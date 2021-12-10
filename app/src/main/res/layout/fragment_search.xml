@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimaryDark"
+        app:title="@string/search"
+        app:titleTextColor="@color/white"
+        android:layout_marginBottom="@dimen/cardview_default_radius"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:id="@+id/parking_check"
+        app:layout_constraintTop_toBottomOf="@id/search_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="parking"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/school_check"
+        app:layout_constraintTop_toBottomOf="@id/parking_check"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="school"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bus_check"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/school_check"
+        android:text="bus station"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/house_check"
+        app:layout_constraintTop_toBottomOf="@id/bus_check"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="house"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

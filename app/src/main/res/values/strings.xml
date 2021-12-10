@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Real Estate Manager</string>
+
+    <!-- BOTTOM NAVIGATION VIEW -->
+    <string name="title_map">Map</string>
+    <string name="title_list_view">List View</string>
+    <string name="search">Search</string>
+    <string name="loan">Loan</string>
+
+    <string name="add_property">Add property</string>
+    <string name="add_agent">Add agent</string>
+
+
+    <string name="property_style">Studio</string>
+    <string name="property_location">Nogent-sur-Marne</string>
+    <string name="price">$ 200 000</string>
+
+
+    <!-- LOAN FRAGMENT -->
+    <string name="loan_simulator">Loan Simulator</string>
+    <string name="loan_amount">Loan amount</string>
+    <string name="down_payment">Down payment</string>
+    <string name="loan_terms">Loan terms (years)</string>
+    <string name="interest_rate">Interest rate (%)</string>
+    <string name="monthly_payment">Monthly payment</string>
+    <string name="interest_total_cost">Interest total cost</string>
+    <string name="calculate">Calculate</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+
+    <!-- PROPERTY DETAILS FRAGMENT -->
+
+
+    <!-- SEARCH FRAGMENT -->
+
+
+    <!-- ADD AGENT -->
+    <string name="add_agent_text">Add a new agent</string>
+    <string name="agent_last_name">Last Name</string>
+    <string name="agent_first_name">First Name</string>
+    <string name="agent_email">E-mail</string>
+    <string name="agent_phone">Phone number</string>
+
+
+    <!-- ADD PROPERTY -->
+    <string name="add_property_text">Add a new property</string>
+    <string name="property_type">Type</string>
+    <string name="property_price">Price</string>
+    <string name="property_rooms">Number of room</string>
+    <string name="managed_by">Managed by</string>
+    <string name="title_activity_map_fragment">MapFragment</string>
+
+
+</resources>

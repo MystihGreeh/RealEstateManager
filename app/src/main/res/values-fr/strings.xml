@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">Real Estate Manager</string>
+    <!-- BOTTOM NAVIGATION VIEW -->
+    <string name="title_map">Carte</string>
+    <string name="title_list_view">Liste</string>
+    <string name="search">Rechercher</string>
+    <string name="loan">Simulateur</string>
+
+    <string name="add_property">Ajouter une propriété</string>
+    <string name="add_agent">Ajouter un agent</string>
+
+    <string name="property_style">Studio</string>
+    <string name="property_location">Nogent-sur-Marne</string>
+    <string name="price">200 000 €</string>
+
+
+    <!-- LOAN FRAGMENT -->
+    <string name="loan_simulator">Simulation d\'emprunt</string>
+    <string name="loan_amount">Montant de l\'emprunt</string>
+    <string name="down_payment">Down payment</string>
+    <string name="loan_terms">Longueur (années)</string>
+    <string name="interest_rate">Taux d\'intéressement (%)</string>
+    <string name="monthly_payment">Paiement mensuel</string>
+    <string name="interest_total_cost">Coût total d\'intéressement</string>
+    <string name="calculate">Calcul</string>
+
+    <!-- PROPERTY DETAILS FRAGMENT -->
+
+
+    <!-- SEARCH FRAGMENT -->
+
+
+    <!-- ADD AGENT -->
+    <string name="add_agent_text">Ajouter un nouvel agent</string>
+    <string name="agent_last_name">Nom</string>
+    <string name="agent_first_name">Prénom</string>
+    <string name="agent_email">E-mail</string>
+    <string name="agent_phone">Téléphone</string>
+
+
+
+    <!-- ADD PROPERTY -->
+    <string name="add_property_text">Ajouter une nouvelle propriété</string>
+    <string name="property_type">Type de bien</string>
+    <string name="property_price">Prix</string>
+    <string name="property_rooms">Nombre de pièces</string>
+    <string name="managed_by">Vendu par</string>
+    <string name="title_activity_map_fragment">MapFragment</string>
+
+</resources>
