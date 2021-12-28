@@ -30,6 +30,27 @@
 
 
     <!-- SEARCH FRAGMENT -->
+    <string name="type">Type</string>
+    <string name="select_all">Tout sélectionner</string>
+    <string name="range_price">Prix</string>
+    <string name="rooms_surface">Pièces et superficie</string>
+    <string name="number_of_rooms">Pièces</string>
+    <string name="number_of_bedrooms">Chambres</string>
+    <string name="surface">Superficie</string>
+    <string name="nearby">A proximité</string>
+    <string name="Other">Autre</string>
+    <string name="bus">Transports</string>
+    <string name="subway">Metro/RER</string>
+    <string name="parking">Parking</string>
+    <string name="school">Ecoles</string>
+    <string name="market">Magasins</string>
+    <string name="parks">Parcs</string>
+    <string name="flat">Appartement</string>
+    <string name="townhouse">Maison Ville</string>
+    <string name="duplex">Duplex</string>
+    <string name="house">Maison</string>
+    <string name="penthouse">Penthouse</string>
+    <string name="price_and_surface">Prix et superficie</string>
 
 
     <!-- ADD AGENT -->
@@ -45,8 +66,10 @@
     <string name="add_property_text">Ajouter une nouvelle propriété</string>
     <string name="property_type">Type de bien</string>
     <string name="property_price">Prix</string>
-    <string name="property_rooms">Nombre de pièces</string>
+    <string name="property_rooms">Pièces</string>
     <string name="managed_by">Vendu par</string>
     <string name="title_activity_map_fragment">MapFragment</string>
+    <string name="description">Description</string>
+    <string name="location">Adresse</string>
 
 </resources>

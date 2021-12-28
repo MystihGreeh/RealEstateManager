@@ -8,4 +8,12 @@
     <color name="light_grey">#B8B6B6</color>
     <color name="blue">#026BBD</color>
     <color name="pink">#E40A54</color>
+    <color name="colorPrimaryVariant">#CA4305</color>
+    <color name="colorSurface">#CA4305</color>
+    <color name="colorOnSurface">#CA4305</color>
+    <color name="colorOnBackground">#CA4305</color>
+    <color name="boxStrokeColor">#DA581C</color>
+    <color name="hintTextColor">#DA581C</color>
+
+
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">#DA581C</item>
+        <item name="hintTextColor">#DA581C</item>
+    </style>
+
+
+
+</resources>

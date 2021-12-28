@@ -32,7 +32,27 @@
 
 
     <!-- SEARCH FRAGMENT -->
-
+    <string name="type">Type</string>
+    <string name="select_all">Select All</string>
+    <string name="range_price">Price</string>
+    <string name="rooms_surface">Rooms and surface</string>
+    <string name="number_of_rooms">Rooms</string>
+    <string name="number_of_bedrooms">Bedrooms</string>
+    <string name="surface">Surface</string>
+    <string name="nearby">Nearby</string>
+    <string name="Other">Other</string>
+    <string name="bus">Transportations</string>
+    <string name="subway">Subway</string>
+    <string name="parking">Parking</string>
+    <string name="school">School</string>
+    <string name="market">Markets</string>
+    <string name="parks">Parks</string>
+    <string name="flat">Flat</string>
+    <string name="duplex">Duplex</string>
+    <string name="house">House</string>
+    <string name="townhouse">Townhouse</string>
+    <string name="penthouse">Penthouse</string>
+    <string name="price_and_surface">Price and surface</string>
 
     <!-- ADD AGENT -->
     <string name="add_agent_text">Add a new agent</string>
@@ -49,6 +69,8 @@
     <string name="property_rooms">Number of room</string>
     <string name="managed_by">Managed by</string>
     <string name="title_activity_map_fragment">MapFragment</string>
+    <string name="description">Description</string>
+    <string name="location">Location</string>
 
 
 </resources>

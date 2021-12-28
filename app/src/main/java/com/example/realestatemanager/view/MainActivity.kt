@@ -1,19 +1,15 @@
 package com.example.realestatemanager.view
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.realestatemanager.R
-import com.example.realestatemanager.databinding.MapFragmentBinding
+import com.example.realestatemanager.databinding.ActivityMainBinding
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,11 +17,11 @@ class MainActivity : AppCompatActivity() {
     private val listViewFragment = ListViewFragment()
     private val searchFragment = SearchFragment()
     private val loanFragment = LoanFragment()
-    private val mapFragment = MapFragment()
+    private val mapFragment = MapsFragment()
     private val addAgentFragment = AddAgentFragment()
     private val addPropertyFragment = AddPropertyFragment()
 
-    lateinit var bottomView: BottomNavigationView
+    private lateinit var binding: ActivityMainBinding
 
 
 
@@ -35,11 +31,6 @@ class MainActivity : AppCompatActivity() {
     private val fromBottom: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.from_bottom_animation) }
     private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.to_bottom_animation) }
 
-    lateinit var floatingActionButton: FloatingActionButton
-    lateinit var addAgentFab: FloatingActionButton
-    lateinit var addPropertyFab: FloatingActionButton
-    lateinit var addAgentText: TextView
-    lateinit var addPropertyText: TextView
 
 
     private var clicked = false
@@ -47,19 +38,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            val window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = this.resources.getColor(R.color.colorPrimaryDark)
-        }
+
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = this.resources.getColor(R.color.colorPrimaryDark)
 
         //Implementing bottom view and displaying first fragment
-        bottomView = findViewById(R.id.activity_main_bottomview)
 
-        bottomView.setOnNavigationItemSelectedListener {
+        binding.activityMainBottomview.setOnNavigationItemSelectedListener {
             when (it.itemId){
                 R.id.list_view -> displayCurrentFragment(listViewFragment)
                 R.id.map -> displaymapFragment(mapFragment)
@@ -71,17 +61,6 @@ class MainActivity : AppCompatActivity() {
 
         displayCurrentFragment(listViewFragment)
 
-        //Floating action button and their texts declaration
-        floatingActionButton = findViewById(R.id.floating_action_button)
-        addAgentFab = findViewById(R.id.add_agent_fab)
-        addAgentText = findViewById(R.id.add_agent_texte)
-        addPropertyFab = findViewById(R.id.add_property_fab)
-        addPropertyText = findViewById(R.id.add_property_texte)
-
-        //Managing onClickListener for floating action button
-        floatingActionButton.setOnClickListener {onAddButtonClicked()}
-        addAgentFab.setOnClickListener {displayAddAgent()}
-        addPropertyFab.setOnClickListener {displayAddProperty()}
 
     }
 
@@ -94,37 +73,51 @@ class MainActivity : AppCompatActivity() {
     private fun onAddButtonClicked() {
         setVisibility(clicked)
         setAnimation(clicked)
-        clicked = !clicked
     }
 
+
     private fun setVisibility(clicked: Boolean) {
-        if (!clicked){
-            addAgentFab.visibility = View.VISIBLE
-            addPropertyFab.visibility = View.VISIBLE
-            addAgentText.visibility = View.VISIBLE
-            addPropertyText.visibility = View.VISIBLE
-        } else{
-            addAgentFab.visibility = View.INVISIBLE
-            addPropertyFab.visibility = View.INVISIBLE
-            addAgentText.visibility = View.INVISIBLE
-            addPropertyText.visibility = View.INVISIBLE
-        }
+            if (!clicked) {
+                binding.addAgentFab.visibility = View.VISIBLE
+                binding.addPropertyFab.visibility = View.VISIBLE
+                binding.addAgentTexte.visibility = View.VISIBLE
+                binding.addPropertyTexte.visibility = View.VISIBLE
+            } else {
+                binding.addAgentFab.visibility = View.INVISIBLE
+                binding.addPropertyFab.visibility = View.INVISIBLE
+                binding.addAgentTexte.visibility = View.INVISIBLE
+                binding.addPropertyTexte.visibility = View.INVISIBLE
+            }
     }
 
     private fun setAnimation(clicked: Boolean) {
         if(!clicked) {
-            addAgentFab.startAnimation(fromBottom)
-            addPropertyFab.startAnimation(fromBottom)
-            addAgentText.startAnimation(fromBottom)
-            addPropertyText.startAnimation(fromBottom)
-            floatingActionButton.startAnimation(rotateOpen)
+            binding.addAgentFab.startAnimation(fromBottom)
+            binding.addPropertyFab.startAnimation(fromBottom)
+            binding.addAgentTexte.startAnimation(fromBottom)
+            binding.addPropertyTexte.startAnimation(fromBottom)
+            binding.floatingActionButton.startAnimation(rotateOpen)
         } else{
-            addAgentFab.startAnimation(toBottom)
-            addPropertyFab.startAnimation(toBottom)
-            addAgentText.startAnimation(toBottom)
-            addPropertyText.startAnimation(toBottom)
-            floatingActionButton.startAnimation(rotateClose)
+            binding.addAgentFab.startAnimation(toBottom)
+            binding.addPropertyFab.startAnimation(toBottom)
+            binding.addAgentTexte.startAnimation(toBottom)
+            binding.addPropertyTexte.startAnimation(toBottom)
+            binding.floatingActionButton.startAnimation(rotateClose)
         }
+    }
+
+    private fun showFab(){
+        binding.floatingActionButton.visibility = View.VISIBLE
+        setAnimation(!clicked)
+        //Managing onClickListener for floating action button
+        binding.floatingActionButton.setOnClickListener {onAddButtonClicked()}
+        binding.addAgentFab.setOnClickListener {displayAddAgent()}
+        binding.addPropertyFab.setOnClickListener {displayAddProperty()}
+    }
+
+    private fun hideFab() {
+        binding.floatingActionButton.visibility = View.INVISIBLE
+
     }
 
 
@@ -133,12 +126,15 @@ class MainActivity : AppCompatActivity() {
     // -------------------------------------------------------------------------------------------
 
     private fun displayCurrentFragment(fragment: Fragment) {
+        showFab()
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.activity_main_framelayout, fragment)
             commit()
         }
     }
-    private fun displaymapFragment(mapFragment: MapFragment){
+    private fun displaymapFragment(mapFragment: MapsFragment){
+        hideFab()
+        clicked = !clicked
         val mapFragment = SupportMapFragment.newInstance()
         supportFragmentManager
             .beginTransaction()
@@ -147,6 +143,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayAddAgent(){
+        hideFab()
+        setAnimation(!clicked)
+        setVisibility(!clicked)
         val fragment: Fragment? = supportFragmentManager
             .findFragmentByTag(AddAgentFragment::class.java.simpleName)
         if (fragment !is AddAgentFragment) {
@@ -158,6 +157,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayAddProperty(){
+        hideFab()
+        setAnimation(!clicked)
+        setVisibility(!clicked)
         val fragment: Fragment? = supportFragmentManager
             .findFragmentByTag(AddPropertyFragment::class.java.simpleName)
         if (fragment !is AddAgentFragment){

@@ -11,6 +11,8 @@
     tools:context="view.ListViewFragment"
     tools:listitem="@layout/fragment_items">
 
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

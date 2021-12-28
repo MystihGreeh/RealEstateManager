@@ -15,28 +15,29 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/colorPrimaryDark"
         app:title="@string/add_agent_text"
-        app:titleTextColor="@color/white"/>
+        app:titleTextColor="@color/white"
+        app:menu="@menu/add_menu"/>
 
     <!-- User Image -->
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
         android:id="@+id/agent_picture"
         android:src="@drawable/user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_agent_toolbar"
-        android:layout_marginVertical="30sp"/>
+        android:layout_marginVertical="16sp"/>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/photo"
         android:src="@drawable/ic_baseline_add_a_photo_24"
-        app:layout_constraintStart_toEndOf="@id/agent_picture"
         app:layout_constraintEnd_toEndOf="@id/agent_picture"
         app:layout_constraintBottom_toBottomOf="@id/agent_picture"
-        android:background="@color/pink"
-        app:layout_constraintCircleRadius="@dimen/cardview_default_radius"/>
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="5dp"/>
 
 
     <!-- User Informations -->
@@ -46,12 +47,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginHorizontal="16sp"
-        android:layout_marginVertical="16sp"
+        android:layout_margin="16dp"
         android:hint="@string/agent_first_name"
-
-        app:layout_constraintTop_toBottomOf="@id/agent_picture"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/photo"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        app:boxStrokeColor="@color/boxStrokeColor"
+        app:hintTextColor="@color/hintTextColor"
         app:startIconDrawable="@drawable/ic_baseline_drive_file_rename_outline_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -60,9 +61,6 @@
                 android:id="@+id/agent_first_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/agent_picture"
-                android:layout_marginVertical="26sp"
-                android:layout_marginHorizontal="26sp"
-
                 />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -72,12 +70,11 @@
         android:id="@+id/agent_last_name_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginVertical="16sp"
+        android:layout_margin="16dp"
         android:hint="@string/agent_last_name"
         app:layout_constraintTop_toBottomOf="@id/agent_first_name_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         app:startIconDrawable="@drawable/ic_baseline_drive_file_rename_outline_24">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -85,8 +82,6 @@
                 android:id="@+id/agent_last_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/agent_first_name_layout"
-                android:layout_marginVertical="26sp"
-                android:layout_marginHorizontal="26sp"
                 />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,12 +90,11 @@
         android:id="@+id/agent_email_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16sp"
-        android:layout_marginVertical="16sp"
+        android:layout_margin="16dp"
         android:hint="@string/agent_email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/agent_last_name_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         app:startIconDrawable="@drawable/email">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -108,8 +102,6 @@
                 android:id="@+id/agent_email"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/agent_last_name"
-                android:layout_marginVertical="26sp"
-                android:layout_marginHorizontal="26sp"
                 />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,12 +109,11 @@
         android:id="@+id/agent_phone_number_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16sp"
-        android:layout_marginVertical="16sp"
+        android:layout_margin="16dp"
         android:hint="@string/agent_phone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/agent_email_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         app:startIconDrawable="@drawable/phone">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -130,22 +121,9 @@
                 android:id="@+id/agent_phone_number"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/agent_email"
-                android:layout_marginVertical="26sp"
-                android:layout_marginHorizontal="26sp"
                 />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Validation button -->
-    <ImageButton
-        android:layout_width="50sp"
-        android:layout_height="50sp"
-        android:id="@+id/save_agent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/agent_phone_number_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_baseline_check_circle_outline_24"
-        android:background="@color/white"/>
 
 
 
