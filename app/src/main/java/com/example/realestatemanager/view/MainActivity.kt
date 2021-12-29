@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
         displayCurrentFragment(listViewFragment)
 
 
@@ -73,6 +72,8 @@ class MainActivity : AppCompatActivity() {
     private fun onAddButtonClicked() {
         setVisibility(clicked)
         setAnimation(clicked)
+        clicked = !clicked
+
     }
 
 
@@ -127,14 +128,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayCurrentFragment(fragment: Fragment) {
         showFab()
+        setVisibility(!clicked)
+        setAnimation(!clicked)
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.activity_main_framelayout, fragment)
             commit()
         }
     }
+
     private fun displaymapFragment(mapFragment: MapsFragment){
-        hideFab()
-        clicked = !clicked
+        setVisibility(!clicked)
+        setAnimation(!clicked)
         val mapFragment = SupportMapFragment.newInstance()
         supportFragmentManager
             .beginTransaction()
@@ -143,9 +147,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayAddAgent(){
-        hideFab()
-        setAnimation(!clicked)
+        clicked = !clicked
         setVisibility(!clicked)
+        setAnimation(!clicked)
         val fragment: Fragment? = supportFragmentManager
             .findFragmentByTag(AddAgentFragment::class.java.simpleName)
         if (fragment !is AddAgentFragment) {
@@ -157,9 +161,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayAddProperty(){
-        hideFab()
-        setAnimation(!clicked)
+        clicked = !clicked
         setVisibility(!clicked)
+        setAnimation(!clicked)
         val fragment: Fragment? = supportFragmentManager
             .findFragmentByTag(AddPropertyFragment::class.java.simpleName)
         if (fragment !is AddAgentFragment){
