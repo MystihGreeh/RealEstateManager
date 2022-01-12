@@ -17,12 +17,10 @@ import androidx.room.PrimaryKey
 
 data class Property(
     @ColumnInfo(name = "property_id") @PrimaryKey var id: String = "",
-    @ColumnInfo(name = "type_property")var type:  TypeProperty = TypeProperty.HOUSE,
     var priceInDollars: Int,
     var surfaceInMeters: Int = 0,
     var numberOfRoom: Int = 0,
     var numberOfBedroom: Int = 0,
-    //var nbrBathroom: Int = 0,
     var description: String = "",
     var street: String,
     var postcode: String,
@@ -36,10 +34,6 @@ data class Property(
     var labelPhoto: String,
     var agent: String)
 
-enum class TypeProperty(val typeName: String) {
-    FLAT("Flat"),
-    TOWNHOUSE("Townhouse"),
-    PENTHOUSE("Penthouse"),
-    HOUSE("House"),
-    DUPLEX("Duplex")
-}
+
+
+

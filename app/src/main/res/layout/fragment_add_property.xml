@@ -50,6 +50,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="none"
                         tools:ignore="LabelFor"
+                        android:id="@+id/autoComplete_type"
                         android:textColorHint="@color/colorPrimaryDark"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,6 +111,7 @@
                     <AutoCompleteTextView
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
+                        android:id="@+id/autoComplete_rooms"
                         android:inputType="none"
                         tools:ignore="LabelFor"
                         android:textColorHint="@color/colorPrimaryDark"/>
@@ -133,6 +135,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="none"
                         tools:ignore="LabelFor"
+                        android:id="@+id/autoComplete_bedrooms"
                         android:textColorHint="@color/colorPrimaryDark"/>
                 </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -283,6 +286,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     tools:ignore="LabelFor"
+                    android:id="@+id/autoComplete_seller"
                     android:textColorHint="@color/colorPrimaryDark"/>
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

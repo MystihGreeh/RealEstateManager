@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.realestatemanager.R
 import com.example.realestatemanager.databinding.ActivityMainBinding
-import com.google.android.gms.maps.SupportMapFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.activityMainBottomview.setOnNavigationItemSelectedListener {
             when (it.itemId){
                 R.id.list_view -> displayCurrentFragment(listViewFragment)
-                R.id.map -> displaymapFragment(mapFragment)
+                R.id.map -> displayCurrentFragment(mapFragment)
                 R.id.search -> displayCurrentFragment(searchFragment)
                 R.id.loan -> displayCurrentFragment(loanFragment)
             }
@@ -136,13 +135,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun displaymapFragment(mapFragment: MapsFragment){
+    private fun displaymapFragment(){
         setVisibility(!clicked)
         setAnimation(!clicked)
-        val mapFragment = SupportMapFragment.newInstance()
+        val mapFragment = MapsFragment()
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.activity_main_framelayout, mapFragment)
+            .replace(R.id.activity_main_framelayout, mapFragment)
             .commit()
     }
 

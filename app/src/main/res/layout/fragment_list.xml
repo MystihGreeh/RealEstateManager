@@ -9,7 +9,8 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="view.ListViewFragment"
-    tools:listitem="@layout/fragment_items">
+    tools:listitem="@layout/fragment_items"
+    android:background="@color/light_green">
 
 
 

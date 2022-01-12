@@ -1,4 +1,10 @@
 package com.example.realestatemanager.viewModel
 
-class MainActivityViewModel {
+import com.example.realestatemanager.repositories.AgentRepository
+import com.example.realestatemanager.repositories.PropertyRepository
+
+class MainActivityViewModel(
+    agentRepository: AgentRepository,
+    propertyRepository: PropertyRepository
+) {
 }

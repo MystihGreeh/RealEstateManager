@@ -23,9 +23,11 @@
     <string name="loan_terms">Durée (années)</string>
     <string name="interest_rate">Taux (%)</string>
     <string name="monthly_payment">Paiement mensuel</string>
+    <string name="annual_payment">Paiement annuel</string>
     <string name="interest_total_cost">Coût total d\'intéressement : </string>
     <string name="calculate">Calcul</string>
     <string name="required_field">Champ obligatoire</string>
+    <string name="bring_payment">Apport personnel</string>
 
     <!-- PROPERTY DETAILS FRAGMENT -->
 
@@ -36,7 +38,7 @@
     <string name="range_price">Prix</string>
     <string name="rooms">Nombres de pièces</string>
     <string name="number_of_rooms">Pièces</string>
-    <string name="number_of_bedrooms">Nombre de chambres</string>
+    <string name="number_of_bedrooms">Chambres</string>
     <string name="surface">Superficie</string>
     <string name="nearby">A proximité</string>
     <string name="Other">Autre</string>

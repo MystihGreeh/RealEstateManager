@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.realestatemanager.R
 import com.example.realestatemanager.databinding.FragmentLoanBinding
@@ -39,53 +40,80 @@ class LoanFragment : Fragment() {
         bindingLoan = null
     }
 
-    private fun setOnClickListener() {
-        binding.calculate.setOnClickListener {
-            val amount = binding.loanAmount.text.toString()
-            val interest = binding.interestRate.text.toString()
-            val nbYears = binding.loanTerms.text.toString()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-
-            var isDataOk = true
-
-            if (amount.isBlank()) {
-                binding.loanAmount.error = getString(R.string.required_field)
-                isDataOk = false
-            }
-
-            if (interest.isBlank()) {
-                binding.interestRate.error = getString(R.string.required_field)
-                isDataOk = false
-            }
-
-            if (nbYears.isBlank()) {
-                binding.loanTerms.error = getString(R.string.required_field)
-                isDataOk = false
-            }
-
-            if (isDataOk) {
-                binding.loanAmount.setText(currencyFormat.format(amount.toDouble()))
-                val number = NumberFormat.getNumberInstance(Locale.getDefault())
-                binding.interestRate.setText(number.format(interest.toDouble()))
-                binding.loanTerms.setText(nbYears)
-                //calculate(amount.toDouble(), interest.toDouble(), nbYears.toInt())
-            }
-        }
+        this.setOnClickListener()
     }
 
-    /*private fun calculate(amount: Double, interest: Double, nbMonths: Int) {
-        val monthlyInterestRate = ((((1 + (interest / 100)).pow(1.0 / 12.0) - 1) * 100) / 100)
-        val t1N = 1 + monthlyInterestRate
-        val result = ((finalAmount * monthlyInterestRate) * ((t1N).pow(nbMonths))) / (((t1N).pow(nbMonths)) - 1)
+    // ---------------------
+    // CONFIGURATION
+    // ---------------------
 
-        binding.txtResult.text = getString(R.string.monthly_payment, currencyFormat.format(result))
+    private fun setOnClickListener(){
+        bindingLoan?.calculate?.setOnClickListener { calculate() }
+    }
 
-        val view = this.currentFocus
-        if (view != null) {
-            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            manager.hideSoftInputFromWindow(view.windowToken, 0)
+
+    // ---------------------
+    // ACTION
+    // ---------------------
+
+    private fun calculate(){
+        var canCalculate: Boolean
+        val amount = bindingLoan?.loanAmount?.text.toString().toDoubleOrNull() ?: 0.0
+        val downPayment = bindingLoan?.downPaymentLayout?.text.toString().toDoubleOrNull() ?: 0.0
+        val term = bindingLoan?.loanTerms?.text.toString().toDoubleOrNull()
+        val interest = bindingLoan?.interestRate?.text.toString().toDoubleOrNull()
+        val contribution = bindingLoan?.bringAmount?.text.toString().toDoubleOrNull() ?: 0.0
+
+        when{
+            bindingLoan?.loanAmount?.text.isNullOrEmpty() || bindingLoan?.loanTerms?.text.isNullOrEmpty() || bindingLoan?.interestRate?.text.isNullOrEmpty() || downPayment >= amount -> {
+                canCalculate = false
+                if (bindingLoan?.loanAmount?.text.isNullOrEmpty()){
+                    bindingLoan?.loanAmountLayout?.error = resources.getString(R.string.required_field)
+                }
+                if (bindingLoan?.loanTerms?.text.isNullOrEmpty()){
+                    bindingLoan?.loanTermsLayout?.error = resources.getString(R.string.required_field)
+                }
+                if (bindingLoan?.interestRate?.text.isNullOrEmpty()){
+                    bindingLoan?.interestRateLayout?.error = resources.getString(R.string.required_field)
+                }else if (interest!! < 0 || interest > 100){
+                    bindingLoan?.interestRateLayout?.error = resources.getString(R.string.required_field)
+                }
+            }
+            else -> {
+                canCalculate = true
+                bindingLoan?.loanAmountLayout?.error = null
+                bindingLoan?.loanTermsLayout?.error = null
+                bindingLoan?.interestRateLayout?.error = null
+            }
         }
-    }*/
+
+        if (canCalculate){
+            val result: Double
+            val totalInterest: Double
+            val annualPayement: Double
+            val downAmount: Double
+            if(interest == 0.0){
+                result = ((amount - contribution) - (downPayment)) / (term!! * 12)
+                totalInterest = 0.0
+                annualPayement = result * 12
+                downAmount = (result * 12) * term
+            }else{
+                result = ((amount - contribution) - (downPayment)) * ((interest!! / (100)) / (12)) / (1 - Math.pow( 1 + ((interest / 100) / 12), -term!! *12))
+                annualPayement = result * 12
+                downAmount = (result * 12) * term
+                totalInterest = downAmount - amount
+            }
+            bindingLoan?.monthlyPaymentLayout?.setText(String.format("%.2f",result), TextView.BufferType.EDITABLE)
+            bindingLoan?.annualPaymentLayout?.setText(String.format("%.2f",annualPayement), TextView.BufferType.EDITABLE)
+            bindingLoan?.downPaymentLayout?.setText(String.format("%.2f",downAmount), TextView.BufferType.EDITABLE)
+            bindingLoan?.interestTotalCostLayout?.setText(String.format("%.2f",(totalInterest), TextView.BufferType.EDITABLE))
+
+
+        }
+    }
 
 
 }

@@ -20,9 +20,11 @@
     <string name="loan_simulator">Loan Simulator</string>
     <string name="loan_amount">Loan amount</string>
     <string name="down_payment">Down payment : </string>
+    <string name="bring_payment">Financial contribution</string>
     <string name="loan_terms">Loan terms (years)</string>
     <string name="interest_rate">Interest rate (%)</string>
     <string name="monthly_payment">Monthly payment</string>
+    <string name="annual_payment">Annual payment</string>
     <string name="interest_total_cost">Interest total cost : </string>
     <string name="calculate">Calculate</string>
     <string name="required_field">Required field</string>
@@ -37,7 +39,7 @@
     <string name="select_all">Select All</string>
     <string name="range_price">Price</string>
     <string name="number_of_rooms">Rooms</string>
-    <string name="number_of_bedrooms">Number of bedrooms</string>
+    <string name="number_of_bedrooms">Bedrooms</string>
     <string name="surface">Surface</string>
     <string name="nearby">Nearby</string>
     <string name="Other">Other</string>

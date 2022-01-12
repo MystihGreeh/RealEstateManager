@@ -2,15 +2,12 @@ package com.example.realestatemanager.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.example.realestatemanager.model.Property
-import com.example.realestatemanager.repositories.AgentRepository
 import com.example.realestatemanager.repositories.PropertyRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class AddPropertyViewModel (private val repository: PropertyRepository, private val agentRepository: AgentRepository) : ViewModel() {
+class AddPropertyViewModel(private val repository: PropertyRepository) : ViewModel() {
 
     val allProperties: Flow<List<Property>> = repository.allProperties
 
@@ -21,9 +18,6 @@ class AddPropertyViewModel (private val repository: PropertyRepository, private 
         repository.insert(property)
     }
 
-    suspend fun checkAgent() = withContext(Dispatchers.IO) {
-        agentRepository.getCountAgent() > 0
-    }
 }
 
 
