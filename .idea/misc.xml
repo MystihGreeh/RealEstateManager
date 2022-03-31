@@ -3,16 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/custom_save_button.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/edit_text_background.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/email.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_add_a_photo_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_bedroom_parent_24.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_check_circle_outline_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_checklist_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_directions_bus_24.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_drive_file_rename_outline_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_house_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_local_parking_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_meeting_room_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_park_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_school_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/ic_baseline_zoom_out_map_24.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/money.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/phone.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout-v28/fragment_add_agent.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/activity_add_property.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/activity_property_details.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/activity_property_details.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_add_agent.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_add_property.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_item.xml" value="0.18229166666666666" />
@@ -23,11 +35,14 @@
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_map.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_property_details.xml" value="0.18888888888888888" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/item_horizontal_photos.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/map_fragment.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/maps_fragement.xml" value="0.19583333333333333" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/maps_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/property_rv_items.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/menu/add_menu.xml" value="0.17239583333333333" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/xml/provider_paths.xml" value="0.25" />
       </map>
     </option>
   </component>

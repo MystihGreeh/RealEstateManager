@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:id="@+id/restaurant_constraint_layout"
+    android:id="@+id/property_constraint_layout"
     android:paddingBottom="16dp"
     android:paddingTop="16dp">
 
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="16dp"
-        android:background="@color/white">
+        android:background="@color/colorPrimaryDark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,7 +37,8 @@
                 android:id="@+id/property_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/loan"
+                android:cropToPadding="true"
+                android:src="@drawable/house_picture"
                 android:contentDescription="property_picture" />
 
         </androidx.cardview.widget.CardView>
@@ -50,7 +51,7 @@
             app:layout_constraintStart_toEndOf="@+id/property_card_view"
             android:layout_marginStart="16dp"
             app:layout_constraintTop_toTopOf="@+id/property_card_view"
-            android:text="@string/property_style"
+            android:text="@string/demo_property_type"
             android:textStyle="bold"/>
 
         <TextView
@@ -59,7 +60,7 @@
             android:id="@+id/property_location"
             app:layout_constraintTop_toTopOf="@+id/property_card_view"
             app:layout_constraintBottom_toBottomOf="@+id/property_card_view"
-            android:text="@string/property_location"
+            android:text="@string/demo_property_location"
             app:layout_constraintStart_toEndOf="@+id/property_card_view"
             app:layout_constraintStart_toStartOf="@+id/property_style"
             android:textColor="@color/light_grey"/>
@@ -71,8 +72,17 @@
             android:id="@+id/property_price"
             app:layout_constraintStart_toStartOf="@+id/property_style"
             app:layout_constraintBottom_toBottomOf="@+id/property_card_view"
-            android:text="@string/price"
+            android:text="@string/demo_price"
             android:textColor="@color/blue"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/property_currency"
+                app:layout_constraintStart_toEndOf="@+id/property_price"
+                app:layout_constraintBottom_toBottomOf="@+id/property_card_view"
+                android:text="@string/details_property_euro"
+                android:textColor="@color/blue"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

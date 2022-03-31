@@ -4,35 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/light_green">
+    tools:viewBindingIgnore="false"
+    android:background="@color/colorPrimaryDark">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/add_property_toolbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/colorPrimaryDark"
-            app:title="@string/add_property_text"
-            app:titleTextColor="@color/white"
-            android:layout_marginBottom="@dimen/cardview_default_radius"
-            app:menu="@menu/add_menu"/>
 
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/add_property_toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/info_cardview"
-        android:layout_margin="16dp">
+        android:layout_margin="16dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/price_layout"
+            android:id="@+id/type_text_view"
+            android:text="@string/type"
+            android:layout_marginTop="16dp"
+            android:textSize="15sp"
+            app:layout_constraintTop_toTopOf="parent"/>
+                <Spinner
                     android:id="@+id/property_type"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
@@ -40,19 +40,13 @@
                     android:layout_margin="16dp"
                     android:hint="@string/property_type"
                     android:textColorHint="@color/black"
+                    android:entries="@array/type_array"
                     app:boxBackgroundColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/type_text_view">
 
-                    <AutoCompleteTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        tools:ignore="LabelFor"
-                        android:id="@+id/autoComplete_type"
-                        android:textColorHint="@color/colorPrimaryDark"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                </Spinner>
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -83,60 +77,60 @@
                     android:hint="@string/surface"
                     app:layout_constraintTop_toBottomOf="@id/property_type"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    app:startIconDrawable="@drawable/ic_baseline_drive_file_rename_outline_24">
+                    app:startIconDrawable="@drawable/ic_baseline_zoom_out_map_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/surface"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/agent_picture"
+                        app:layout_constraintTop_toBottomOf="@id/property_type"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/number_of_rooms"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:hint="@string/number_of_rooms"
+                    app:startIconDrawable="@drawable/ic_baseline_meeting_room_24"
                     app:layout_constraintStart_toStartOf="@id/price_layout"
                     app:layout_constraintEnd_toEndOf="@id/price_layout"
-                    app:layout_constraintTop_toBottomOf="@id/price_layout"
-                    android:textColorHint="@color/black"
-                    app:boxBackgroundColor="@color/white"
-                    android:paddingBottom="16dp">
+                    app:layout_constraintTop_toBottomOf="@id/price_layout">
 
-                    <AutoCompleteTextView
-                        android:layout_width="150dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/autoComplete_rooms"
-                        android:inputType="none"
-                        tools:ignore="LabelFor"
-                        android:textColorHint="@color/colorPrimaryDark"/>
+
+                        android:textColorHint="@color/colorPrimaryDark"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/number_of_bedrooms"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:hint="@string/number_of_bedrooms"
+                    app:startIconDrawable="@drawable/ic_baseline_bedroom_parent_24"
                     app:layout_constraintStart_toStartOf="@id/surface_layout"
                     app:layout_constraintEnd_toEndOf="@id/surface_layout"
-                    app:layout_constraintTop_toBottomOf="@id/surface_layout"
-                    android:textColorHint="@color/black"
-                    app:boxBackgroundColor="@color/white">
+                    app:layout_constraintTop_toBottomOf="@id/surface_layout">
 
-                    <AutoCompleteTextView
-                        android:layout_width="150dp"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
-                        tools:ignore="LabelFor"
                         android:id="@+id/autoComplete_bedrooms"
-                        android:textColorHint="@color/colorPrimaryDark"/>
+                        app:layout_constraintStart_toStartOf="@id/number_of_bedrooms"
+                        app:layout_constraintEnd_toEndOf="@id/number_of_bedrooms"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginBottom="16dp"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -146,7 +140,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/info_cardview"
             android:id="@+id/cardview"
-            android:layout_margin="16dp">
+            android:layout_margin="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -158,62 +154,68 @@
                     android:text="@string/nearby"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_margin="16dp"
-                    android:textSize="20dp"/>
+                    android:textSize="20sp"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false"
+                    android:onClick="onCheckboxClicked"
                     android:id="@+id/school_check"
                     app:layout_constraintTop_toBottomOf="@id/nearby"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginHorizontal="16sp"
-                    android:text="@string/school"/>
+                    android:text="@string/school"
+                    tools:ignore="UsingOnClickInXml" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false"
                     android:id="@+id/bus_check"
+                    android:onClick="onCheckboxClicked"
                     app:layout_constraintTop_toBottomOf="@id/school_check"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginHorizontal="16sp"
-                    android:text="@string/bus"/>
+                    android:text="@string/bus"
+                    tools:ignore="UsingOnClickInXml" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false"
                     android:id="@+id/market_check"
+                    android:onClick="onCheckboxClicked"
                     app:layout_constraintTop_toBottomOf="@id/bus_check"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginHorizontal="16sp"
-                    android:text="@string/market"/>
+                    android:text="@string/market"
+                    tools:ignore="UsingOnClickInXml" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false"
                     android:id="@+id/parks_check"
+                    android:onClick="onCheckboxClicked"
                     app:layout_constraintTop_toBottomOf="@id/nearby"
                     app:layout_constraintStart_toStartOf="@id/all_check"
-                    android:text="@string/parks"/>
+                    android:text="@string/parks"
+                    tools:ignore="UsingOnClickInXml" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false"
                     android:id="@+id/parking_check"
+                    android:onClick="onCheckboxClicked"
                     app:layout_constraintTop_toBottomOf="@id/parks_check"
                     app:layout_constraintStart_toStartOf="@id/all_check"
-                    android:text="@string/parking"/>
+                    android:text="@string/parking"
+                    tools:ignore="UsingOnClickInXml" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false"
                     android:id="@+id/all_check"
+                    android:onClick="onCheckboxClicked"
                     app:layout_constraintBottom_toBottomOf="@id/market_check"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/select_all"
-                    android:layout_marginHorizontal="16dp"/>
+                    android:layout_marginHorizontal="16dp"
+                    tools:ignore="UsingOnClickInXml" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -222,7 +224,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/cardview"
         android:id="@+id/description_cardview"
-        android:layout_margin="16dp">
+        android:layout_margin="16dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -247,7 +251,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/location_layout"
+                android:id="@+id/street_address_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -260,46 +264,160 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/location"
+                    android:id="@+id/street_address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/description_layout"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/seller_layout"
+                android:id="@+id/postal_code_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="16dp"
+                android:hint="@string/postal_code"
+                app:layout_constraintTop_toBottomOf="@id/street_address_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                app:startIconDrawable="@drawable/ic_baseline_add_location_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/postal_code"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/street_address_layout"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/city_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="16dp"
+                android:hint="@string/city"
+                app:layout_constraintTop_toBottomOf="@id/postal_code_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                app:startIconDrawable="@drawable/ic_baseline_add_location_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/city"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/description_layout"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contry_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="16dp"
+                android:hint="@string/contry"
+                app:layout_constraintTop_toBottomOf="@id/city_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                app:startIconDrawable="@drawable/ic_baseline_add_location_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/contry"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/description_layout"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/contry_layout"
+                android:id="@+id/seller_text_view"
+                android:text="@string/managed_by"
+                android:layout_marginTop="16dp"
+                android:textSize="15sp"
+                app:layout_constraintTop_toBottomOf="@+id/contry_layout"/>
+            <Spinner
+                android:id="@+id/seller_spinner"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:hint="@string/managed_by"
+                android:entries="@array/seller_array"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/location_layout"
-                app:startIconDrawable="@drawable/ic_baseline_person_24"
+                app:layout_constraintTop_toBottomOf="@id/seller_text_view"
                 android:paddingBottom="16dp">
 
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    tools:ignore="LabelFor"
-                    android:id="@+id/autoComplete_seller"
-                    android:textColorHint="@color/colorPrimaryDark"/>
-            </com.google.android.material.textfield.TextInputLayout>
+            </Spinner>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_baseline_add_a_photo_24"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_cardview"
-            android:layout_marginVertical="16dp"/>
+            android:id="@+id/separation"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:id="@+id/add_picture_camera"
+            android:text="@string/add_from_camera"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/separation"
+            app:layout_constraintTop_toBottomOf="@id/description_cardview"
+            android:layout_marginVertical="16dp"
+            android:background="@drawable/custom_save_button"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:id="@+id/add_picture_gallery"
+            android:text="@string/add_from_gallery"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="@id/separation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_cardview"
+            android:layout_marginVertical="16dp"
+            android:background="@drawable/custom_save_button"/>
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:id="@+id/save_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/horizontal_recycler_view"
+            android:background="@drawable/custom_save_button"
+            android:text="Save"
+            android:layout_margin="16dp"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:textAllCaps="false"
+            />
+
+        <!-- PROPERTY IMAGES RECYCLERVIEW -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/horizontal_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_picture_camera"
+            tools:listitem="@layout/item_horizontal_photos" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:menu="@menu/bottom_navigation_menu"/>
 
-    <!-- Foating action buttons -->
+    <!-- Foating action buttons-->
 
     <!-- ADD -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -54,66 +54,6 @@
         android:focusable="true"
         android:visibility="invisible"/>
 
-
-
-    <!-- ADD AGENT -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_agent_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/floating_action_button"
-        app:layout_constraintEnd_toEndOf="@id/floating_action_button"
-        app:layout_constraintBottom_toTopOf="@id/floating_action_button"
-        android:layout_marginVertical="@android:dimen/app_icon_size"
-        app:fabSize="mini"
-        android:src="@drawable/add_agent"
-        android:backgroundTint="@color/colorPrimaryDark"
-        tools:ignore="ContentDescription"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/add_agent_texte"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/add_agent_fab"
-        app:layout_constraintTop_toTopOf="@id/add_agent_fab"
-        app:layout_constraintEnd_toStartOf="@id/add_agent_fab"
-        android:text="@string/add_agent"
-        android:layout_marginEnd="16dp"
-        android:textColor="@color/light_grey"
-        android:visibility="invisible"/>
-
-
-    <!-- ADD PROPERTY-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_property_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/add_agent_fab"
-        app:layout_constraintEnd_toEndOf="@id/add_agent_fab"
-        app:layout_constraintBottom_toTopOf="@id/add_agent_fab"
-        android:layout_marginVertical="@android:dimen/app_icon_size"
-        app:fabSize="mini"
-        android:src="@drawable/add_property"
-        android:backgroundTint="@color/colorPrimaryDark"
-        tools:ignore="ContentDescription"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/add_property_texte"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/add_property_fab"
-        app:layout_constraintTop_toTopOf="@id/add_property_fab"
-        app:layout_constraintEnd_toStartOf="@id/add_property_fab"
-        android:text="@string/add_property"
-        android:layout_marginEnd="16dp"
-        android:textColor="@color/light_grey"
-        android:visibility="invisible"/>
 
 
 

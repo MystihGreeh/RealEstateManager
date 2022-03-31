@@ -5,14 +5,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.realestatemanager.model.Agent
 import com.example.realestatemanager.model.Property
 
-@Database(entities = [Agent::class, Property::class], version = 1)
+@Database(entities = arrayOf(Property::class), version = 1, exportSchema = false)
 
 abstract class RealEstateManagerDatabase : RoomDatabase() {
 
-    abstract fun getAgentDao(): AgentDao
     abstract fun getPropertyDao(): PropertyDao
 
     companion object {

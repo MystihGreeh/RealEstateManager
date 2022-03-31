@@ -2,37 +2,41 @@ package com.example.realestatemanager.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 
-@Entity(
-    tableName = "properties",
-    foreignKeys = [
-        ForeignKey(
-            entity = Agent::class,
-            parentColumns = ["agent_id"],
-            childColumns = ["agent"],
-            onDelete = ForeignKey.NO_ACTION)])
+@Entity(tableName = "properties")
 
-data class Property(
-    @ColumnInfo(name = "property_id") @PrimaryKey var id: String = "",
-    var priceInDollars: Int,
-    var surfaceInMeters: Int = 0,
-    var numberOfRoom: Int = 0,
-    var numberOfBedroom: Int = 0,
-    var description: String = "",
-    var street: String,
-    var postcode: String,
-    var city: String,
-    var country: String,
-    var isSold: Boolean = false,
-    var availableDate: String,
-    var soldDate: String = "",
-    var agentId: Int,
-    var coverPhoto: String,
-    var labelPhoto: String,
-    var agent: String)
+class Property(
+    @ColumnInfo(name = "type") var typeOfGood: String,
+    @ColumnInfo(name = "price") var priceInDollars: String,
+    @ColumnInfo(name = "surface") var surfaceInMeters: String,
+    @ColumnInfo(name = "number of room") var numberOfRoom: String,
+    @ColumnInfo(name = "number of berdoom") var numberOfBedroom: String,
+    @ColumnInfo(name = "description") var description: String,
+    @ColumnInfo(name = "street") var street: String,
+    @ColumnInfo(name = "postal code") var postalcode: String,
+    @ColumnInfo(name = "city") var city: String,
+    @ColumnInfo(name = "country") var country: String,
+    @ColumnInfo(name = "transportation") var transportation: String,
+    @ColumnInfo(name = "market") var market: String,
+    @ColumnInfo(name = "parks") var parks: String,
+    @ColumnInfo(name = "parking") var parking: String,
+    @ColumnInfo(name = "school") var school: String,
+    @ColumnInfo(name = "select all") var selectAll: String,
+    //@ColumnInfo(name = "is sold") var isSold: Boolean,
+    @ColumnInfo(name = "agent") var agent: String,
+    @ColumnInfo(name = "propertyImage") var propertyImage: String?,
+    //@ColumnInfo(name = "timestamp") val timestamp:String
+    ){
+
+
+    @PrimaryKey(autoGenerate = true)
+    var id = 0
+}
+
+
+
 
 
 

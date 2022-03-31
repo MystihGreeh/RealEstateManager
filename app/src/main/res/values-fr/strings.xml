@@ -11,9 +11,20 @@
     <string name="add_property">Ajouter une propriété</string>
     <string name="add_agent">Ajouter un agent</string>
 
-    <string name="property_style">Studio</string>
-    <string name="property_location">Nogent-sur-Marne</string>
-    <string name="price">200 000 €</string>
+    <string name="demo_property_type">Maison de ville</string>
+    <string name="demo_property_location">Draveil</string>
+    <string name="demo_price">210 000 </string>
+    <string name="demo_surface">84 </string>
+    <string name="demo_property_not_sold">A vendre</string>
+    <string name="demo_property_sold">Vendu !</string>
+    <string name="demo_property_street">3 avenue de la République</string>
+    <string name="demo_property_city">Draveil</string>
+    <string name="demo_property_country">France</string>
+    <string name="demo_property_postal_code">91210</string>
+    <string name="demo_property_description">Belle maison de ville refaite à neuf. Aucun travaux à prévoir.</string>
+    <string name="demo_property_seller">Thomas</string>
+    <string name="demo_property_no"> - </string>
+    <string name="demo_property_nearby_all"> A proximité de tout ! </string>
 
 
     <!-- LOAN FRAGMENT -->
@@ -29,8 +40,6 @@
     <string name="required_field">Champ obligatoire</string>
     <string name="bring_payment">Apport personnel</string>
 
-    <!-- PROPERTY DETAILS FRAGMENT -->
-
 
     <!-- SEARCH FRAGMENT -->
     <string name="type">Type</string>
@@ -40,6 +49,7 @@
     <string name="number_of_rooms">Pièces</string>
     <string name="number_of_bedrooms">Chambres</string>
     <string name="surface">Superficie</string>
+    <string name="m2">m2</string>
     <string name="nearby">A proximité</string>
     <string name="Other">Autre</string>
     <string name="bus">Transports</string>
@@ -56,23 +66,72 @@
     <string name="mini">mini</string>
     <string name="max">max</string>
 
-    <!-- ADD AGENT -->
-    <string name="add_agent_text">Ajouter un nouvel agent</string>
-    <string name="agent_last_name">Nom</string>
-    <string name="agent_first_name">Prénom</string>
-    <string name="agent_email">E-mail</string>
-    <string name="agent_phone">Téléphone</string>
 
 
 
     <!-- ADD PROPERTY -->
     <string name="add_property_text">Ajouter une nouvelle propriété</string>
-    <string name="property_type">Type de bien</string>
+    <string name="property_type">Type de bien :</string>
     <string name="property_price">Prix</string>
     <string name="property_rooms">Pièces</string>
-    <string name="managed_by">Vendu par</string>
+    <string name="managed_by">Vendu par :</string>
     <string name="title_activity_map_fragment">MapFragment</string>
     <string name="description">Description</string>
     <string name="location">Adresse</string>
+    <string name="city">Ville</string>
+    <string name="contry">Pays</string>
+    <string name="postal_code">Code Postal</string>
+    <string name="add_from_camera">Prendre une photo</string>
+    <string name="add_from_gallery">ajouter depuis la galerie</string>
+
+
+    <!-- Autocomplete type -->
+    <string-array name="type_array">
+        <item>Maison</item>
+        <item>Appartement</item>
+        <item>Duplex</item>
+        <item>Penthouse</item>
+        <item>Maison de ville</item>
+    </string-array>
+
+    <!-- Autocomplete seller -->
+    <string-array name="seller_array">
+        <item>Charlotte</item>
+        <item>David</item>
+        <item>Sylvain</item>
+        <item>Christelle</item>
+    </string-array>
+
+
+    <!-- PROPERTY DETAILS -->
+    <string name="details_property_type">Type de bien :</string>
+    <string name="details_property_price">Prix :</string>
+    <string name="details_property_dollar"> $</string>
+    <string name="details_property_euro"> €</string>
+    <string name="details_property_meters"> m2</string>
+    <string name="details_property_surface">Superficie :</string>
+    <string name="demo_property_room">4 </string>
+    <string name="demo_property_bedroom">2 </string>
+    <string name="demo_property_room_text"> pièce(s)</string>>
+    <string name="demo_property_bedroom_text"> chambre(s)</string>
+    <string name="details_property_rooms">Nombre de pièces :</string>
+    <string name="details_property_bedrooms">Nombre de chambres :</string>
+    <string name="details_managed_by">Vendu par :</string>
+    <string name="details_description">Description :</string>
+    <string name="details_location">Adresse :</string>
+    <string name="details_city">Ville :</string>
+    <string name="details_country">Pays :</string>
+    <string name="details_postal_code">Code Postal :</string>
+    <string name="details_from_camera">Photos :</string>
+    <string name="details_property_school">Ecoles :</string>
+    <string name="details_property_parks">Parcs :</string>
+    <string name="details_property_parkings">Parkings :</string>
+    <string name="details_property_market">Magasins :</string>
+    <string name="details_property_transportations">Transports :</string>
+    <string name="details_property_status">Etat :</string>
+    <string name="details_property_sold">Vendu !</string>
+    <string name="details_property_not_sold">En vente</string>
+    <string name="details_property_back_button">Retour</string>
+    <string name="details_property_modify_button">Modifier</string>
 
 </resources>

@@ -1,22 +1,22 @@
 package com.example.realestatemanager.database
 
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.example.realestatemanager.model.Property
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PropertyDao {
-    @Query("SELECT * FROM properties")
-    fun getAllProperties(): Flow<List<Property>>
 
-    @Query("SELECT * FROM properties WHERE property_id = :propertyId")
-    suspend fun getProperty(propertyId: String): List<Property>
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(property: Property)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun createProperty(property: Property)
+    @Delete
+    suspend fun delete(property: Property)
 
+    @Query("Select * from properties order by id ASC")
+    fun getAllProperties(): LiveData<List<Property>>
+
+    @Update
+    suspend fun update(property: Property)
 }

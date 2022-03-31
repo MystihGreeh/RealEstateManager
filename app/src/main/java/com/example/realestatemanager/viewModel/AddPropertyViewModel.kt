@@ -1,22 +1,29 @@
 package com.example.realestatemanager.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.realestatemanager.model.Property
 import com.example.realestatemanager.repositories.PropertyRepository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AddPropertyViewModel(private val repository: PropertyRepository) : ViewModel() {
+class AddPropertyViewModel(private val repository : PropertyRepository) : ViewModel() {
 
-    val allProperties: Flow<List<Property>> = repository.allProperties
+    val allProperties: LiveData<List<Property>> = repository.allProperties
 
-    /**
-     * Launching a new coroutine to insert the data in a non-blocking way
-     */
-    fun insert(property: Property) = GlobalScope.launch {
+    fun deleteProperty(property: Property) = viewModelScope.launch(Dispatchers.IO){
+        repository.delete(property)
+    }
+
+    fun updateProperty(property: Property) = viewModelScope.launch(Dispatchers.IO){
+        repository.update(property)
+    }
+
+    fun addProperty(property: Property) = viewModelScope.launch(Dispatchers.IO){
         repository.insert(property)
     }
+
 
 }
 

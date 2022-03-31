@@ -11,9 +11,24 @@
     <string name="add_agent">Add agent</string>
 
 
-    <string name="property_style">Studio</string>
-    <string name="property_location">Nogent-sur-Marne</string>
-    <string name="price">$ 200 000</string>
+    <string name="demo_property_type">Townhouse</string>
+    <string name="demo_property_location">Draveil</string>
+    <string name="demo_price">210 000 </string>
+    <string name="demo_surface">84 </string>
+    <string name="demo_property_not_sold">In Sale</string>
+    <string name="demo_property_sold">Sold !</string>
+    <string name="demo_property_street">3 avenue de la République</string>
+    <string name="demo_property_city">Draveil</string>
+    <string name="demo_property_room_text"> room(s)</string>
+    <string name="demo_property_room">4 </string>
+    <string name="demo_property_bedroom">2 </string>
+    <string name="demo_property_bedroom_text"> bedroom(s)</string>
+    <string name="demo_property_country">France</string>
+    <string name="demo_property_postal_code">91210</string>
+    <string name="demo_property_description">Belle maison de ville refaite à neuf. Aucun travaux à prévoir.</string>
+    <string name="demo_property_seller">Thomas</string>
+    <string name="demo_property_no"> - </string>
+    <string name="demo_property_nearby_all"> Nearby everything !</string>
 
 
     <!-- LOAN FRAGMENT -->
@@ -30,17 +45,14 @@
     <string name="required_field">Required field</string>
     <!-- TODO: Remove or change this placeholder text -->
 
-
-    <!-- PROPERTY DETAILS FRAGMENT -->
-
-
     <!-- SEARCH FRAGMENT -->
-    <string name="type">Type</string>
+    <string name="type">Type of good :</string>
     <string name="select_all">Select All</string>
     <string name="range_price">Price</string>
     <string name="number_of_rooms">Rooms</string>
     <string name="number_of_bedrooms">Bedrooms</string>
     <string name="surface">Surface</string>
+    <string name="m2">m2</string>
     <string name="nearby">Nearby</string>
     <string name="Other">Other</string>
     <string name="bus">Transportations</string>
@@ -58,23 +70,65 @@
     <string name="mini">Mini</string>
     <string name="max">Max</string>
 
-    <!-- ADD AGENT -->
-    <string name="add_agent_text">Add a new agent</string>
-    <string name="agent_last_name">Last Name</string>
-    <string name="agent_first_name">First Name</string>
-    <string name="agent_email">E-mail</string>
-    <string name="agent_phone">Phone number</string>
-
 
     <!-- ADD PROPERTY -->
     <string name="add_property_text">Add a new property</string>
     <string name="property_type">Type</string>
     <string name="property_price">Price</string>
     <string name="property_rooms">Number of room</string>
-    <string name="managed_by">Managed by</string>
+    <string name="managed_by">Managed by :</string>
     <string name="title_activity_map_fragment">MapFragment</string>
     <string name="description">Description</string>
     <string name="location">Location</string>
+    <string name="city">Ville</string>
+    <string name="contry">Pays</string>
+    <string name="add_from_camera">Add from camera</string>
+    <string name="add_from_gallery">Add from gallery</string>
+    <string name="postal_code">Code Postal</string>
+
+    <!-- Autocomplete type -->
+    <string-array name="type_array">
+        <item>House</item>
+        <item>Flat</item>
+        <item>Duplex</item>
+        <item>Penthouse</item>
+        <item>Townhouse</item>
+    </string-array>
+
+    <!-- Autocomplete seller -->
+    <string-array name="seller_array">
+        <item>Charlotte</item>
+        <item>David</item>
+        <item>Sylvain</item>
+        <item>Christelle</item>
+    </string-array>
+
+    <!-- PROPERTY DETAILS -->
+    <string name="details_property_type">Type of good :</string>
+    <string name="details_property_price">Price :</string>
+    <string name="details_property_surface">Surface :</string>
+    <string name="details_property_dollar"> $</string>
+    <string name="details_property_euro"> €</string>
+    <string name="details_property_meters"> m2</string>
+    <string name="details_property_rooms">Number of rooms :</string>
+    <string name="details_property_bedrooms">Number of bedrooms :</string>
+    <string name="details_managed_by">Sold by :</string>
+    <string name="details_description">Description :</string>
+    <string name="details_location">Address :</string>
+    <string name="details_city">City :</string>
+    <string name="details_country">Country :</string>
+    <string name="details_postal_code">Postal Code :</string>
+    <string name="details_from_camera">Photos :</string>
+    <string name="details_property_school">School :</string>
+    <string name="details_property_parks">Parks :</string>
+    <string name="details_property_parkings">Parkings :</string>
+    <string name="details_property_market">Markets :</string>
+    <string name="details_property_transportations">Transportations :</string>
+    <string name="details_property_status">Status :</string>
+    <string name="details_property_sold">Sold !</string>
+    <string name="details_property_not_sold">In Sale</string>
+    <string name="details_property_back_button">Back</string>
+    <string name="details_property_modify_button">Modify</string>
 
 
 </resources>
