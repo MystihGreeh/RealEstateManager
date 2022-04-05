@@ -1,11 +1,11 @@
 package com.example.realestatemanager.view
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.example.realestatemanager.R
 import com.example.realestatemanager.api.RealEstateManagerApplication
 import com.example.realestatemanager.databinding.ActivityAddPropertyBinding
@@ -29,6 +30,10 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class AddPropertyActivity: AppCompatActivity() {
@@ -36,6 +41,7 @@ class AddPropertyActivity: AppCompatActivity() {
     private var binding: ActivityAddPropertyBinding? = null
     private val CAMERA_REQUEST_CODE = 1
     private val GALLERY_REQUEST_CODE = 2
+    lateinit var currentPhotoPath: String
 
     val seller = arrayOf("Charlotte", "David", "Sylvain", "Christelle")
     val typeOfGood = arrayOf("Type", "House", "Flat", "Duplex", "Penthouse", "Townhouse")
@@ -62,26 +68,6 @@ class AddPropertyActivity: AppCompatActivity() {
         setContentView(R.layout.activity_add_property)
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
-
-        //when you click on the image
-        binding?.horizontalRecyclerView?.setOnClickListener {
-            val pictureDialog = AlertDialog.Builder(this)
-            pictureDialog.setTitle("Select Action")
-            val pictureDialogItem = arrayOf(
-                "Select photo from Gallery",
-                "Capture photo from Camera"
-            )
-            pictureDialog.setItems(pictureDialogItem) { dialog, which ->
-
-                when (which) {
-                    0 -> gallery()
-                    1 -> camera()
-                }
-            }
-
-            pictureDialog.show()
-
-        }
 
         var propertyType = "none"
         binding?.propertyType?.setOnItemSelectedListener(object :
@@ -123,20 +109,7 @@ class AddPropertyActivity: AppCompatActivity() {
             galleryCheckPermission()
         }
 
-        //when you click on the image
-        binding?.horizontalRecyclerView?.setOnClickListener {
-            val pictureDialog = AlertDialog.Builder(this)
-            pictureDialog.setTitle("Select Action")
-            val pictureDialogItem = arrayOf("Select photo from Gallery",
-                "Capture photo from Camera")
-            pictureDialog.setItems(pictureDialogItem) { dialog, which ->
-                when (which) {
-                    0 -> gallery()
-                    1 -> camera()
-                }
-            }
-            pictureDialog.show()
-        }
+
         binding?.saveButton?.setOnClickListener {
             binding?.saveButton?.setText("Save Property")
             val propertyPrice = binding?.price?.text.toString()
@@ -154,7 +127,6 @@ class AddPropertyActivity: AppCompatActivity() {
             propertyParking = if (binding?.parkingCheck?.isChecked == true) {"Parking"} else "none"
             propertyMarket = if (binding?.marketCheck?.isChecked == true) {"Market"} else "none"
             propertyAllNearby = if (binding?.allCheck?.isChecked == true) {"Nearby all"} else "none"
-            val propertyImage = binding?.horizontalRecyclerView?.toString()
 
             viewModel.addProperty(
                 Property(
@@ -175,7 +147,6 @@ class AddPropertyActivity: AppCompatActivity() {
                     propertySchool,
                     propertyAllNearby,
                     propertySeller,
-                    propertyImage
                 )
             )
             Toast.makeText(this, "Property Added", Toast.LENGTH_LONG).show()
@@ -254,26 +225,45 @@ class AddPropertyActivity: AppCompatActivity() {
     }
 
     private fun camera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, CAMERA_REQUEST_CODE)
+        val photoFile: File? = try {
+            createImageFile()
+        } catch (ex: IOException) {
+            null
+        }
+        // Continue only if the File was successfully created
+        photoFile?.also {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                this,
+                "com.example.android.fileprovider",
+                it
+            )
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, CAMERA_REQUEST_CODE)
+
+
+
+
+        }
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 CAMERA_REQUEST_CODE -> {
                     val bitmap = data?.extras?.get("data") as Bitmap
                     //we are using coroutine image loader (coil)
-                    //binding?.imgPicture?.setImageBitmap(bitmap)
+                    binding?.horizontalRecyclerView?.setImageBitmap(bitmap)
+                    binding?.horizontalRecyclerView?.cropToPadding
                 }
                 GALLERY_REQUEST_CODE -> {
-                    //binding?.imgPicture?.setImageURI(data?.data)
+                    binding?.horizontalRecyclerView?.setImageURI(data?.data)
+                    binding?.horizontalRecyclerView?.cropToPadding
                 }
             }
         }
-    }
+    }*/
 
 
     private fun showRotationalDialogForPermission() {
@@ -294,5 +284,23 @@ class AddPropertyActivity: AppCompatActivity() {
             .setNegativeButton("CANCEL") { dialog, _ ->
                 dialog.dismiss()
             }.show()
+    }
+
+
+    //Creating a file to save pictures
+    @SuppressLint("SimpleDateFormat")
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
     }
 }

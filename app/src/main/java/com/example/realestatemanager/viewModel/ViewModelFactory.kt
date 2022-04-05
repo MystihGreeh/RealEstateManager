@@ -14,6 +14,10 @@ class ViewModelFactory (private val repository: PropertyRepository) : ViewModelP
                 @Suppress("UNCHECKED_CAST")
                 return MainActivityViewModel(repository) as T
             }
+            if (modelClass.isAssignableFrom(PropertyDetailsViewModelActivity::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return PropertyDetailsViewModelActivity(repository) as T
+            }
             if (modelClass.isAssignableFrom(FragmentListViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return FragmentListViewModel(repository) as T

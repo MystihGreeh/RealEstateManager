@@ -8,8 +8,7 @@ import com.example.realestatemanager.repositories.PropertyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainActivityViewModel(private val repository : PropertyRepository) : ViewModel() {
-
+class PropertyDetailsViewModelActivity(private val repository : PropertyRepository): ViewModel(){
     val allProperties: LiveData<List<Property>> = repository.allProperties
 
 
@@ -24,7 +23,4 @@ class MainActivityViewModel(private val repository : PropertyRepository) : ViewM
     fun addProperty(property: Property) = viewModelScope.launch(Dispatchers.IO){
         repository.insert(property)
     }
-
-
-
 }

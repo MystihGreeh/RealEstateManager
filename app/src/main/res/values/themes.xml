@@ -2,8 +2,8 @@
 <resources>
 
     <style name="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">#DA581C</item>
-        <item name="hintTextColor">#DA581C</item>
+        <item name="boxStrokeColor">#009688</item>
+        <item name="hintTextColor">#009688</item>
     </style>
 
 

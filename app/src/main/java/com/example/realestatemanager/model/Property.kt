@@ -26,7 +26,7 @@ class Property(
     @ColumnInfo(name = "select all") var selectAll: String,
     //@ColumnInfo(name = "is sold") var isSold: Boolean,
     @ColumnInfo(name = "agent") var agent: String,
-    @ColumnInfo(name = "propertyImage") var propertyImage: String?,
+    //@ColumnInfo(name = "propertyImage") var propertyImage: String?,
     //@ColumnInfo(name = "timestamp") val timestamp:String
     ){
 

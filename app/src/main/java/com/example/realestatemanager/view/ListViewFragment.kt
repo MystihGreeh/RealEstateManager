@@ -5,18 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.realestatemanager.R
+import androidx.fragment.app.activityViewModels
 import com.example.realestatemanager.databinding.FragmentListBinding
+import com.example.realestatemanager.model.Property
+import com.example.realestatemanager.viewModel.MainActivityViewModel
 
-class ListViewFragment : Fragment() {
-
+class ListViewFragment : Fragment(), PropertyClickInterface{
 
     private var bindingListFragment: FragmentListBinding? = null
     private val binding get() = bindingListFragment!!
 
-    //private var viewModel : AddPropertyViewModel by viewModels<AddPropertyViewModel>()
-
+    val viewModel : MainActivityViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -26,20 +27,13 @@ class ListViewFragment : Fragment() {
         // Inflate the layout for this fragment
         bindingListFragment = FragmentListBinding.inflate(inflater, container, false)
 
-        //setting the adapter
-        val propertyAdapter = PropertyAdapter(R.layout.property_rv_items)
-        binding.propertyListRecyclerView.adapter = propertyAdapter
-
-
-        /*viewModel.allProperties.observe(
-            viewLifecycleOwner
-        ) { list -> list.let { propertyAdapter.updateList(it)
-        }}
        viewModel.allProperties.observe(this, {
-            list -> list.let { propertyAdapter.updateList(it) }
-        })*/
+            list -> binding?.propertyListRecyclerView?.adapter = PropertyAdapter(list, this)
 
-        //setting the floating action button
+        })
+
+
+
         addButtonClicked()
 
         return binding.root}
@@ -52,4 +46,31 @@ class ListViewFragment : Fragment() {
             startActivity(intent)
             }
     }
+
+    override fun onPropertyClick(property: Property) {
+        Toast.makeText(requireContext(), "${property.city} clicked", Toast.LENGTH_LONG).show()
+        val intent = Intent(this@ListViewFragment.requireContext(), PropertyDetailsActivity::class.java)
+        intent.putExtra("propertyID", property.id)
+        intent.putExtra("propertyType", property.typeOfGood)
+        intent.putExtra("propertyPrice", property.priceInDollars)
+        intent.putExtra("propertySurface", property.surfaceInMeters)
+        intent.putExtra("propertyRooms", property.numberOfRoom)
+        intent.putExtra("propertyBedrooms", property.numberOfBedroom)
+        intent.putExtra("propertySchool", property.school)
+        intent.putExtra("propertyTransportation", property.transportation)
+        intent.putExtra("propertyMarket", property.market)
+        intent.putExtra("propertyParks", property.parks)
+        intent.putExtra("propertyParking", property.parking)
+        intent.putExtra("propertyAll", property.selectAll)
+        intent.putExtra("propertyDescription", property.description)
+        intent.putExtra("propertyAddress", property.street)
+        intent.putExtra("propertyPostalCode", property.postalcode)
+        intent.putExtra("propertyCity", property.city)
+        intent.putExtra("propertyCountry", property.country)
+        intent.putExtra("propertySeller", property.agent)
+        startActivity(intent)
+
+    }
+
+
 }
