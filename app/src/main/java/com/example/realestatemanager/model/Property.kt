@@ -18,16 +18,16 @@ class Property(
     @ColumnInfo(name = "postal code") var postalcode: String,
     @ColumnInfo(name = "city") var city: String,
     @ColumnInfo(name = "country") var country: String,
-    @ColumnInfo(name = "transportation") var transportation: String,
-    @ColumnInfo(name = "market") var market: String,
-    @ColumnInfo(name = "parks") var parks: String,
-    @ColumnInfo(name = "parking") var parking: String,
-    @ColumnInfo(name = "school") var school: String,
-    @ColumnInfo(name = "select all") var selectAll: String,
-    //@ColumnInfo(name = "is sold") var isSold: Boolean,
+    @ColumnInfo(name = "transportation") var transportation: Boolean,
+    @ColumnInfo(name = "market") var market: Boolean,
+    @ColumnInfo(name = "parks") var parks: Boolean,
+    @ColumnInfo(name = "parking") var parking: Boolean,
+    @ColumnInfo(name = "school") var school: Boolean,
+    @ColumnInfo(name = "select all") var selectAll: Boolean,
+    @ColumnInfo(name = "is sold") var isSold: Boolean,
     @ColumnInfo(name = "agent") var agent: String,
     //@ColumnInfo(name = "propertyImage") var propertyImage: String?,
-    //@ColumnInfo(name = "timestamp") val timestamp:String
+    @ColumnInfo(name = "timestamp") val timestamp:String
     ){
 
 

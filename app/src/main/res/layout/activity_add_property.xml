@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -227,118 +227,116 @@
         android:layout_margin="16dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/description_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="16dp"
                 android:hint="@string/description"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 app:startIconDrawable="@drawable/ic_baseline_drive_file_rename_outline_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/description"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/market_check"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/market_check" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/street_address_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="16dp"
                 android:hint="@string/location"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 app:startIconDrawable="@drawable/ic_baseline_add_location_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/street_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/street_address"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/description_layout"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/description_layout" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/postal_code_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="16dp"
                 android:hint="@string/postal_code"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/street_address_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 app:startIconDrawable="@drawable/ic_baseline_add_location_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/postal_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/postal_code"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/street_address_layout"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/street_address_layout" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/city_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="16dp"
                 android:hint="@string/city"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/postal_code_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 app:startIconDrawable="@drawable/ic_baseline_add_location_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/city"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/description_layout"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/description_layout" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/contry_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="16dp"
                 android:hint="@string/contry"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/city_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 app:startIconDrawable="@drawable/ic_baseline_add_location_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/contry"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/description_layout"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/description_layout" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
+                android:id="@+id/seller_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/contry_layout"
-                android:id="@+id/seller_text_view"
-                android:text="@string/managed_by"
                 android:layout_marginTop="16dp"
+                android:text="@string/managed_by"
                 android:textSize="15sp"
-                app:layout_constraintTop_toBottomOf="@+id/contry_layout"/>
+                app:layout_constraintStart_toStartOf="@id/contry_layout"
+                app:layout_constraintTop_toBottomOf="@+id/contry_layout" />
+
             <Spinner
                 android:id="@+id/seller_spinner"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
@@ -346,14 +344,24 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:entries="@array/seller_array"
+                android:paddingBottom="16dp"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/seller_text_view"
-                android:paddingBottom="16dp">
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seller_text_view">
             </Spinner>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onCheckboxClicked"
+                android:id="@+id/is_sold_check"
+                app:layout_constraintStart_toStartOf="@id/seller_spinner"
+                app:layout_constraintTop_toBottomOf="@id/seller_spinner"
+                android:layout_marginVertical="16dp"
+                android:text="@string/sold"
+                tools:ignore="UsingOnClickInXml"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -403,7 +411,7 @@
             android:padding="16dp"
             android:layout_marginBottom="16dp"
             android:textAllCaps="false"
-            />
+            tools:ignore="HardcodedText" />
 
         <!-- PROPERTY IMAGES RECYCLERVIEW -->
         <androidx.recyclerview.widget.RecyclerView

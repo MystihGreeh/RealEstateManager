@@ -8,7 +8,9 @@
     <string name="loan">Loan</string>
 
     <string name="add_property">Add property</string>
-    <string name="add_agent">Add agent</string>
+    <string name="sold">Sold </string>
+    <string name="on_sale">On sale </string>
+    <string name="the"> the </string>
 
 
     <string name="demo_property_type">Townhouse</string>

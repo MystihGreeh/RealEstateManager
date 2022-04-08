@@ -1,5 +1,7 @@
 package com.example.realestatemanager.view
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,8 @@ class PropertyAdapter (private val allProperties: List<Property>, val propertyCl
         val propertyTypeOfGood = itemView.findViewById<TextView>(R.id.property_style)
         val propertyCity = itemView.findViewById<TextView>(R.id.property_location)
         val propertyPrice = itemView.findViewById<TextView>(R.id.property_price)
+        val propertyOnSale = itemView.findViewById<TextView>(R.id.is_sold)
+        var propertyIsOnSale:Boolean = false
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
@@ -25,11 +29,19 @@ class PropertyAdapter (private val allProperties: List<Property>, val propertyCl
         return ViewHolder(view)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val property = allProperties[position]
         holder.propertyTypeOfGood.text = property.typeOfGood
-        holder.propertyCity.text =property.city
+        holder.propertyCity.text = property.city
         holder.propertyPrice.text = property.priceInDollars
+        if (property.isSold == false){
+            holder.propertyOnSale.setText(R.string.on_sale)
+            holder.propertyOnSale.setTextColor(Color.parseColor("#04711C"))
+        } else {
+            holder.propertyOnSale.setText(R.string.sold)
+            holder.propertyOnSale.setTextColor(Color.parseColor("#C50017"))
+        }
 
         holder.itemView.setOnClickListener {
             propertyClickInterface.onPropertyClick(allProperties[position])

@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,6 +21,7 @@ import com.example.realestatemanager.R
 import com.example.realestatemanager.api.RealEstateManagerApplication
 import com.example.realestatemanager.databinding.ActivityAddPropertyBinding
 import com.example.realestatemanager.model.Property
+import com.example.realestatemanager.utils.Utils
 import com.example.realestatemanager.viewModel.AddPropertyViewModel
 import com.example.realestatemanager.viewModel.ViewModelFactory
 import com.karumi.dexter.Dexter
@@ -43,25 +45,27 @@ class AddPropertyActivity: AppCompatActivity() {
     private val GALLERY_REQUEST_CODE = 2
     lateinit var currentPhotoPath: String
 
-    val seller = arrayOf("Charlotte", "David", "Sylvain", "Christelle")
-    val typeOfGood = arrayOf("Type", "House", "Flat", "Duplex", "Penthouse", "Townhouse")
 
     private val viewModel: AddPropertyViewModel by viewModels {
         ViewModelFactory((application as RealEstateManagerApplication).repository)
+
     }
     var propertyID = -1
-    var propertyBus = "none"
-    var propertyParks = "none"
-    var propertyParking = "none"
-    var propertySchool = "none"
-    var propertyMarket = "none"
-    var propertyAllNearby = "none"
+    var propertyBus :Boolean = false
+    var propertySchool:Boolean = false
+    var propertyParks :Boolean = false
+    var propertyParking:Boolean = false
+    var propertyMarket :Boolean = false
+    var propertyAllNearby:Boolean = false
+    var propertyOnSale:Boolean = false
+    var propertyDateOfSale : String = ""
 
     companion object {
         val IMAGE_REQUEST_CODE = 100
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -69,7 +73,14 @@ class AddPropertyActivity: AppCompatActivity() {
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-        var propertyType = "none"
+        if (binding?.propertyType != null) {
+            val adapter = ArrayAdapter.createFromResource(this, R.array.type_array,
+                android.R.layout.simple_spinner_item)
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+            binding?.propertyType?.adapter = adapter
+        }
+
+        var propertyType = ""
         binding?.propertyType?.setOnItemSelectedListener(object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -78,14 +89,22 @@ class AddPropertyActivity: AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                val selectedTypeOfGood = typeOfGood[position]
-                propertyType = selectedTypeOfGood
+                val selectedItem = parent!!.getItemAtPosition(position)
+                propertyType = selectedItem as String
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
         })
-        var propertySeller = "none"
+
+        if (binding?.sellerSpinner != null) {
+            val adapter = ArrayAdapter.createFromResource(this, R.array.seller_array,
+                android.R.layout.simple_spinner_item)
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+            binding?.sellerSpinner?.adapter = adapter
+        }
+
+        var propertySeller = ""
         binding?.sellerSpinner?.setOnItemSelectedListener(object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -95,11 +114,10 @@ class AddPropertyActivity: AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                val selectedSeller = seller[position]
-                propertySeller = selectedSeller
+                val selectedItem = parent!!.getItemAtPosition(position)
+                propertySeller = selectedItem as String
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                
             }
         })
         binding?.addPictureCamera?.setOnClickListener {
@@ -121,12 +139,6 @@ class AddPropertyActivity: AppCompatActivity() {
             val propertyPostalCode = binding?.postalCode?.text.toString()
             val propertyCity = binding?.city?.text.toString()
             val propertyCountry = binding?.contry?.text.toString()
-            propertyBus = if (binding?.busCheck?.isChecked == true) {"bus"} else "none"
-            propertyParks = if (binding?.parksCheck?.isChecked == true) {"Park"} else "none"
-            propertySchool = if (binding?.schoolCheck?.isChecked == true) {"School"} else "none"
-            propertyParking = if (binding?.parkingCheck?.isChecked == true) {"Parking"} else "none"
-            propertyMarket = if (binding?.marketCheck?.isChecked == true) {"Market"} else "none"
-            propertyAllNearby = if (binding?.allCheck?.isChecked == true) {"Nearby all"} else "none"
 
             viewModel.addProperty(
                 Property(
@@ -142,11 +154,14 @@ class AddPropertyActivity: AppCompatActivity() {
                     propertyCountry,
                     propertyBus,
                     propertyMarket,
-                    propertyParking,
                     propertyParks,
+                    propertyParking,
                     propertySchool,
                     propertyAllNearby,
+                    propertyOnSale,
                     propertySeller,
+                    propertyDateOfSale
+
                 )
             )
             Toast.makeText(this, "Property Added", Toast.LENGTH_LONG).show()
@@ -158,16 +173,25 @@ class AddPropertyActivity: AppCompatActivity() {
 
 
     fun onCheckboxClicked(view: View) {
+
         if (view is CheckBox) {
             val checked: Boolean = view.isChecked
             //When user pick a nearby place(s)
             when (view.id) {
-                R.id.bus_check -> {propertyBus = if (checked) {"Bus"} else {"None"}}
-                R.id.market_check -> {propertyMarket = if (checked) {"Market"} else {"None"}}
-                R.id.parking_check -> {propertyParking = if (checked) {"Parking"} else {"None"}}
-                R.id.parks_check -> {propertyParks = if (checked) {"Parks"} else {"None"}}
-                R.id.school_check -> {propertySchool = if (checked) {"School"} else {"None"}}
-                R.id.all_check -> {propertyAllNearby = if (checked) {"Nearby All"} else {"None"}}
+                R.id.is_sold_check -> {propertyOnSale = checked
+                propertyDateOfSale = Utils.Companion.getTodayDate()!!}
+                R.id.bus_check -> {propertyBus = checked}
+                R.id.market_check -> {propertyMarket = checked}
+                R.id.parking_check -> {propertyParking = checked}
+                R.id.parks_check -> {propertyParks = checked}
+                R.id.school_check -> {propertySchool = checked}
+                R.id.all_check -> {
+                    propertyAllNearby = checked
+                    propertyBus = checked
+                    propertyMarket = checked
+                    propertyParking = checked
+                    propertyParks = checked
+                    propertySchool = checked}
             }
         }
     }

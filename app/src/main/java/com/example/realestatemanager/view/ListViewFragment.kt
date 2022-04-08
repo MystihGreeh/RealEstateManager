@@ -23,12 +23,12 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         bindingListFragment = FragmentListBinding.inflate(inflater, container, false)
 
        viewModel.allProperties.observe(this, {
-            list -> binding?.propertyListRecyclerView?.adapter = PropertyAdapter(list, this)
+            list -> binding.propertyListRecyclerView.adapter = PropertyAdapter(list, this)
 
         })
 
@@ -56,11 +56,11 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
         intent.putExtra("propertySurface", property.surfaceInMeters)
         intent.putExtra("propertyRooms", property.numberOfRoom)
         intent.putExtra("propertyBedrooms", property.numberOfBedroom)
-        intent.putExtra("propertySchool", property.school)
-        intent.putExtra("propertyTransportation", property.transportation)
-        intent.putExtra("propertyMarket", property.market)
-        intent.putExtra("propertyParks", property.parks)
-        intent.putExtra("propertyParking", property.parking)
+        intent.putExtra("propertyNearbySchool", property.school)
+        intent.putExtra("propertyNearbyTransportation", property.transportation)
+        intent.putExtra("propertyNearbyMarket", property.market)
+        intent.putExtra("propertyNearbyParks", property.parks)
+        intent.putExtra("propertyNearbyParking", property.parking)
         intent.putExtra("propertyAll", property.selectAll)
         intent.putExtra("propertyDescription", property.description)
         intent.putExtra("propertyAddress", property.street)
@@ -68,6 +68,8 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
         intent.putExtra("propertyCity", property.city)
         intent.putExtra("propertyCountry", property.country)
         intent.putExtra("propertySeller", property.agent)
+        intent.putExtra("propertyOnSale", property.isSold)
+        intent.putExtra("propertyTimeStamp", property.timestamp)
         startActivity(intent)
 
     }

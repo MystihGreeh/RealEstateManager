@@ -1,5 +1,6 @@
 package com.example.realestatemanager.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.wifi.WifiManager
 import java.text.DateFormat
@@ -27,8 +28,9 @@ class Utils {
          * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
          * @return
          */
+        @SuppressLint("SimpleDateFormat")
         fun getTodayDate(): String? {
-            val dateFormat: DateFormat = SimpleDateFormat("yyyy/MM/dd")
+            val dateFormat: DateFormat = SimpleDateFormat("dd MMM, yyyy")
             return dateFormat.format(Date())
         }
 
@@ -39,8 +41,8 @@ class Utils {
          * @param context
          * @return
          */
-        fun isInternetAvailable(context: Context): Boolean? {
-            val wifi = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        fun isInternetAvailable(context: Context): Boolean {
+            val wifi = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
             return wifi.isWifiEnabled
         }
 
@@ -51,8 +53,7 @@ class Utils {
         }
 
 
-        private val EMAIL_PATTERN =
-            "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$"
+        private val EMAIL_PATTERN by lazy { "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$" }
         private val pattern = Pattern.compile(EMAIL_PATTERN)
     }
 }

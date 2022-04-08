@@ -9,7 +9,9 @@
     <string name="loan">Simulateur</string>
 
     <string name="add_property">Ajouter une propriété</string>
-    <string name="add_agent">Ajouter un agent</string>
+    <string name="sold">Vendu </string>
+    <string name="on_sale">A vendre </string>
+    <string name="the">le </string>
 
     <string name="demo_property_type">Maison de ville</string>
     <string name="demo_property_location">Draveil</string>
