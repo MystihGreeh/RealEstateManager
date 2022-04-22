@@ -94,7 +94,6 @@
         <item>Flat</item>
         <item>Duplex</item>
         <item>Penthouse</item>
-        <item>Townhouse</item>
     </string-array>
 
     <!-- Autocomplete seller -->
@@ -131,6 +130,8 @@
     <string name="details_property_not_sold">In Sale</string>
     <string name="details_property_back_button">Back</string>
     <string name="details_property_modify_button">Modify</string>
+
+
 
 
 </resources>

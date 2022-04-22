@@ -26,8 +26,11 @@ class Property(
     @ColumnInfo(name = "select all") var selectAll: Boolean,
     @ColumnInfo(name = "is sold") var isSold: Boolean,
     @ColumnInfo(name = "agent") var agent: String,
-    //@ColumnInfo(name = "propertyImage") var propertyImage: String?,
-    @ColumnInfo(name = "timestamp") val timestamp:String
+    @ColumnInfo(name = "propertyImage") var propertyImage: String,
+    @ColumnInfo(name = "timestamp") val timestamp:String,
+    @ColumnInfo(name = "fullAddress") val fullAddress:String,
+    @ColumnInfo(name = "longitude") val longitude: Double?,
+    @ColumnInfo(name = "latitude") val latitude: Double?
     ){
 
 

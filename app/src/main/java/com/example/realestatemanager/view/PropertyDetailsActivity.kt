@@ -1,8 +1,10 @@
 package com.example.realestatemanager.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.realestatemanager.R
@@ -11,7 +13,7 @@ import com.example.realestatemanager.databinding.ActivityPropertyDetailsBinding
 import com.example.realestatemanager.viewModel.PropertyDetailsViewModelActivity
 import com.example.realestatemanager.viewModel.ViewModelFactory
 
-class PropertyDetailsActivity : AppCompatActivity() {
+class PropertyDetailsActivity : AppCompatActivity(){
 
     private var binding: ActivityPropertyDetailsBinding? = null
 
@@ -27,6 +29,7 @@ class PropertyDetailsActivity : AppCompatActivity() {
         binding = ActivityPropertyDetailsBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
+        val propertyID = intent.getStringExtra("propertyId")
         val propertyType = intent.getStringExtra("propertyType")
         val propertyPrice = intent.getStringExtra("propertyPrice")
         val propertyDescription = intent.getStringExtra("propertyDescription")
@@ -39,6 +42,7 @@ class PropertyDetailsActivity : AppCompatActivity() {
         val propertyPostalCode = intent.getStringExtra("propertyPostalCode")
         val propertyCountry = intent.getStringExtra("propertyCountry")
         val propertyNearbySchool = intent.getBooleanExtra("propertyNearbySchool", false)
+        val propertyNearbyTransportation = intent.getBooleanExtra("propertyNearbyTransportation", false)
         val propertyNearbyParks = intent.getBooleanExtra("propertyNearbyParks", false)
         val propertyNearbyParking = intent.getBooleanExtra("propertyNearbyparking", false)
         val propertyNearbyMarket = intent.getBooleanExtra("propertyNearbyMarket", false)
@@ -69,7 +73,7 @@ class PropertyDetailsActivity : AppCompatActivity() {
         if (propertyNearbyMarket == true) {
             binding?.marketNearbyTextview?.setImageResource(R.drawable.ic_baseline_check_24)
         } else binding?.marketNearbyTextview?.setImageResource(R.drawable.ic_baseline_close_24)
-        if (propertyNearbySchool == true) {
+        if (propertyNearbyTransportation == true) {
             binding?.transportationNearbyTextview?.setImageResource(R.drawable.ic_baseline_check_24)
         } else binding?.transportationNearbyTextview?.setImageResource(R.drawable.ic_baseline_close_24)
         if (propertyNearbyAll == true) {
@@ -84,7 +88,42 @@ class PropertyDetailsActivity : AppCompatActivity() {
             binding?.soldTimestamp?.setText(" le $propertyTimeStamp ")
             binding?.soldTimestamp?.setTextColor(Color.parseColor("#C50017"))
         }
+        //var geocoder = Geocoder(this, Locale.getDefault())
+        //var addresses: MutableList<Address>? = geocoder.getFromLocationName(binding?.city.toString(), 2)
+        //var address: Address? = addresses?.get(0)
+
+        binding?.modifyButton?.setOnClickListener {
+            Toast.makeText(this, "clicked", Toast.LENGTH_LONG).show()
+            val intent = Intent(this@PropertyDetailsActivity, AddPropertyActivity::class.java)
+            intent.putExtra("propertyId", propertyID)
+            intent.putExtra("propertyType", propertyType)
+            intent.putExtra("propertyPrice", propertyPrice)
+            intent.putExtra("propertySurface", propertySurface)
+            intent.putExtra("propertyRooms", propertyRooms)
+            intent.putExtra("propertyBedrooms", propertyBedrooms)
+            intent.putExtra("propertyNearbySchool", propertyNearbySchool)
+            intent.putExtra("propertyNearbyTransportation", propertyNearbyTransportation)
+            intent.putExtra("propertyNearbyMarket", propertyNearbyMarket)
+            intent.putExtra("propertyNearbyParks", propertyNearbyParks)
+            intent.putExtra("propertyNearbyParking", propertyNearbyParking)
+            intent.putExtra("propertyAll", propertyNearbyAll)
+            intent.putExtra("propertyDescription", propertyDescription)
+            intent.putExtra("propertyAddress", propertyStreet)
+            intent.putExtra("propertyPostalCode", propertyPostalCode)
+            intent.putExtra("propertyCity", propertyCity)
+            intent.putExtra("propertyCountry", propertyCountry)
+            intent.putExtra("propertySeller", propertySeller)
+            intent.putExtra("propertyOnSale", propertyOnSale)
+            intent.putExtra("propertyTimeStamp", propertyTimeStamp)
+            //intent.putExtra("propertyImage", prop)
+            startActivity(intent)
+        }
+        binding?.backButton?.setOnClickListener {
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            this.finish()
+        }
     }
 
-    }
+
+}
 

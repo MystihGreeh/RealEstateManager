@@ -93,7 +93,6 @@
         <item>Appartement</item>
         <item>Duplex</item>
         <item>Penthouse</item>
-        <item>Maison de ville</item>
     </string-array>
 
     <!-- Autocomplete seller -->

@@ -28,7 +28,7 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
         bindingListFragment = FragmentListBinding.inflate(inflater, container, false)
 
        viewModel.allProperties.observe(this, {
-            list -> binding.propertyListRecyclerView.adapter = PropertyAdapter(list, this)
+            list -> binding.propertyListRecyclerView.adapter = PropertyAdapter(this, list, this)
 
         })
 
@@ -49,7 +49,7 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
 
     override fun onPropertyClick(property: Property) {
         Toast.makeText(requireContext(), "${property.city} clicked", Toast.LENGTH_LONG).show()
-        val intent = Intent(this@ListViewFragment.requireContext(), PropertyDetailsActivity::class.java)
+        val intent = Intent(this@ListViewFragment.requireContext(), PropertyDetailsActivity ::class.java)
         intent.putExtra("propertyID", property.id)
         intent.putExtra("propertyType", property.typeOfGood)
         intent.putExtra("propertyPrice", property.priceInDollars)
@@ -70,6 +70,7 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
         intent.putExtra("propertySeller", property.agent)
         intent.putExtra("propertyOnSale", property.isSold)
         intent.putExtra("propertyTimeStamp", property.timestamp)
+        intent.putExtra("propertyImage", property.propertyImage)
         startActivity(intent)
 
     }

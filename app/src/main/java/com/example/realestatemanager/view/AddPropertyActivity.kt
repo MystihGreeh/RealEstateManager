@@ -3,6 +3,8 @@ package com.example.realestatemanager.view
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -44,14 +46,16 @@ class AddPropertyActivity: AppCompatActivity() {
     private val CAMERA_REQUEST_CODE = 1
     private val GALLERY_REQUEST_CODE = 2
     lateinit var currentPhotoPath: String
+    lateinit var propertyImage: String
+    lateinit var fullAddressList: List<Address>
 
 
+
+    // Initializing ViewModel
     private val viewModel: AddPropertyViewModel by viewModels {
         ViewModelFactory((application as RealEstateManagerApplication).repository)
-
     }
-    var propertyID = -1
-    var propertyBus :Boolean = false
+
     var propertySchool:Boolean = false
     var propertyParks :Boolean = false
     var propertyParking:Boolean = false
@@ -59,6 +63,13 @@ class AddPropertyActivity: AppCompatActivity() {
     var propertyAllNearby:Boolean = false
     var propertyOnSale:Boolean = false
     var propertyDateOfSale : String = ""
+    var propertyID = -1
+    var propertyBus :Boolean = false
+    lateinit var propertyDescription:String
+    lateinit var propertySurface:String
+    lateinit var geocoder: Geocoder
+    var latitude:Double = 0.0
+    var longitude:Double = 0.0
 
     companion object {
         val IMAGE_REQUEST_CODE = 100
@@ -73,6 +84,10 @@ class AddPropertyActivity: AppCompatActivity() {
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
+        val propertyId = intent.getStringExtra("propertyId")
+        if (propertyId != null){
+            displayPropertyInfos()
+        }
         if (binding?.propertyType != null) {
             val adapter = ArrayAdapter.createFromResource(this, R.array.type_array,
                 android.R.layout.simple_spinner_item)
@@ -130,6 +145,7 @@ class AddPropertyActivity: AppCompatActivity() {
 
         binding?.saveButton?.setOnClickListener {
             binding?.saveButton?.setText("Save Property")
+
             val propertyPrice = binding?.price?.text.toString()
             val propertySurface = binding?.surface?.text.toString()
             val propertyNbrRoom = binding?.autoCompleteRooms?.text.toString()
@@ -139,6 +155,13 @@ class AddPropertyActivity: AppCompatActivity() {
             val propertyPostalCode = binding?.postalCode?.text.toString()
             val propertyCity = binding?.city?.text.toString()
             val propertyCountry = binding?.contry?.text.toString()
+
+            geocoder = Geocoder(this, Locale.getDefault()) // initializing Geocoder
+            val fullAddress = "$propertyStreet, $propertyPostalCode, $propertyCity, $propertyCountry"
+            fullAddressList = geocoder.getFromLocationName(fullAddress, 1)
+            latitude = fullAddressList[0].latitude
+            longitude = fullAddressList[0].longitude
+
 
             viewModel.addProperty(
                 Property(
@@ -160,8 +183,11 @@ class AddPropertyActivity: AppCompatActivity() {
                     propertyAllNearby,
                     propertyOnSale,
                     propertySeller,
-                    propertyDateOfSale
-
+                    propertyImage,
+                    propertyDateOfSale,
+                    fullAddress,
+                    longitude,
+                    latitude
                 )
             )
             Toast.makeText(this, "Property Added", Toast.LENGTH_LONG).show()
@@ -169,6 +195,30 @@ class AddPropertyActivity: AppCompatActivity() {
             startActivity(Intent(applicationContext, MainActivity::class.java))
             this.finish()
         }
+    }
+
+
+
+    private fun displayPropertyInfos() {
+        //propertyType = intent.getStringExtra("propertyType")
+        //propertyPrice = intent.getStringExtra("propertyPrice")
+        //binding?.descriptionLayout = intent.getStringExtra("propertyDescription")!!
+        //val propertyRooms = intent.getStringExtra("propertyRooms")
+        //val propertySurface = intent.getStringExtra("propertySurface")
+        //val propertyBedrooms = intent.getStringExtra("propertyBedrooms")
+        //val propertySeller = intent.getStringExtra("propertySeller")
+        //val propertyStreet = intent.getStringExtra("propertyAddress")
+        //val propertyCity = intent.getStringExtra("propertyCity")
+        //val propertyPostalCode = intent.getStringExtra("propertyPostalCode")
+        //val propertyCountry = intent.getStringExtra("propertyCountry")
+        //val propertyNearbySchool = intent.getBooleanExtra("propertyNearbySchool", false)
+        //val propertyNearbyTransportation = intent.getBooleanExtra("propertyNearbyTransportation", false)
+        //val propertyNearbyParks = intent.getBooleanExtra("propertyNearbyParks", false)
+        //val propertyNearbyParking = intent.getBooleanExtra("propertyNearbyparking", false)
+        //val propertyNearbyMarket = intent.getBooleanExtra("propertyNearbyMarket", false)
+        //val propertyNearbyAll = intent.getBooleanExtra("propertyNearbyAll", false)
+        //val propertyOnSale = intent.getBooleanExtra("propertyOnSale", false)
+        //val propertyTimeStamp = intent.getStringExtra("propertyTimeStamp")
     }
 
 
@@ -263,6 +313,7 @@ class AddPropertyActivity: AppCompatActivity() {
             )
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, CAMERA_REQUEST_CODE)
+            propertyImage = photoURI.toString()
 
 
 
@@ -319,12 +370,13 @@ class AddPropertyActivity: AppCompatActivity() {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
+            "Property_image_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
         }
+
     }
 }

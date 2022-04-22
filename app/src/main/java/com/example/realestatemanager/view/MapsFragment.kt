@@ -7,14 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.realestatemanager.R
 import com.example.realestatemanager.databinding.MapsFragmentBinding
+import com.example.realestatemanager.viewModel.MainActivityViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment : Fragment(R.layout.maps_fragment), OnMapReadyCallback {
 
@@ -24,11 +28,16 @@ class MapsFragment : Fragment(R.layout.maps_fragment), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
+
+
+    val viewModel : MainActivityViewModel by activityViewModels()
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         mapBinding = MapsFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -42,6 +51,7 @@ class MapsFragment : Fragment(R.layout.maps_fragment), OnMapReadyCallback {
         mapBinding?.map?.onCreate(savedInstanceState)
         mapBinding?.map?.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        getDeviceLocation()
 
 
     }
@@ -60,20 +70,26 @@ class MapsFragment : Fragment(R.layout.maps_fragment), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        getDeviceLocation()
         uiSettings()
-        //Place current location marker
+        // Add a marker for each properties
+        viewModel.allProperties.observe(this, {
+            propertyList ->
+            if (propertyList != null){
+                val property1 = LatLng(propertyList[0].latitude!!, propertyList[0].longitude!!)
+                val update = CameraUpdateFactory.newLatLngZoom(property1, 12F)
+                mMap.moveCamera(update)
 
-        // Add a marker and move the camera
+                propertyList.forEach{
+                    val marker = LatLng(it.latitude!!, it.longitude!!)
+                    mMap.addMarker(MarkerOptions().position(marker).title(it.street + ", " + it.city))
+                    mMap.addMarker(MarkerOptions().position(marker).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)))
+                        ?.tag = it.id
+                }
+            }
+        })
 
-
-
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
-        /*val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
     }
+
 
     fun uiSettings() {
         mMap.setMinZoomPreference(12f)
@@ -85,9 +101,6 @@ class MapsFragment : Fragment(R.layout.maps_fragment), OnMapReadyCallback {
         uiSettings.isMyLocationButtonEnabled
     }
 
-
-    // LIFE STATE MAP
-
     // Find device location
     fun getDeviceLocation() {
         try {
@@ -97,8 +110,8 @@ class MapsFragment : Fragment(R.layout.maps_fragment), OnMapReadyCallback {
                     val longitude = location.longitude
                     val currentLatLng = LatLng(latitude, longitude)
                     val cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 8F)
-                    mMap?.animateCamera(cameraUpdate)
-
+                    mMap.animateCamera(cameraUpdate)
+                    mMap.addMarker(MarkerOptions().position(currentLatLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)))
                 }
             }
         } catch (error: SecurityException) {}
