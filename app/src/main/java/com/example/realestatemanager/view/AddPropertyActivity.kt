@@ -19,6 +19,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.example.realestatemanager.BuildConfig
 import com.example.realestatemanager.R
 import com.example.realestatemanager.api.RealEstateManagerApplication
 import com.example.realestatemanager.databinding.ActivityAddPropertyBinding
@@ -48,6 +49,8 @@ class AddPropertyActivity: AppCompatActivity() {
     lateinit var currentPhotoPath: String
     lateinit var propertyImage: String
     lateinit var fullAddressList: List<Address>
+    lateinit var propertyStaticMapUrl:String
+    val GOOGLE_KEY: String = BuildConfig.GOOGLE_KEY
 
 
 
@@ -162,6 +165,7 @@ class AddPropertyActivity: AppCompatActivity() {
             latitude = fullAddressList[0].latitude
             longitude = fullAddressList[0].longitude
 
+            propertyStaticMapUrl = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=15&size=200x200&sensor=false&key="+GOOGLE_KEY
 
             viewModel.addProperty(
                 Property(
@@ -187,7 +191,8 @@ class AddPropertyActivity: AppCompatActivity() {
                     propertyDateOfSale,
                     fullAddress,
                     longitude,
-                    latitude
+                    latitude,
+                    propertyStaticMapUrl
                 )
             )
             Toast.makeText(this, "Property Added", Toast.LENGTH_LONG).show()

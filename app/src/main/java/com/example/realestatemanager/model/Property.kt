@@ -30,7 +30,8 @@ class Property(
     @ColumnInfo(name = "timestamp") val timestamp:String,
     @ColumnInfo(name = "fullAddress") val fullAddress:String,
     @ColumnInfo(name = "longitude") val longitude: Double?,
-    @ColumnInfo(name = "latitude") val latitude: Double?
+    @ColumnInfo(name = "latitude") val latitude: Double?,
+    @ColumnInfo(name = "propertyStaticMapUrl") val propertyStaticMapUrl: String?
     ){
 
 

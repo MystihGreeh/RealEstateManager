@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.realestatemanager.R
 import com.example.realestatemanager.api.RealEstateManagerApplication
 import com.example.realestatemanager.databinding.ActivityPropertyDetailsBinding
@@ -16,6 +18,8 @@ import com.example.realestatemanager.viewModel.ViewModelFactory
 class PropertyDetailsActivity : AppCompatActivity(){
 
     private var binding: ActivityPropertyDetailsBinding? = null
+
+
 
     private val viewModel: PropertyDetailsViewModelActivity by viewModels {
         ViewModelFactory((application as RealEstateManagerApplication).repository)
@@ -49,6 +53,9 @@ class PropertyDetailsActivity : AppCompatActivity(){
         val propertyNearbyAll = intent.getBooleanExtra("propertyNearbyAll", false)
         val propertyOnSale = intent.getBooleanExtra("propertyOnSale", false)
         val propertyTimeStamp = intent.getStringExtra("propertyTimeStamp")
+        val propertyLatitude = intent.getStringExtra("propertyLatitude")
+        val propertyLongitude = intent.getStringExtra("propertyLongitude")
+        val propertyStaticMapUrl = intent.getStringExtra("propertyStaticMapUrl")
 
         binding?.propertyTypeTextview?.setText((propertyType))
         binding?.propertyPriceTextview?.setText((propertyPrice))
@@ -88,9 +95,11 @@ class PropertyDetailsActivity : AppCompatActivity(){
             binding?.soldTimestamp?.setText(" le $propertyTimeStamp ")
             binding?.soldTimestamp?.setTextColor(Color.parseColor("#C50017"))
         }
-        //var geocoder = Geocoder(this, Locale.getDefault())
-        //var addresses: MutableList<Address>? = geocoder.getFromLocationName(binding?.city.toString(), 2)
-        //var address: Address? = addresses?.get(0)
+        val imageView = findViewById<ImageView>(R.id.static_map)
+
+        Glide.with(this)
+            .load(propertyStaticMapUrl)
+            .into(imageView)
 
         binding?.modifyButton?.setOnClickListener {
             Toast.makeText(this, "clicked", Toast.LENGTH_LONG).show()

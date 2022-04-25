@@ -48,7 +48,7 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
     }
 
     override fun onPropertyClick(property: Property) {
-        Toast.makeText(requireContext(), "${property.city} clicked", Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), "${property.typeOfGood} ${property.city}", Toast.LENGTH_LONG).show()
         val intent = Intent(this@ListViewFragment.requireContext(), PropertyDetailsActivity ::class.java)
         intent.putExtra("propertyID", property.id)
         intent.putExtra("propertyType", property.typeOfGood)
@@ -70,6 +70,9 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
         intent.putExtra("propertySeller", property.agent)
         intent.putExtra("propertyOnSale", property.isSold)
         intent.putExtra("propertyTimeStamp", property.timestamp)
+        intent.putExtra("propertyLatitude", property.latitude)
+        intent.putExtra("propertyLongitude", property.longitude)
+        intent.putExtra("propertyStaticMapUrl", property.propertyStaticMapUrl)
         intent.putExtra("propertyImage", property.propertyImage)
         startActivity(intent)
 
