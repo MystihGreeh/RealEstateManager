@@ -10,9 +10,6 @@
 
 
     <!-- FrameLayout for fragments -->
-
-
-    <!-- BottomView -->
     <FrameLayout
         android:id="@+id/activity_main_framelayout"
         android:layout_width="0dp"
@@ -24,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"/>
 
+    <!-- BottomView -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/activity_main_bottomview"
         android:layout_width="match_parent"

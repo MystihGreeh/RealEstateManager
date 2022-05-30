@@ -6,12 +6,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.realestatemanager.model.Property
+import com.example.realestatemanager.model.PropertyPhoto
 
-@Database(entities = arrayOf(Property::class), version = 1, exportSchema = false)
+@Database(entities = [Property::class, PropertyPhoto::class],
+    version = 1,
+    exportSchema = false)
+
 
 abstract class RealEstateManagerDatabase : RoomDatabase() {
 
     abstract fun getPropertyDao(): PropertyDao
+    abstract fun getPhotoDao(): PhotoDao
 
     companion object {
         @Volatile

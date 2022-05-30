@@ -104,8 +104,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/autoComplete_rooms"
-
-                        android:textColorHint="@color/colorPrimaryDark"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -371,8 +369,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_cardview"
-            android:id="@+id/separation"/>
+            android:id="@+id/separation" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/separation"
+            app:layout_constraintEnd_toEndOf="@id/separation"
+            android:id="@+id/cover_picture_text"
+            app:layout_constraintTop_toBottomOf="@id/description_cardview"
+            android:text="@string/select_pictures"
+            android:textColor="@color/white"
+            android:textStyle="italic"
+            android:layout_marginVertical="16dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/separation"
+            app:layout_constraintEnd_toEndOf="@id/separation"
+            android:id="@+id/other_picture_text"
+            app:layout_constraintTop_toBottomOf="@id/add_horizontal_recycler_view"
+            android:text="@string/Choose_picture_cover"
+            android:textColor="@color/white"
+            android:textStyle="italic"
+            android:layout_marginVertical="16dp"
+            android:textSize="20sp"/>
         <Button
             android:layout_width="150dp"
             android:layout_height="70dp"
@@ -381,7 +404,7 @@
             android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/separation"
-            app:layout_constraintTop_toBottomOf="@id/description_cardview"
+            app:layout_constraintTop_toBottomOf="@id/cover_picture_text"
             android:layout_marginVertical="16dp"
             android:background="@drawable/custom_save_button"/>
 
@@ -393,7 +416,7 @@
             android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="@id/separation"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description_cardview"
+            app:layout_constraintTop_toBottomOf="@id/cover_picture_text"
             android:layout_marginVertical="16dp"
             android:background="@drawable/custom_save_button"/>
 
@@ -404,7 +427,7 @@
             android:id="@+id/save_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/horizontal_recycler_view"
+            app:layout_constraintTop_toBottomOf="@id/other_picture_text"
             android:background="@drawable/custom_save_button"
             android:text="Save"
             android:layout_margin="16dp"
@@ -415,7 +438,7 @@
 
         <!-- PROPERTY IMAGES RECYCLERVIEW -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/horizontal_recycler_view"
+            android:id="@+id/add_horizontal_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="16dp"

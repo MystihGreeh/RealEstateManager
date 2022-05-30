@@ -1,6 +1,7 @@
 package com.example.realestatemanager.view
 
 import android.content.Intent
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.realestatemanager.R
 import com.example.realestatemanager.databinding.FragmentListBinding
 import com.example.realestatemanager.model.Property
 import com.example.realestatemanager.viewModel.MainActivityViewModel
@@ -16,6 +18,7 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
 
     private var bindingListFragment: FragmentListBinding? = null
     private val binding get() = bindingListFragment!!
+
 
     val viewModel : MainActivityViewModel by activityViewModels()
 
@@ -29,9 +32,7 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
 
        viewModel.allProperties.observe(this, {
             list -> binding.propertyListRecyclerView.adapter = PropertyAdapter(this, list, this)
-
         })
-
 
 
         addButtonClicked()
@@ -43,38 +44,47 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
     private fun addButtonClicked(){
         binding.floatingActionButton.setOnClickListener{
             val intent = Intent(this@ListViewFragment.requireContext(), AddPropertyActivity::class.java)
+            intent.setFlags(FLAG_GRANT_READ_URI_PERMISSION)
             startActivity(intent)
             }
     }
 
     override fun onPropertyClick(property: Property) {
+
         Toast.makeText(requireContext(), "${property.typeOfGood} ${property.city}", Toast.LENGTH_LONG).show()
-        val intent = Intent(this@ListViewFragment.requireContext(), PropertyDetailsActivity ::class.java)
-        intent.putExtra("propertyID", property.id)
-        intent.putExtra("propertyType", property.typeOfGood)
-        intent.putExtra("propertyPrice", property.priceInDollars)
-        intent.putExtra("propertySurface", property.surfaceInMeters)
-        intent.putExtra("propertyRooms", property.numberOfRoom)
-        intent.putExtra("propertyBedrooms", property.numberOfBedroom)
-        intent.putExtra("propertyNearbySchool", property.school)
-        intent.putExtra("propertyNearbyTransportation", property.transportation)
-        intent.putExtra("propertyNearbyMarket", property.market)
-        intent.putExtra("propertyNearbyParks", property.parks)
-        intent.putExtra("propertyNearbyParking", property.parking)
-        intent.putExtra("propertyAll", property.selectAll)
-        intent.putExtra("propertyDescription", property.description)
-        intent.putExtra("propertyAddress", property.street)
-        intent.putExtra("propertyPostalCode", property.postalcode)
-        intent.putExtra("propertyCity", property.city)
-        intent.putExtra("propertyCountry", property.country)
-        intent.putExtra("propertySeller", property.agent)
-        intent.putExtra("propertyOnSale", property.isSold)
-        intent.putExtra("propertyTimeStamp", property.timestamp)
-        intent.putExtra("propertyLatitude", property.latitude)
-        intent.putExtra("propertyLongitude", property.longitude)
-        intent.putExtra("propertyStaticMapUrl", property.propertyStaticMapUrl)
-        intent.putExtra("propertyImage", property.propertyImage)
-        startActivity(intent)
+
+        val bundle = Bundle()
+
+        bundle.putLong("id", property.id!!)
+        bundle.putString("propertyType", property.typeOfGood)
+        bundle.putString("propertyPrice", property.priceInDollars)
+        bundle.putString("propertySurface", property.surfaceInMeters)
+        bundle.putString("propertyRooms", property.numberOfRoom)
+        bundle.putString("propertyBedrooms", property.numberOfBedroom)
+        bundle.putBoolean("propertyNearbySchool", property.school)
+        bundle.putBoolean("propertyNearbyTransportation", property.transportation)
+        bundle.putBoolean("propertyNearbyMarket", property.market)
+        bundle.putBoolean("propertyNearbyParks", property.parks)
+        bundle.putBoolean("propertyNearbyParking", property.parking)
+        bundle.putBoolean("propertyAll", property.selectAll)
+        bundle.putString("propertyDescription", property.description)
+        bundle.putString("propertyAddress", property.street)
+        bundle.putString("propertyPostalCode", property.postalcode)
+        bundle.putString("propertyCity", property.city)
+        bundle.putString("propertyCountry", property.country)
+        bundle.putString("propertySeller", property.agent)
+        bundle.putBoolean("propertyOnSale", property.isSold)
+        bundle.putString("propertyCreatedTimeStamp", property.createdTimestamp)
+        bundle.putString("propertySoldTimeStamp", property.soldTimestamp)
+        //bundle.putDouble("propertyLatitude", property.latitude)
+        //bundle.putSerializable("propertyLongitude", property.longitude)
+        bundle.putString("propertyStaticMapUrl", property.propertyStaticMapUrl)
+        bundle.putString("propertyImage", property.propertyImage)
+
+        val detailsFragment = PropertyDetailsFragment()
+        detailsFragment.arguments = bundle
+        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_main_framelayout, detailsFragment)?.commit()
+
 
     }
 

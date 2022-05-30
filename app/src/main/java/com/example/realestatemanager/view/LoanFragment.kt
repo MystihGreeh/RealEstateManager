@@ -9,14 +9,9 @@ import androidx.fragment.app.Fragment
 import com.example.realestatemanager.R
 import com.example.realestatemanager.databinding.FragmentLoanBinding
 import java.text.NumberFormat
-import java.util.*
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoanFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class LoanFragment : Fragment() {
 
     private var bindingLoan: FragmentLoanBinding? = null
@@ -28,17 +23,31 @@ class LoanFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         bindingLoan = FragmentLoanBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        bindingLoan = null
+
+
+
+    override fun onResume() {
+        super.onResume()
+        bindingLoan?.fragmentLoan
     }
+
+    override fun onPause() {
+        super.onPause()
+        bindingLoan?.fragmentLoan
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bindingLoan?.fragmentLoan
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,7 +69,7 @@ class LoanFragment : Fragment() {
     // ---------------------
 
     private fun calculate(){
-        var canCalculate: Boolean
+        val canCalculate: Boolean
         val amount = bindingLoan?.loanAmount?.text.toString().toDoubleOrNull() ?: 0.0
         val downPayment = bindingLoan?.downPaymentLayout?.text.toString().toDoubleOrNull() ?: 0.0
         val term = bindingLoan?.loanTerms?.text.toString().toDoubleOrNull()

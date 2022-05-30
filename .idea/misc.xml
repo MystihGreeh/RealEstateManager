@@ -25,7 +25,8 @@
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/money.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/drawable/phone.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout-v28/fragment_add_agent.xml" value="0.25" />
-        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/activity_add_property.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout-w600dp/activity_main.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/activity_add_property.xml" value="0.2506527415143603" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/activity_property_details.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_add_agent.xml" value="0.25" />
@@ -36,7 +37,7 @@
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_loan.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_loan2.xml" value="0.20677083333333332" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_map.xml" value="0.25" />
-        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_property_details.xml" value="0.18888888888888888" />
+        <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_property_details.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/item_horizontal_photos.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Openclassrooms/RealEstateManager/app/src/main/res/layout/map_fragment.xml" value="0.25" />

@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "properties")
 
 class Property(
+    @ColumnInfo(name = "property_id") @PrimaryKey var id: Long?,
     @ColumnInfo(name = "type") var typeOfGood: String,
     @ColumnInfo(name = "price") var priceInDollars: String,
     @ColumnInfo(name = "surface") var surfaceInMeters: String,
@@ -27,16 +28,14 @@ class Property(
     @ColumnInfo(name = "is sold") var isSold: Boolean,
     @ColumnInfo(name = "agent") var agent: String,
     @ColumnInfo(name = "propertyImage") var propertyImage: String,
-    @ColumnInfo(name = "timestamp") val timestamp:String,
+    @ColumnInfo(name = "createdTimestamp") val createdTimestamp:String,
+    @ColumnInfo(name = "soldTimestamp") val soldTimestamp:String,
     @ColumnInfo(name = "fullAddress") val fullAddress:String,
     @ColumnInfo(name = "longitude") val longitude: Double?,
     @ColumnInfo(name = "latitude") val latitude: Double?,
     @ColumnInfo(name = "propertyStaticMapUrl") val propertyStaticMapUrl: String?
     ){
 
-
-    @PrimaryKey(autoGenerate = true)
-    var id = 0
 }
 
 

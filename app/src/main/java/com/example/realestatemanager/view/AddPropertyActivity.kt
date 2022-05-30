@@ -1,11 +1,19 @@
 package com.example.realestatemanager.view
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -18,12 +26,18 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.realestatemanager.BuildConfig
 import com.example.realestatemanager.R
+import com.example.realestatemanager.adapter.PhotoAdapter
 import com.example.realestatemanager.api.RealEstateManagerApplication
 import com.example.realestatemanager.databinding.ActivityAddPropertyBinding
 import com.example.realestatemanager.model.Property
+import com.example.realestatemanager.model.PropertyPhoto
 import com.example.realestatemanager.utils.Utils
 import com.example.realestatemanager.viewModel.AddPropertyViewModel
 import com.example.realestatemanager.viewModel.ViewModelFactory
@@ -35,28 +49,37 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.properties.Delegates
 
 
-class AddPropertyActivity: AppCompatActivity() {
+class AddPropertyActivity(): AppCompatActivity() {
 
     private var binding: ActivityAddPropertyBinding? = null
     private val CAMERA_REQUEST_CODE = 1
     private val GALLERY_REQUEST_CODE = 2
-    lateinit var currentPhotoPath: String
-    lateinit var propertyImage: String
+    var currentPhotoPath: String = ""
+    var propertyImage: String = ""
     lateinit var fullAddressList: List<Address>
     lateinit var propertyStaticMapUrl:String
+    var lastPropertyId by Delegates.notNull<Int>()
     val GOOGLE_KEY: String = BuildConfig.GOOGLE_KEY
-
+    var photoList = mutableListOf<String>()
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<PhotoAdapter.ViewHolder>? = null
 
 
     // Initializing ViewModel
     private val viewModel: AddPropertyViewModel by viewModels {
-        ViewModelFactory((application as RealEstateManagerApplication).repository)
+        ViewModelFactory((application as RealEstateManagerApplication).repository, (application as RealEstateManagerApplication).photoRepository)
     }
 
     var propertySchool:Boolean = false
@@ -65,11 +88,12 @@ class AddPropertyActivity: AppCompatActivity() {
     var propertyMarket :Boolean = false
     var propertyAllNearby:Boolean = false
     var propertyOnSale:Boolean = false
+    var propertyCreatedDate : String = ""
     var propertyDateOfSale : String = ""
     var propertyID = -1
     var propertyBus :Boolean = false
-    lateinit var propertyDescription:String
-    lateinit var propertySurface:String
+    lateinit var propertySeller:String
+    lateinit var propertyType:String
     lateinit var geocoder: Geocoder
     var latitude:Double = 0.0
     var longitude:Double = 0.0
@@ -88,9 +112,26 @@ class AddPropertyActivity: AppCompatActivity() {
         setContentView(binding!!.root)
 
         val propertyId = intent.getStringExtra("propertyId")
-        if (propertyId != null){
-            displayPropertyInfos()
+
+        takeCoverPictureListener()
+        selectSpinner()
+
+        binding?.saveButton?.setOnClickListener {
+            binding?.saveButton?.setText("Save Property")
+            CoroutineScope(Main).launch {
+                saveProperty()
+            }
+            Toast.makeText(this, "Property Added", Toast.LENGTH_LONG).show()
+
         }
+
+    }
+
+    //--------------------------------------------------------------------------------------------//
+    //-------------------------- SELECTING INFO AND SAVING PROPERTY ------------------------------//
+    //--------------------------------------------------------------------------------------------//
+
+    fun selectSpinner(){
         if (binding?.propertyType != null) {
             val adapter = ArrayAdapter.createFromResource(this, R.array.type_array,
                 android.R.layout.simple_spinner_item)
@@ -98,7 +139,6 @@ class AddPropertyActivity: AppCompatActivity() {
             binding?.propertyType?.adapter = adapter
         }
 
-        var propertyType = ""
         binding?.propertyType?.setOnItemSelectedListener(object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -111,7 +151,6 @@ class AddPropertyActivity: AppCompatActivity() {
                 propertyType = selectedItem as String
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
         })
 
@@ -122,7 +161,6 @@ class AddPropertyActivity: AppCompatActivity() {
             binding?.sellerSpinner?.adapter = adapter
         }
 
-        var propertySeller = ""
         binding?.sellerSpinner?.setOnItemSelectedListener(object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -138,97 +176,48 @@ class AddPropertyActivity: AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         })
-        binding?.addPictureCamera?.setOnClickListener {
-            cameraCheckPermission()
-        }
-        binding?.addPictureGallery?.setOnClickListener {
-            galleryCheckPermission()
-        }
+    }
 
 
-        binding?.saveButton?.setOnClickListener {
-            binding?.saveButton?.setText("Save Property")
+    private fun saveProperty(){
+        val propertyPrice = binding?.price?.text.toString()
+        val propertySurface = binding?.surface?.text.toString()
+        val propertyNbrRoom = binding?.autoCompleteRooms?.text.toString()
+        val propertyNbrBedroom = binding?.autoCompleteBedrooms?.text.toString()
+        val propertyDescription = binding?.description?.text.toString()
+        val propertyStreet = binding?.streetAddress?.text.toString()
+        val propertyPostalCode = binding?.postalCode?.text.toString()
+        val propertyCity = binding?.city?.text.toString()
+        val propertyCountry = binding?.contry?.text.toString()
+        propertyCreatedDate = Utils.Companion.getTodayDate()!!
+        //Setting the Geocoder and getting the StaticMap URL
+        geocoder = Geocoder(this, Locale.getDefault()) // initializing Geocoder
+        val fullAddress = "$propertyStreet, $propertyPostalCode, $propertyCity, $propertyCountry"
+        fullAddressList = geocoder.getFromLocationName(fullAddress, 1)
+        latitude = fullAddressList[0].latitude
+        longitude = fullAddressList[0].longitude
 
-            val propertyPrice = binding?.price?.text.toString()
-            val propertySurface = binding?.surface?.text.toString()
-            val propertyNbrRoom = binding?.autoCompleteRooms?.text.toString()
-            val propertyNbrBedroom = binding?.autoCompleteBedrooms?.text.toString()
-            val propertyDescription = binding?.description?.text.toString()
-            val propertyStreet = binding?.streetAddress?.text.toString()
-            val propertyPostalCode = binding?.postalCode?.text.toString()
-            val propertyCity = binding?.city?.text.toString()
-            val propertyCountry = binding?.contry?.text.toString()
+        propertyStaticMapUrl = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=15&size=200x200&sensor=false&key="+GOOGLE_KEY
 
-            geocoder = Geocoder(this, Locale.getDefault()) // initializing Geocoder
-            val fullAddress = "$propertyStreet, $propertyPostalCode, $propertyCity, $propertyCountry"
-            fullAddressList = geocoder.getFromLocationName(fullAddress, 1)
-            latitude = fullAddressList[0].latitude
-            longitude = fullAddressList[0].longitude
-
-            propertyStaticMapUrl = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=15&size=200x200&sensor=false&key="+GOOGLE_KEY
-
-            viewModel.addProperty(
-                Property(
-                    propertyType,
-                    propertyPrice,
-                    propertySurface,
-                    propertyNbrRoom,
-                    propertyNbrBedroom,
-                    propertyDescription,
-                    propertyStreet,
-                    propertyPostalCode,
-                    propertyCity,
-                    propertyCountry,
-                    propertyBus,
-                    propertyMarket,
-                    propertyParks,
-                    propertyParking,
-                    propertySchool,
-                    propertyAllNearby,
-                    propertyOnSale,
-                    propertySeller,
-                    propertyImage,
-                    propertyDateOfSale,
-                    fullAddress,
-                    longitude,
-                    latitude,
-                    propertyStaticMapUrl
-                )
+        //Saving property using ViewModel
+        viewModel.addProperty(
+            Property(
+                null, propertyType, propertyPrice, propertySurface, propertyNbrRoom, propertyNbrBedroom,
+                propertyDescription, propertyStreet, propertyPostalCode, propertyCity,
+                propertyCountry, propertyBus, propertyMarket, propertyParks, propertyParking,
+                propertySchool, propertyAllNearby, propertyOnSale, propertySeller,
+                propertyImage, propertyCreatedDate,
+                propertyDateOfSale, fullAddress, longitude, latitude, propertyStaticMapUrl
             )
-            Toast.makeText(this, "Property Added", Toast.LENGTH_LONG).show()
-
-            startActivity(Intent(applicationContext, MainActivity::class.java))
-            this.finish()
-        }
+        ).observe(this, androidx.lifecycle.Observer {
+            CoroutineScope(Main).launch {
+                createAllPhotos(it)
+            }
+        })
+        //startActivity(Intent(applicationContext, MainActivity::class.java))
+        this.finish()
     }
-
-
-
-    private fun displayPropertyInfos() {
-        //propertyType = intent.getStringExtra("propertyType")
-        //propertyPrice = intent.getStringExtra("propertyPrice")
-        //binding?.descriptionLayout = intent.getStringExtra("propertyDescription")!!
-        //val propertyRooms = intent.getStringExtra("propertyRooms")
-        //val propertySurface = intent.getStringExtra("propertySurface")
-        //val propertyBedrooms = intent.getStringExtra("propertyBedrooms")
-        //val propertySeller = intent.getStringExtra("propertySeller")
-        //val propertyStreet = intent.getStringExtra("propertyAddress")
-        //val propertyCity = intent.getStringExtra("propertyCity")
-        //val propertyPostalCode = intent.getStringExtra("propertyPostalCode")
-        //val propertyCountry = intent.getStringExtra("propertyCountry")
-        //val propertyNearbySchool = intent.getBooleanExtra("propertyNearbySchool", false)
-        //val propertyNearbyTransportation = intent.getBooleanExtra("propertyNearbyTransportation", false)
-        //val propertyNearbyParks = intent.getBooleanExtra("propertyNearbyParks", false)
-        //val propertyNearbyParking = intent.getBooleanExtra("propertyNearbyparking", false)
-        //val propertyNearbyMarket = intent.getBooleanExtra("propertyNearbyMarket", false)
-        //val propertyNearbyAll = intent.getBooleanExtra("propertyNearbyAll", false)
-        //val propertyOnSale = intent.getBooleanExtra("propertyOnSale", false)
-        //val propertyTimeStamp = intent.getStringExtra("propertyTimeStamp")
-    }
-
-
     fun onCheckboxClicked(view: View) {
-
         if (view is CheckBox) {
             val checked: Boolean = view.isChecked
             //When user pick a nearby place(s)
@@ -249,6 +238,22 @@ class AddPropertyActivity: AppCompatActivity() {
                     propertySchool = checked}
             }
         }
+    }
+
+    //--------------------------------------------------------------------------------------------//
+    //----------------------------------------- PHOTOS -------------------------------------------//
+    //--------------------------------------------------------------------------------------------//
+
+    private fun initiateRecyclerView() {
+        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding?.addHorizontalRecyclerView?.layoutManager = layoutManager
+        adapter = PhotoAdapter(photoList)
+        binding?.addHorizontalRecyclerView?.adapter = adapter
+    }
+
+    fun takeCoverPictureListener(){
+        binding?.addPictureCamera?.setOnClickListener {cameraCheckPermission()}
+        binding?.addPictureGallery?.setOnClickListener {galleryCheckPermission()}
     }
 
     private fun galleryCheckPermission() {
@@ -275,7 +280,10 @@ class AddPropertyActivity: AppCompatActivity() {
 
     private fun gallery() {
         val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
+        intent.type = "image/"
+        //propertyImage = intent.data.toString()
+        checkFileRights()
+        requestFileRights(true)
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
 
@@ -304,46 +312,47 @@ class AddPropertyActivity: AppCompatActivity() {
     }
 
     private fun camera() {
-        val photoFile: File? = try {
-            createImageFile()
-        } catch (ex: IOException) {
-            null
-        }
-        // Continue only if the File was successfully created
-        photoFile?.also {
+        var photoFile: File? = null
+        try {
+            photoFile = createImageFile()
+        } catch (ex: IOException) {}
+        if (photoFile!= null) {
+            // Continue only if the File was successfully created
             val photoURI: Uri = FileProvider.getUriForFile(
                 this,
-                "com.example.android.fileprovider",
-                it
+                "com.example.android.fileProvider",
+                photoFile
             )
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, CAMERA_REQUEST_CODE)
-            propertyImage = photoURI.toString()
-
-
-
-
         }
     }
 
-
-    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 CAMERA_REQUEST_CODE -> {
+                    Toast.makeText(this, "Photo Added", Toast.LENGTH_LONG).show()
                     val bitmap = data?.extras?.get("data") as Bitmap
+                    bitmap.saveImage(this)
+                    intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
+                    intent.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                    initiateRecyclerView()
                     //we are using coroutine image loader (coil)
-                    binding?.horizontalRecyclerView?.setImageBitmap(bitmap)
-                    binding?.horizontalRecyclerView?.cropToPadding
                 }
                 GALLERY_REQUEST_CODE -> {
-                    binding?.horizontalRecyclerView?.setImageURI(data?.data)
-                    binding?.horizontalRecyclerView?.cropToPadding
+                    Toast.makeText(this, "Photo Added", Toast.LENGTH_LONG).show()
+                    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(data?.data.toString()))
+                    bitmap.saveImage(this)
+                    intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
+                    intent.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                    initiateRecyclerView()
                 }
             }
         }
-    }*/
+    }
+
 
 
     private fun showRotationalDialogForPermission() {
@@ -374,14 +383,84 @@ class AddPropertyActivity: AppCompatActivity() {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
+        val image = File.createTempFile(
             "Property_image_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
+        )
+            currentPhotoPath = image.absolutePath
+
+            return image
+    }
+
+
+    @SuppressLint("SimpleDateFormat")
+    fun Bitmap.saveImage(context: Context): Uri? {
+        val realEstateManager = "Pictures/realEstateManager"
+        val date = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageName = "match_$date.jpg"
+        val bytes = ByteArrayOutputStream()
+        this.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        if (bytes.size() == 0)
+            return null
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            val path: String =
+                MediaStore.Images.Media.insertImage(context.contentResolver, this, imageName, null)
+            return Uri.parse(path)
+        }
+        val resolver = context.contentResolver
+
+        val pictureCollection =
+            MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+
+        val pictureDetails = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, imageName)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, realEstateManager)
+            put(MediaStore.MediaColumns.IS_PENDING, 1)
         }
 
+        val uri = resolver.insert(pictureCollection, pictureDetails)
+        if (uri != null) {
+            resolver.openFileDescriptor(uri, "w", null).use { pfd ->
+                if (pfd != null) {
+                    val op = FileOutputStream(pfd.fileDescriptor)
+                    op.write(bytes.toByteArray())
+                    op.close()
+                }
+            }
+            pictureDetails.clear()
+            pictureDetails.put(MediaStore.Audio.Media.IS_PENDING, 0)
+            resolver.update(uri, pictureDetails, null, null)
+        }
+        propertyImage = uri.toString()
+        photoList.add(propertyImage)
+        return uri
     }
+
+    fun checkFileRights(): Boolean {
+        val result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        return result == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun requestFileRights(share: Boolean) {
+        val code = if (share) 101 else 102
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE), code)
+    }
+
+
+    private fun createAllPhotos(id: Long){
+        photoList.forEach{
+                viewModel.addPhoto(
+                    PropertyPhoto(
+                         id,
+                        propertyImage,
+                        null.toString()
+                    )
+                )
+        }
+    }
+
 }
+

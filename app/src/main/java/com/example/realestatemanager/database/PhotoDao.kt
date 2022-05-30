@@ -1,18 +1,23 @@
 package com.example.realestatemanager.database
 
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.realestatemanager.model.PropertyPhoto
 
 @Dao
-interface PhotoDao {
+interface PhotoDao  {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPhoto(photos: List<PropertyPhoto>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(photo: PropertyPhoto)
 
-    @Query("DELETE FROM propertiesPictures WHERE photo_id IN (:photoId)")
-    suspend fun deletePhotos(photoId: List<String>)
+    @Delete
+    suspend fun delete(photo: PropertyPhoto)
+
+    @Query("Select * from photos order by photo_id ASC")
+    fun getAllPhotos(): LiveData<List<PropertyPhoto>>
+
 
     @Update
-    suspend fun updatePhoto(photos: List<PropertyPhoto>)
+    suspend fun update(photo: PropertyPhoto)
 }

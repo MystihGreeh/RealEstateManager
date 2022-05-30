@@ -9,9 +9,11 @@
     <string name="loan">Simulateur</string>
 
     <string name="add_property">Ajouter une propriété</string>
-    <string name="sold">Vendu </string>
+    <string name="sold_the">Vendu le</string>
+    <string name="sold">Vendu</string>
+    <string name="creation">Créé le</string>
     <string name="on_sale">A vendre </string>
-    <string name="the">le </string>
+
 
     <string name="demo_property_type">Maison de ville</string>
     <string name="demo_property_location">Draveil</string>
@@ -46,11 +48,11 @@
     <!-- SEARCH FRAGMENT -->
     <string name="type">Type</string>
     <string name="select_all">Tout sélectionner</string>
-    <string name="range_price">Prix</string>
+    <string name="range_price">Prix en $</string>
     <string name="rooms">Nombres de pièces</string>
     <string name="number_of_rooms">Pièces</string>
     <string name="number_of_bedrooms">Chambres</string>
-    <string name="surface">Superficie</string>
+    <string name="surface">Superficie en m2</string>
     <string name="m2">m2</string>
     <string name="nearby">A proximité</string>
     <string name="Other">Autre</string>
@@ -67,6 +69,8 @@
     <string name="penthouse">Penthouse</string>
     <string name="mini">mini</string>
     <string name="max">max</string>
+    <string name="search_property">Rechercher</string>
+    <string name="with_picture">Avec photos</string>
 
 
 
@@ -85,6 +89,8 @@
     <string name="postal_code">Code Postal</string>
     <string name="add_from_camera">Prendre une photo</string>
     <string name="add_from_gallery">ajouter depuis la galerie</string>
+    <string name="select_pictures">Ajouter des photos</string>
+    <string name="Choose_picture_cover">Choisissez une photo de couverture !</string>
 
 
     <!-- Autocomplete type -->
@@ -103,12 +109,18 @@
         <item>Christelle</item>
     </string-array>
 
+    <!-- seller -->
+    <string name="charlotte">Charlotte</string>
+    <string name="david">David</string>
+    <string name="sylvain">Sylvain</string>
+    <string name="christelle">Christelle</string>
+
 
     <!-- PROPERTY DETAILS -->
     <string name="details_property_type">Type de bien :</string>
     <string name="details_property_price">Prix :</string>
     <string name="details_property_dollar"> $</string>
-    <string name="details_property_euro"> €</string>
+    <string name="details_property_euro"> $</string>
     <string name="details_property_meters"> m2</string>
     <string name="details_property_surface">Superficie :</string>
     <string name="demo_property_room">4 </string>

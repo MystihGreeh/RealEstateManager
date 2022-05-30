@@ -9,8 +9,9 @@
 
     <string name="add_property">Add property</string>
     <string name="sold">Sold </string>
+    <string name="sold_the">Sold</string>
+    <string name="creation">Created </string>
     <string name="on_sale">On sale </string>
-    <string name="the"> the </string>
 
 
     <string name="demo_property_type">Townhouse</string>
@@ -50,10 +51,10 @@
     <!-- SEARCH FRAGMENT -->
     <string name="type">Type of good :</string>
     <string name="select_all">Select All</string>
-    <string name="range_price">Price</string>
+    <string name="range_price">Price in $</string>
     <string name="number_of_rooms">Rooms</string>
     <string name="number_of_bedrooms">Bedrooms</string>
-    <string name="surface">Surface</string>
+    <string name="surface">Surface in m2</string>
     <string name="m2">m2</string>
     <string name="nearby">Nearby</string>
     <string name="Other">Other</string>
@@ -71,6 +72,8 @@
     <string name="rooms">Number of rooms</string>
     <string name="mini">Mini</string>
     <string name="max">Max</string>
+    <string name="search_property">Search</string>
+    <string name="with_picture">With pictures</string>
 
 
     <!-- ADD PROPERTY -->
@@ -87,6 +90,8 @@
     <string name="add_from_camera">Add from camera</string>
     <string name="add_from_gallery">Add from gallery</string>
     <string name="postal_code">Code Postal</string>
+    <string name="select_pictures">Select pictures</string>
+    <string name="Choose_picture_cover">Choose the cover picture !</string>
 
     <!-- Autocomplete type -->
     <string-array name="type_array">
@@ -104,12 +109,19 @@
         <item>Christelle</item>
     </string-array>
 
+    <!-- seller -->
+        <string name="charlotte">Charlotte</string>
+        <string name="david">David</string>
+        <string name="sylvain">Sylvain</string>
+        <string name="christelle">Christelle</string>
+
+
     <!-- PROPERTY DETAILS -->
     <string name="details_property_type">Type of good :</string>
     <string name="details_property_price">Price :</string>
     <string name="details_property_surface">Surface :</string>
     <string name="details_property_dollar"> $</string>
-    <string name="details_property_euro"> €</string>
+    <string name="details_property_euro"> $</string>
     <string name="details_property_meters"> m2</string>
     <string name="details_property_rooms">Number of rooms :</string>
     <string name="details_property_bedrooms">Number of bedrooms :</string>
@@ -130,7 +142,6 @@
     <string name="details_property_not_sold">In Sale</string>
     <string name="details_property_back_button">Back</string>
     <string name="details_property_modify_button">Modify</string>
-
 
 
 

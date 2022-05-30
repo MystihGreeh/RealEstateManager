@@ -4,15 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/light_green">
+    android:background="@color/light_green"
+    android:id="@+id/fragment_search">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_toolbar"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="ScrollViewSize">
 
             <!-- Toolbar -->
             <androidx.appcompat.widget.Toolbar
@@ -49,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/type"
                         android:text="@string/type"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryDark"
                         app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/nearby"
                     android:text="@string/nearby"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintStart_toStartOf="parent"
@@ -196,7 +199,8 @@
             android:id="@+id/price_cardview"
             android:layout_margin="16dp"
             app:cardCornerRadius="20dp"
-            app:cardElevation="5dp">
+            app:cardElevation="5dp"
+            android:paddingBottom="16dp">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -206,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/price"
                     android:text="@string/range_price"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintStart_toStartOf="parent"
@@ -217,7 +221,6 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/price_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -228,17 +231,15 @@
                     app:layout_constraintTop_toBottomOf="@id/price"
                     android:paddingBottom="16dp">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        tools:ignore="LabelFor"/>
+                        android:id="@+id/price_mini"
+                        app:layout_constraintStart_toStartOf="parent"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/price_max_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -246,15 +247,13 @@
                     android:textColorHint="@color/black"
                     app:boxBackgroundColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/price"
-                    android:layout_marginVertical="16dp">
+                    app:layout_constraintTop_toBottomOf="@id/price">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        tools:ignore="LabelFor" />
+                        android:id="@+id/price_max"
+                        app:layout_constraintStart_toStartOf="parent" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -279,7 +278,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/surface"
                     android:text="@string/surface"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintStart_toStartOf="parent"
@@ -290,7 +289,6 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/surface_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -301,17 +299,14 @@
                     app:layout_constraintTop_toBottomOf="@id/surface"
                     android:paddingBottom="16dp">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        tools:ignore="LabelFor"/>
+                        android:id="@+id/surface_mini"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/surface_max_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -322,12 +317,10 @@
                     app:layout_constraintTop_toBottomOf="@id/surface"
                     android:layout_marginVertical="16dp">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        tools:ignore="LabelFor" />
+                        android:id="@+id/surface_max"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -352,7 +345,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/numbers"
                     android:text="@string/rooms"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintStart_toStartOf="parent"
@@ -362,7 +355,6 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/mini_rooms_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -373,17 +365,14 @@
                     app:layout_constraintTop_toBottomOf="@id/numbers"
                     android:paddingBottom="16dp">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        tools:ignore="LabelFor" />
+                        android:id="@+id/room_mini"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/max_room_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -393,12 +382,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/numbers">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        tools:ignore="LabelFor" />
+                        android:id="@+id/room_max"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -422,7 +409,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/bedroom_number"
                     android:text="@string/number_of_bedrooms"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintStart_toStartOf="parent"
@@ -432,7 +419,6 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/mini_bedrooms_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -443,17 +429,14 @@
                     app:layout_constraintTop_toBottomOf="@id/bedroom_number"
                     android:paddingBottom="16dp">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        tools:ignore="LabelFor" />
+                        android:id="@+id/bedroom_mini"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/max_bedroom_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -463,12 +446,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bedroom_number">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        tools:ignore="LabelFor" />
+                        android:id="@+id/bedroom_max"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -493,7 +474,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/managed_by"
                     android:text="@string/managed_by"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintStart_toStartOf="parent"
@@ -501,28 +482,100 @@
                     android:layout_marginVertical="16sp"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/managed_by_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
+                <CheckBox
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:hint="@string/managed_by"
-                    android:textColorHint="@color/black"
-                    app:boxBackgroundColor="@color/white"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/charlotte_check"
                     app:layout_constraintTop_toBottomOf="@id/managed_by"
-                    android:paddingBottom="16dp">
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginHorizontal="16sp"
+                    android:text="@string/charlotte"/>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/david_check"
+                    app:layout_constraintTop_toBottomOf="@id/charlotte_check"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginHorizontal="16sp"
+                    android:text="@string/david"/>
 
-                    <AutoCompleteTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textColorHint="@color/colorPrimaryDark"
-                        tools:ignore="LabelFor" />
-                </com.google.android.material.textfield.TextInputLayout>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/christelle_check"
+                    app:layout_constraintTop_toTopOf="@id/charlotte_check"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/christelle"
+                    android:layout_marginHorizontal="16dp"/>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sylvain_check"
+                    app:layout_constraintTop_toBottomOf="@id/christelle_check"
+                    app:layout_constraintStart_toStartOf="@id/christelle_check"
+                    android:text="@string/sylvain" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Managed by -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/managed_by_cardview"
+            android:id="@+id/other_cardview"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/other"
+                    android:text="@string/Other"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginVertical="16sp"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sold"
+                    app:layout_constraintTop_toBottomOf="@id/other"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginHorizontal="16sp"
+                    android:text="@string/sold"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/with_picture"
+                    app:layout_constraintTop_toTopOf="@id/sold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/with_picture"
+                    android:layout_marginHorizontal="16dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/other_cardview"
+            android:text="@string/search_property"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_save_button"
+            android:layout_margin="16dp"
+            android:id="@+id/search_property"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
