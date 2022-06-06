@@ -19,6 +19,9 @@ class LoanFragment : Fragment() {
 
     private lateinit var currencyFormat: NumberFormat
 
+    companion object {
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -69,34 +69,38 @@ class AddPropertyActivity(): AppCompatActivity() {
     var currentPhotoPath: String = ""
     var propertyImage: String = ""
     lateinit var fullAddressList: List<Address>
-    lateinit var propertyStaticMapUrl:String
+    lateinit var propertyStaticMapUrl: String
     var lastPropertyId by Delegates.notNull<Int>()
     val GOOGLE_KEY: String = BuildConfig.GOOGLE_KEY
     var photoList = mutableListOf<String>()
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<PhotoAdapter.ViewHolder>? = null
+    var canSave: Boolean = false
 
 
     // Initializing ViewModel
     private val viewModel: AddPropertyViewModel by viewModels {
-        ViewModelFactory((application as RealEstateManagerApplication).repository, (application as RealEstateManagerApplication).photoRepository)
+        ViewModelFactory(
+            (application as RealEstateManagerApplication).repository,
+            (application as RealEstateManagerApplication).photoRepository
+        )
     }
 
-    var propertySchool:Boolean = false
-    var propertyParks :Boolean = false
-    var propertyParking:Boolean = false
-    var propertyMarket :Boolean = false
-    var propertyAllNearby:Boolean = false
-    var propertyOnSale:Boolean = false
-    var propertyCreatedDate : String = ""
-    var propertyDateOfSale : String = ""
+    var propertySchool: Boolean = false
+    var propertyParks: Boolean = false
+    var propertyParking: Boolean = false
+    var propertyMarket: Boolean = false
+    var propertyAllNearby: Boolean = false
+    var propertyOnSale: Boolean = false
+    var propertyCreatedDate: String = ""
+    var propertyDateOfSale: String = ""
     var propertyID = -1
-    var propertyBus :Boolean = false
-    lateinit var propertySeller:String
-    lateinit var propertyType:String
+    var propertyBus: Boolean = false
+    lateinit var propertySeller: String
+    lateinit var propertyType: String
     lateinit var geocoder: Geocoder
-    var latitude:Double = 0.0
-    var longitude:Double = 0.0
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
 
     companion object {
         val IMAGE_REQUEST_CODE = 100
@@ -118,10 +122,15 @@ class AddPropertyActivity(): AppCompatActivity() {
 
         binding?.saveButton?.setOnClickListener {
             binding?.saveButton?.setText("Save Property")
+            handlingErrors()
+            if (canSave){
             CoroutineScope(Main).launch {
                 saveProperty()
             }
-            Toast.makeText(this, "Property Added", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, R.string.required_field, Toast.LENGTH_LONG).show()}
+            else{
+                Toast.makeText(this, R.string.required_field, Toast.LENGTH_LONG).show()
+            }
 
         }
 
@@ -131,10 +140,12 @@ class AddPropertyActivity(): AppCompatActivity() {
     //-------------------------- SELECTING INFO AND SAVING PROPERTY ------------------------------//
     //--------------------------------------------------------------------------------------------//
 
-    fun selectSpinner(){
+    fun selectSpinner() {
         if (binding?.propertyType != null) {
-            val adapter = ArrayAdapter.createFromResource(this, R.array.type_array,
-                android.R.layout.simple_spinner_item)
+            val adapter = ArrayAdapter.createFromResource(
+                this, R.array.type_array,
+                android.R.layout.simple_spinner_item
+            )
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
             binding?.propertyType?.adapter = adapter
         }
@@ -150,13 +161,16 @@ class AddPropertyActivity(): AppCompatActivity() {
                 val selectedItem = parent!!.getItemAtPosition(position)
                 propertyType = selectedItem as String
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         })
 
         if (binding?.sellerSpinner != null) {
-            val adapter = ArrayAdapter.createFromResource(this, R.array.seller_array,
-                android.R.layout.simple_spinner_item)
+            val adapter = ArrayAdapter.createFromResource(
+                this, R.array.seller_array,
+                android.R.layout.simple_spinner_item
+            )
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
             binding?.sellerSpinner?.adapter = adapter
         }
@@ -173,13 +187,14 @@ class AddPropertyActivity(): AppCompatActivity() {
                 val selectedItem = parent!!.getItemAtPosition(position)
                 propertySeller = selectedItem as String
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         })
     }
 
 
-    private fun saveProperty(){
+    private fun saveProperty() {
         val propertyPrice = binding?.price?.text.toString()
         val propertySurface = binding?.surface?.text.toString()
         val propertyNbrRoom = binding?.autoCompleteRooms?.text.toString()
@@ -197,45 +212,80 @@ class AddPropertyActivity(): AppCompatActivity() {
         latitude = fullAddressList[0].latitude
         longitude = fullAddressList[0].longitude
 
-        propertyStaticMapUrl = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=15&size=200x200&sensor=false&key="+GOOGLE_KEY
+        propertyStaticMapUrl =
+            "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=15&size=200x200&sensor=false&key=" + GOOGLE_KEY
+
 
         //Saving property using ViewModel
         viewModel.addProperty(
             Property(
-                null, propertyType, propertyPrice, propertySurface, propertyNbrRoom, propertyNbrBedroom,
-                propertyDescription, propertyStreet, propertyPostalCode, propertyCity,
-                propertyCountry, propertyBus, propertyMarket, propertyParks, propertyParking,
-                propertySchool, propertyAllNearby, propertyOnSale, propertySeller,
-                propertyImage, propertyCreatedDate,
-                propertyDateOfSale, fullAddress, longitude, latitude, propertyStaticMapUrl
+                null,
+                propertyType,
+                propertyPrice,
+                propertySurface,
+                propertyNbrRoom,
+                propertyNbrBedroom,
+                propertyDescription,
+                propertyStreet,
+                propertyPostalCode,
+                propertyCity,
+                propertyCountry,
+                propertyBus,
+                propertyMarket,
+                propertyParks,
+                propertyParking,
+                propertySchool,
+                propertyAllNearby,
+                propertyOnSale,
+                propertySeller,
+                propertyImage,
+                propertyCreatedDate,
+                propertyDateOfSale,
+                fullAddress,
+                longitude,
+                latitude,
+                propertyStaticMapUrl
             )
         ).observe(this, androidx.lifecycle.Observer {
             CoroutineScope(Main).launch {
                 createAllPhotos(it)
             }
         })
-        //startActivity(Intent(applicationContext, MainActivity::class.java))
         this.finish()
     }
+
     fun onCheckboxClicked(view: View) {
         if (view is CheckBox) {
             val checked: Boolean = view.isChecked
             //When user pick a nearby place(s)
             when (view.id) {
-                R.id.is_sold_check -> {propertyOnSale = checked
-                propertyDateOfSale = Utils.Companion.getTodayDate()!!}
-                R.id.bus_check -> {propertyBus = checked}
-                R.id.market_check -> {propertyMarket = checked}
-                R.id.parking_check -> {propertyParking = checked}
-                R.id.parks_check -> {propertyParks = checked}
-                R.id.school_check -> {propertySchool = checked}
+                R.id.is_sold_check -> {
+                    propertyOnSale = checked
+                    propertyDateOfSale = Utils.Companion.getTodayDate()!!
+                }
+                R.id.bus_check -> {
+                    propertyBus = checked
+                }
+                R.id.market_check -> {
+                    propertyMarket = checked
+                }
+                R.id.parking_check -> {
+                    propertyParking = checked
+                }
+                R.id.parks_check -> {
+                    propertyParks = checked
+                }
+                R.id.school_check -> {
+                    propertySchool = checked
+                }
                 R.id.all_check -> {
                     propertyAllNearby = checked
                     propertyBus = checked
                     propertyMarket = checked
                     propertyParking = checked
                     propertyParks = checked
-                    propertySchool = checked}
+                    propertySchool = checked
+                }
             }
         }
     }
@@ -251,9 +301,9 @@ class AddPropertyActivity(): AppCompatActivity() {
         binding?.addHorizontalRecyclerView?.adapter = adapter
     }
 
-    fun takeCoverPictureListener(){
-        binding?.addPictureCamera?.setOnClickListener {cameraCheckPermission()}
-        binding?.addPictureGallery?.setOnClickListener {galleryCheckPermission()}
+    fun takeCoverPictureListener() {
+        binding?.addPictureCamera?.setOnClickListener { cameraCheckPermission() }
+        binding?.addPictureGallery?.setOnClickListener { galleryCheckPermission() }
     }
 
     private fun galleryCheckPermission() {
@@ -263,6 +313,7 @@ class AddPropertyActivity(): AppCompatActivity() {
             override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
                 gallery()
             }
+
             override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
                 Toast.makeText(
                     this@AddPropertyActivity,
@@ -271,8 +322,10 @@ class AddPropertyActivity(): AppCompatActivity() {
                 ).show()
                 showRotationalDialogForPermission()
             }
+
             override fun onPermissionRationaleShouldBeShown(
-                p0: PermissionRequest?, p1: PermissionToken?) {
+                p0: PermissionRequest?, p1: PermissionToken?
+            ) {
                 showRotationalDialogForPermission()
             }
         }).onSameThread().check()
@@ -292,7 +345,8 @@ class AddPropertyActivity(): AppCompatActivity() {
         Dexter.withContext(this)
             .withPermissions(
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                android.Manifest.permission.CAMERA).withListener(
+                android.Manifest.permission.CAMERA
+            ).withListener(
                 object : MultiplePermissionsListener {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                         report?.let {
@@ -302,9 +356,11 @@ class AddPropertyActivity(): AppCompatActivity() {
                             }
                         }
                     }
+
                     override fun onPermissionRationaleShouldBeShown(
                         p0: MutableList<PermissionRequest>?,
-                        p1: PermissionToken?) {
+                        p1: PermissionToken?
+                    ) {
                         showRotationalDialogForPermission()
                     }
                 }
@@ -315,8 +371,9 @@ class AddPropertyActivity(): AppCompatActivity() {
         var photoFile: File? = null
         try {
             photoFile = createImageFile()
-        } catch (ex: IOException) {}
-        if (photoFile!= null) {
+        } catch (ex: IOException) {
+        }
+        if (photoFile != null) {
             // Continue only if the File was successfully created
             val photoURI: Uri = FileProvider.getUriForFile(
                 this,
@@ -343,7 +400,10 @@ class AddPropertyActivity(): AppCompatActivity() {
                 }
                 GALLERY_REQUEST_CODE -> {
                     Toast.makeText(this, "Photo Added", Toast.LENGTH_LONG).show()
-                    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(data?.data.toString()))
+                    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(
+                        this.getContentResolver(),
+                        Uri.parse(data?.data.toString())
+                    )
                     bitmap.saveImage(this)
                     intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
                     intent.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
@@ -354,11 +414,12 @@ class AddPropertyActivity(): AppCompatActivity() {
     }
 
 
-
     private fun showRotationalDialogForPermission() {
         AlertDialog.Builder(this)
-            .setMessage("It looks like you have turned off permissions"
-                    + "required for this feature. It can be enable under App settings")
+            .setMessage(
+                "It looks like you have turned off permissions"
+                        + "required for this feature. It can be enable under App settings"
+            )
             .setPositiveButton("Go TO SETTINGS") { _, _ ->
                 try {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -388,9 +449,9 @@ class AddPropertyActivity(): AppCompatActivity() {
             ".jpg", /* suffix */
             storageDir /* directory */
         )
-            currentPhotoPath = image.absolutePath
+        currentPhotoPath = image.absolutePath
 
-            return image
+        return image
     }
 
 
@@ -440,27 +501,74 @@ class AddPropertyActivity(): AppCompatActivity() {
     }
 
     fun checkFileRights(): Boolean {
-        val result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        val result = ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
         return result == PackageManager.PERMISSION_GRANTED
     }
 
     fun requestFileRights(share: Boolean) {
         val code = if (share) 101 else 102
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE), code)
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+            code
+        )
     }
 
 
-    private fun createAllPhotos(id: Long){
-        photoList.forEach{
-                viewModel.addPhoto(
-                    PropertyPhoto(
-                         id,
-                        propertyImage,
-                        null.toString()
-                    )
+    private fun createAllPhotos(id: Long) {
+
+        photoList.forEachIndexed { index, element ->
+            viewModel.addPhoto(
+                PropertyPhoto(
+                    id,
+                    element,
+                    null.toString()
                 )
+            )
         }
     }
 
+    //--------------------------------------------------------------------------------------------//
+    //----------------------------------------- HANDLING ERRORS ----------------------------------//
+    //--------------------------------------------------------------------------------------------//
+
+    private fun handlingErrors() {
+
+        when {
+            binding?.streetAddress?.text.isNullOrEmpty() || binding?.city?.text.isNullOrEmpty() || binding?.contry?.text.isNullOrEmpty() || binding?.price?.text.isNullOrEmpty() -> {
+                canSave = false
+                if (binding?.streetAddress?.text.isNullOrEmpty()) {
+                    binding?.streetAddressLayout?.error =
+                        resources.getString(R.string.required_field)
+                }
+                if (binding?.city?.text.isNullOrEmpty()) {
+                    binding?.cityLayout?.error =
+                        resources.getString(R.string.required_field)
+                }
+                if (binding?.contry?.text.isNullOrEmpty()) {
+                    binding?.contryLayout?.error =
+                        resources.getString(R.string.required_field)
+                }
+                if (binding?.price?.text.isNullOrEmpty()) {
+                    binding?.priceLayout?.error =
+                        resources.getString(R.string.required_field)
+                }
+            }
+            else -> {
+                canSave = true
+                binding?.streetAddressLayout?.error = null
+                binding?.cityLayout?.error = null
+                binding?.contryLayout?.error = null
+                binding?.priceLayout?.error = null
+            }
+        }
+    }
 }
+
 

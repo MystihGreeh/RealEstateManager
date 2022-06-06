@@ -25,7 +25,6 @@ class PhotoAdapter(private val allPhotos: MutableList<String>, ) : RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentPhoto = allPhotos[position]
-
         holder.propertyPicture.setImageURI(currentPhoto.toUri())
         holder.propertyPicture.cropToPadding
 

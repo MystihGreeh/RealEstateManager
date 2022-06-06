@@ -14,6 +14,9 @@ import com.example.realestatemanager.utils.Utils
 import com.example.realestatemanager.viewModel.MainActivityViewModel
 
 class SearchFragment : Fragment() {
+    companion object {
+
+    }
 
     private var bindingSearchFragment: FragmentSearchBinding? = null
     private val binding get() = bindingSearchFragment!!

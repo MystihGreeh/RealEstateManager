@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.realestatemanager.R
+import com.example.realestatemanager.adapter.PhotoAdapter
 import com.example.realestatemanager.databinding.FragmentPropertyDetailsBinding
 import com.example.realestatemanager.viewModel.MainActivityViewModel
 
@@ -19,9 +22,12 @@ class PropertyDetailsFragment() : Fragment() {
     private var bindingDetailsFragment: FragmentPropertyDetailsBinding? = null
     private val binding get() = bindingDetailsFragment!!
     var photoList = mutableListOf<String>()
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<PhotoAdapter.ViewHolder>? = null
 
     val viewModel : MainActivityViewModel by activityViewModels()
 
+    val propertyId = arguments?.get("id")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +44,7 @@ class PropertyDetailsFragment() : Fragment() {
         //val photoID = arguments?.get("photoId")
         //val photoPropertyid = arguments?.get("photoPropertyId")
         //val photoString = arguments?.get("photoString")
-        val propertyID = arguments?.get("propertyId")
+
         val propertyType = arguments?.get("propertyType")
         val propertyPrice = arguments?.get("propertyPrice")
         val propertyDescription = arguments?.get("propertyDescription")
@@ -108,14 +114,45 @@ class PropertyDetailsFragment() : Fragment() {
             .load(propertyStaticMapUrl)
             .into(binding.staticMap)
 
+        back()
+
+        getPropertyPhotos()
+    }
+
+    private fun getPropertyPhotos(){
+        viewModel.allPhoto.observe(this, {
+                photos ->
+            if (photos != null){
+                photos.forEach{
+                        propertyPhoto -> var propertyIdPhoto = propertyPhoto.property
+                    val propertyID = arguments?.get("id")
+                    if (propertyIdPhoto == propertyID){
+                        photoList.add(propertyPhoto.name)
+                    }
+                }
+                initiateRecyclerView()
+            }
+        })
+    }
+    private fun initiateRecyclerView() {
+        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.horizontalRecyclerView.layoutManager = layoutManager
+        adapter = PhotoAdapter(photoList)
+        binding.horizontalRecyclerView.adapter = adapter
+
+    }
+
+
+    fun back(){
         binding.backButton.setOnClickListener {
             val listeView = ListViewFragment()
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.activity_main_framelayout, listeView)?.commit()
         }
+    }
 
-        val recyclerView = binding.horizontalRecyclerView
-        //recyclerView?.adapter = PhotoAdapter(photoList, context)
+    companion object {
+        const val DATA_KEY = "data_key"
     }
 
 }

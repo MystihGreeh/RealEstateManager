@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.realestatemanager.R
 import com.example.realestatemanager.model.Property
 
-class PropertyAdapter(val context: ListViewFragment, private val allProperties: List<Property>, val propertyClickInterface: PropertyClickInterface) : RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
+class PropertyAdapter(val context: ListViewFragment, private val allProperties: List<Property>, val propertyClickInterface: PropertyClickInterface, val propertyDeleteInterface: PropertyDeleteInterface) : RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -21,6 +21,7 @@ class PropertyAdapter(val context: ListViewFragment, private val allProperties: 
         val propertyPrice = itemView.findViewById<TextView>(R.id.property_price)
         val propertyOnSale = itemView.findViewById<TextView>(R.id.is_sold)
         val propertyPicture = itemView.findViewById<ImageView>(R.id.property_picture)
+        val deleteButton = itemView.findViewById<ImageView>(R.id.delete)
 
     }
 
@@ -53,13 +54,13 @@ class PropertyAdapter(val context: ListViewFragment, private val allProperties: 
             .load(property.propertyImage.get(0))
             .into(holder.propertyPicture)*/
         //we are using coroutine image loader (coil)
-
+        holder.deleteButton.setOnClickListener{
+            propertyDeleteInterface.onDeleteClick(allProperties[position])
+        }
         holder.propertyPicture.setImageURI(property.propertyImage.toUri())
         holder.propertyPicture.cropToPadding
 
     }
-
-
         override fun getItemCount(): Int {
             return allProperties.size
         }
@@ -72,3 +73,8 @@ class PropertyAdapter(val context: ListViewFragment, private val allProperties: 
 interface PropertyClickInterface{
     fun onPropertyClick(property: Property)
 }
+
+interface PropertyDeleteInterface{
+    fun onDeleteClick(property: Property)
+}
+

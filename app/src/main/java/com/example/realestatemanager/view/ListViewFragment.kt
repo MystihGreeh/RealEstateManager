@@ -14,15 +14,16 @@ import com.example.realestatemanager.databinding.FragmentListBinding
 import com.example.realestatemanager.model.Property
 import com.example.realestatemanager.viewModel.MainActivityViewModel
 
-class ListViewFragment : Fragment(), PropertyClickInterface{
+class ListViewFragment : Fragment(), PropertyClickInterface, PropertyDeleteInterface{
 
     private var bindingListFragment: FragmentListBinding? = null
     private val binding get() = bindingListFragment!!
 
-
     val viewModel : MainActivityViewModel by activityViewModels()
 
 
+    companion object {
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,10 +31,9 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
         // Inflate the layout for this fragment
         bindingListFragment = FragmentListBinding.inflate(inflater, container, false)
 
-       viewModel.allProperties.observe(this, {
-            list -> binding.propertyListRecyclerView.adapter = PropertyAdapter(this, list, this)
+        viewModel.allProperties.observe(this, {
+            list -> binding.propertyListRecyclerView.adapter = PropertyAdapter(this, list, this, this)
         })
-
 
         addButtonClicked()
 
@@ -47,6 +47,10 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
             intent.setFlags(FLAG_GRANT_READ_URI_PERMISSION)
             startActivity(intent)
             }
+    }
+    override fun onDeleteClick(property: Property) {
+        viewModel.deleteProperty(property)
+        Toast.makeText(requireContext(), "${property.city} Deleted", Toast.LENGTH_LONG).show()
     }
 
     override fun onPropertyClick(property: Property) {
@@ -83,7 +87,7 @@ class ListViewFragment : Fragment(), PropertyClickInterface{
 
         val detailsFragment = PropertyDetailsFragment()
         detailsFragment.arguments = bundle
-        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_main_framelayout, detailsFragment)?.commit()
+        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.details_main_framelayout, detailsFragment)?.commit()
 
 
     }

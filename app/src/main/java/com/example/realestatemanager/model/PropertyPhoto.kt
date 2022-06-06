@@ -3,6 +3,7 @@ package com.example.realestatemanager.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 
 
@@ -12,7 +13,7 @@ import androidx.room.PrimaryKey
             entity = Property::class,
             parentColumns = ["property_id"],
             childColumns = ["property"],
-            onDelete = ForeignKey.NO_ACTION)])
+            onDelete = CASCADE)])
 
 data class PropertyPhoto(
     @ColumnInfo(name = "property") var property: Long,

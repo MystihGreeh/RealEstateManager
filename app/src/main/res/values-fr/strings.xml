@@ -91,6 +91,8 @@
     <string name="add_from_gallery">ajouter depuis la galerie</string>
     <string name="select_pictures">Ajouter des photos</string>
     <string name="Choose_picture_cover">Choisissez une photo de couverture !</string>
+    <string name="property_added">Propriété ajoutée !</string>
+
 
 
     <!-- Autocomplete type -->
@@ -146,5 +148,6 @@
     <string name="details_property_not_sold">En vente</string>
     <string name="details_property_back_button">Retour</string>
     <string name="details_property_modify_button">Modifier</string>
+    <string name="delete_property">Supprimer</string>
 
 </resources>

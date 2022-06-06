@@ -92,6 +92,7 @@
     <string name="postal_code">Code Postal</string>
     <string name="select_pictures">Select pictures</string>
     <string name="Choose_picture_cover">Choose the cover picture !</string>
+    <string name="property_added">Property added !</string>
 
     <!-- Autocomplete type -->
     <string-array name="type_array">
@@ -142,6 +143,7 @@
     <string name="details_property_not_sold">In Sale</string>
     <string name="details_property_back_button">Back</string>
     <string name="details_property_modify_button">Modify</string>
+    <string name="delete_property">Delete</string>
 
 
 

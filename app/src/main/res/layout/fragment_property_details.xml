@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/details_fragment"
-    tools:context=".view.PropertyDetailsFragment">
+    tools:context=".view.MainActivity"
+    tools:viewBindingIgnore="false"
+    android:id="@+id/details_activity_layout">
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -640,6 +642,7 @@
                 app:layout_constraintTop_toBottomOf="@id/map_cardview"
                 android:layout_marginVertical="16dp"
                 android:background="@drawable/custom_save_button"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

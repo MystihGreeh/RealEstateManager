@@ -32,6 +32,8 @@ class MapsFragment : Fragment(R.layout.maps_fragment), OnMapReadyCallback {
 
     val viewModel : MainActivityViewModel by activityViewModels()
 
+    companion object {
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
