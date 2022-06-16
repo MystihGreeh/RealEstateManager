@@ -19,10 +19,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +33,7 @@ import com.example.realestatemanager.R
 import com.example.realestatemanager.adapter.PhotoAdapter
 import com.example.realestatemanager.api.RealEstateManagerApplication
 import com.example.realestatemanager.databinding.ActivityAddPropertyBinding
+import com.example.realestatemanager.databinding.DialogImputBinding
 import com.example.realestatemanager.model.Property
 import com.example.realestatemanager.model.PropertyPhoto
 import com.example.realestatemanager.utils.Utils
@@ -49,33 +47,34 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.properties.Delegates
+import kotlin.collections.ArrayList
 
 
 class AddPropertyActivity(): AppCompatActivity() {
 
     private var binding: ActivityAddPropertyBinding? = null
+    private var bindingDialog: DialogImputBinding? = null
     private val CAMERA_REQUEST_CODE = 1
     private val GALLERY_REQUEST_CODE = 2
     var currentPhotoPath: String = ""
     var propertyImage: String = ""
     lateinit var fullAddressList: List<Address>
     lateinit var propertyStaticMapUrl: String
-    var lastPropertyId by Delegates.notNull<Int>()
     val GOOGLE_KEY: String = BuildConfig.GOOGLE_KEY
-    var photoList = mutableListOf<String>()
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<PhotoAdapter.ViewHolder>? = null
     var canSave: Boolean = false
+    var photoDetail: String = ""
+    var photoList = ArrayList<PropertyPhoto>()
+
 
 
     // Initializing ViewModel
@@ -94,7 +93,6 @@ class AddPropertyActivity(): AppCompatActivity() {
     var propertyOnSale: Boolean = false
     var propertyCreatedDate: String = ""
     var propertyDateOfSale: String = ""
-    var propertyID = -1
     var propertyBus: Boolean = false
     lateinit var propertySeller: String
     lateinit var propertyType: String
@@ -123,11 +121,11 @@ class AddPropertyActivity(): AppCompatActivity() {
         binding?.saveButton?.setOnClickListener {
             binding?.saveButton?.setText("Save Property")
             handlingErrors()
-            if (canSave){
-            CoroutineScope(Main).launch {
-                saveProperty()
+            if (canSave) {
+                CoroutineScope(Main).launch {
+                    saveProperty()
+                }
             }
-            Toast.makeText(this, R.string.required_field, Toast.LENGTH_LONG).show()}
             else{
                 Toast.makeText(this, R.string.required_field, Toast.LENGTH_LONG).show()
             }
@@ -297,13 +295,18 @@ class AddPropertyActivity(): AppCompatActivity() {
     private fun initiateRecyclerView() {
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding?.addHorizontalRecyclerView?.layoutManager = layoutManager
+        photoList = viewModel.propertyPhotos
         adapter = PhotoAdapter(photoList)
         binding?.addHorizontalRecyclerView?.adapter = adapter
     }
 
     fun takeCoverPictureListener() {
-        binding?.addPictureCamera?.setOnClickListener { cameraCheckPermission() }
-        binding?.addPictureGallery?.setOnClickListener { galleryCheckPermission() }
+        binding?.addPictureCamera?.setOnClickListener {
+            cameraCheckPermission()
+
+        }
+        binding?.addPictureGallery?.setOnClickListener {
+            galleryCheckPermission()}
     }
 
     private fun galleryCheckPermission() {
@@ -338,6 +341,7 @@ class AddPropertyActivity(): AppCompatActivity() {
         checkFileRights()
         requestFileRights(true)
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
+
     }
 
 
@@ -395,10 +399,10 @@ class AddPropertyActivity(): AppCompatActivity() {
                     bitmap.saveImage(this)
                     intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
                     intent.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-                    initiateRecyclerView()
-                    //we are using coroutine image loader (coil)
+                    showDetailsTextDialog()
                 }
                 GALLERY_REQUEST_CODE -> {
+
                     Toast.makeText(this, "Photo Added", Toast.LENGTH_LONG).show()
                     val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(
                         this.getContentResolver(),
@@ -407,10 +411,31 @@ class AddPropertyActivity(): AppCompatActivity() {
                     bitmap.saveImage(this)
                     intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
                     intent.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-                    initiateRecyclerView()
+                    showDetailsTextDialog()
                 }
             }
+
         }
+
+    }
+
+
+    // Save photo description
+    private fun showDetailsTextDialog() {
+        val builder = AlertDialog.Builder(this)
+        bindingDialog = DialogImputBinding.inflate(layoutInflater)
+        builder.setView(bindingDialog!!.root)
+        val mAlertDialog = builder.create()
+        mAlertDialog.show()
+        bindingDialog!!.savePhotoDetails.setOnClickListener {
+            photoDetail = bindingDialog!!.photoDetailsTextView.text.toString()
+            mAlertDialog.dismiss()
+            Toast.makeText(this, R.string.detail_saved, Toast.LENGTH_LONG).show()
+            createPhoto()
+        }
+
+
+
     }
 
 
@@ -450,7 +475,6 @@ class AddPropertyActivity(): AppCompatActivity() {
             storageDir /* directory */
         )
         currentPhotoPath = image.absolutePath
-
         return image
     }
 
@@ -496,7 +520,6 @@ class AddPropertyActivity(): AppCompatActivity() {
             resolver.update(uri, pictureDetails, null, null)
         }
         propertyImage = uri.toString()
-        photoList.add(propertyImage)
         return uri
     }
 
@@ -522,16 +545,25 @@ class AddPropertyActivity(): AppCompatActivity() {
 
 
     private fun createAllPhotos(id: Long) {
-
-        photoList.forEachIndexed { index, element ->
+        viewModel.propertyPhotos.forEachIndexed { index, element ->
             viewModel.addPhoto(
                 PropertyPhoto(
                     id,
-                    element,
-                    null.toString()
+                   element.name,
+                   element.description
                 )
             )
         }
+    }
+
+    private fun createPhoto() {
+                viewModel.addNewPhoto(
+                    PropertyPhoto(
+                        0,
+                        propertyImage,
+                        photoDetail
+                    ))
+        initiateRecyclerView()
     }
 
     //--------------------------------------------------------------------------------------------//

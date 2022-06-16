@@ -95,6 +95,11 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <provider
+            android:name=".provider.ItemContentProvider"
+            android:authorities="com.example.realestatemanager.provider"
+            android:exported="true"
+            tools:ignore="ExportedContentProvider" />
 
     </application>
 

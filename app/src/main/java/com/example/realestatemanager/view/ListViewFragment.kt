@@ -13,11 +13,13 @@ import com.example.realestatemanager.R
 import com.example.realestatemanager.databinding.FragmentListBinding
 import com.example.realestatemanager.model.Property
 import com.example.realestatemanager.viewModel.MainActivityViewModel
+import kotlin.properties.Delegates
 
 class ListViewFragment : Fragment(), PropertyClickInterface, PropertyDeleteInterface{
 
     private var bindingListFragment: FragmentListBinding? = null
     private val binding get() = bindingListFragment!!
+    var mIsDualPanel by Delegates.notNull<Boolean>()
 
     val viewModel : MainActivityViewModel by activityViewModels()
 
@@ -87,7 +89,16 @@ class ListViewFragment : Fragment(), PropertyClickInterface, PropertyDeleteInter
 
         val detailsFragment = PropertyDetailsFragment()
         detailsFragment.arguments = bundle
-        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.details_main_framelayout, detailsFragment)?.commit()
+
+        /*if (view.findViewById<MainActivity>(R.id.details_main_framelayout)  == View.VISIBLE){
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.details_main_framelayout, detailsFragment)?.commit()
+        } else {
+
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.main_activity_layout, detailsFragment)?.commit()
+        }*/
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.activity_main_framelayout, detailsFragment)?.commit()
 
 
     }

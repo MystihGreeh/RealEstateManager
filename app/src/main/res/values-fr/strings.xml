@@ -149,5 +149,7 @@
     <string name="details_property_back_button">Retour</string>
     <string name="details_property_modify_button">Modifier</string>
     <string name="delete_property">Supprimer</string>
+    <string name="save">Enregistrer</string>
+    <string name="detail_saved">Detail enregistré</string>
 
 </resources>

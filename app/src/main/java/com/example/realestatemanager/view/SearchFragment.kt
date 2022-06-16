@@ -58,7 +58,9 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        onCheckboxClicked(view)
+        onButtonClicked()
+        searchProperties()
         this.onButtonClicked()
     }
 
@@ -118,14 +120,13 @@ class SearchFragment : Fragment() {
     val propertySurfaceMax = binding.surfaceMax.text.toString()
 
         //Searching property using ViewModel
-        /*viewModel.allProperties.observe(this, {
-                list -> binding.propertyListRecyclerView.adapter = PropertyAdapter(this, list, this)
-        })*/
+
     }
 
     private fun onButtonClicked(){
         binding.searchProperty.setOnClickListener{
             searchProperties()
+            //viewModel.filterProperty()
             val intent = Intent(this@SearchFragment.requireContext(), ListViewFragment::class.java)
             startActivity(intent)
         }

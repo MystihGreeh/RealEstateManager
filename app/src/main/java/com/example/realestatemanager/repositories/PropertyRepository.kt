@@ -8,7 +8,7 @@ class PropertyRepository (private val propertyDao: PropertyDao) {
 
     val allProperties: LiveData<List<Property>> = propertyDao.getAllProperties()
 
-    //val filteredProperties: LiveData<List<Property>> = propertyDao.getFilteredProperties()
+    val filteredProperties: LiveData<List<Property>> = propertyDao.getFilteredProperties()
 
     suspend fun insert(property: Property) : Long{
        return propertyDao.insert(property)
@@ -24,4 +24,7 @@ class PropertyRepository (private val propertyDao: PropertyDao) {
     }
 
 
+    /*suspend fun select(property: Property){
+        propertyDao.getPropertiesWithFilters()
+    }*/
 }

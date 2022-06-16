@@ -50,10 +50,6 @@ class PropertyAdapter(val context: ListViewFragment, private val allProperties: 
         holder.itemView.setOnClickListener {
             propertyClickInterface.onPropertyClick(allProperties[position])
         }
-        /*Glide.with(holder.propertyPicture.getContext())
-            .load(property.propertyImage.get(0))
-            .into(holder.propertyPicture)*/
-        //we are using coroutine image loader (coil)
         holder.deleteButton.setOnClickListener{
             propertyDeleteInterface.onDeleteClick(allProperties[position])
         }

@@ -1,5 +1,7 @@
 package com.example.realestatemanager.model
 
+
+import android.content.ContentValues
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -28,13 +30,47 @@ class Property(
     @ColumnInfo(name = "is sold") var isSold: Boolean,
     @ColumnInfo(name = "agent") var agent: String,
     @ColumnInfo(name = "propertyImage") var propertyImage: String,
-    @ColumnInfo(name = "createdTimestamp") val createdTimestamp:String,
-    @ColumnInfo(name = "soldTimestamp") val soldTimestamp:String,
-    @ColumnInfo(name = "fullAddress") val fullAddress:String,
-    @ColumnInfo(name = "longitude") val longitude: Double?,
-    @ColumnInfo(name = "latitude") val latitude: Double?,
-    @ColumnInfo(name = "propertyStaticMapUrl") val propertyStaticMapUrl: String?
+    @ColumnInfo(name = "createdTimestamp") var createdTimestamp:String,
+    @ColumnInfo(name = "soldTimestamp") var soldTimestamp:String,
+    @ColumnInfo(name = "fullAddress") var fullAddress:String,
+    @ColumnInfo(name = "longitude") var longitude: Double?,
+    @ColumnInfo(name = "latitude") var latitude: Double?,
+    @ColumnInfo(name = "propertyStaticMapUrl") var propertyStaticMapUrl: String?
     ){
+
+
+    // --- UTILS ---
+    fun fromContentValues(values: ContentValues): Property {
+        val property = Property(id, typeOfGood, priceInDollars, surfaceInMeters, numberOfRoom, numberOfBedroom, description, street, postalcode, city, country, transportation, market, parks, parking, school, selectAll, isSold, agent, propertyImage, createdTimestamp, soldTimestamp, fullAddress, longitude, latitude, propertyStaticMapUrl)
+        if (values.containsKey("property_id")) property.id =(values.getAsLong("text"))
+        if (values.containsKey("type")) property.typeOfGood =(values.getAsString("category"))
+        if (values.containsKey("price")) property.priceInDollars = (values.getAsString("isSelected"))
+        if (values.containsKey("surface")) property.surfaceInMeters = (values.getAsString("userId"))
+        if (values.containsKey("number of room")) property.numberOfRoom = (values.getAsString("text"))
+        if (values.containsKey("number of berdoom")) property.numberOfBedroom = (values.getAsString("text"))
+        if (values.containsKey("description")) property.description = (values.getAsString("text"))
+        if (values.containsKey("street")) property.street = (values.getAsString("text"))
+        if (values.containsKey("postal code")) property.postalcode = (values.getAsString("text"))
+        if (values.containsKey("city")) property.city = (values.getAsString("text"))
+        if (values.containsKey("country")) property.country = (values.getAsString("text"))
+        if (values.containsKey("transportation")) property.transportation = (values.getAsBoolean("text"))
+        if (values.containsKey("market")) property.market = (values.getAsBoolean("text"))
+        if (values.containsKey("parks")) property.parks = (values.getAsBoolean("text"))
+        if (values.containsKey("parking")) property.parking = (values.getAsBoolean("text"))
+        if (values.containsKey("school")) property.school = (values.getAsBoolean("text"))
+        if (values.containsKey("select all")) property.selectAll = (values.getAsBoolean("text"))
+        if (values.containsKey("is sold")) property.isSold = (values.getAsBoolean("text"))
+        if (values.containsKey("agent")) property.agent = (values.getAsString("text"))
+        if (values.containsKey("propertyImage")) property.propertyImage = (values.getAsString("text"))
+        if (values.containsKey("createdTimestamp")) property.createdTimestamp = (values.getAsString("text"))
+        if (values.containsKey("soldTimestamp")) property.soldTimestamp = (values.getAsString("text"))
+        if (values.containsKey("fullAddress")) property.fullAddress = (values.getAsString("text"))
+        if (values.containsKey("longitude")) property.longitude = (values.getAsDouble("text"))
+        if (values.containsKey("latitude")) property.latitude = (values.getAsDouble("text"))
+        if (values.containsKey("propertyStaticMapUrl")) property.propertyStaticMapUrl = (values.getAsString("text"))
+
+        return property
+    }
 
 }
 

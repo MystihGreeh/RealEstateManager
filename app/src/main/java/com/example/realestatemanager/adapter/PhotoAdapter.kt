@@ -4,15 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.realestatemanager.R
+import com.example.realestatemanager.model.PropertyPhoto
 
-class PhotoAdapter(private val allPhotos: MutableList<String>, ) : RecyclerView.Adapter<PhotoAdapter.ViewHolder>(){
+class PhotoAdapter(private val allPhotos: MutableList<PropertyPhoto>, ) : RecyclerView.Adapter<PhotoAdapter.ViewHolder>(){
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val propertyPicture = view.findViewById<ImageView>(R.id.property_photo_item)!!
+        val propertyPictureDetail= view.findViewById<TextView>(R.id.horizontal_photo_description_textview)!!
 
     }
 
@@ -24,10 +27,11 @@ class PhotoAdapter(private val allPhotos: MutableList<String>, ) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        allPhotos
         val currentPhoto = allPhotos[position]
-        holder.propertyPicture.setImageURI(currentPhoto.toUri())
+        holder.propertyPicture.setImageURI(currentPhoto.name.toUri())
         holder.propertyPicture.cropToPadding
-
+        holder.propertyPictureDetail.text = currentPhoto.description
     }
     override fun getItemCount(): Int = allPhotos.size
 

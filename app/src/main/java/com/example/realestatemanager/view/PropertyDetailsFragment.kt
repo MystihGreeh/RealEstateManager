@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.realestatemanager.R
 import com.example.realestatemanager.adapter.PhotoAdapter
 import com.example.realestatemanager.databinding.FragmentPropertyDetailsBinding
+import com.example.realestatemanager.model.PropertyPhoto
 import com.example.realestatemanager.viewModel.MainActivityViewModel
 
 
@@ -21,7 +22,8 @@ class PropertyDetailsFragment() : Fragment() {
 
     private var bindingDetailsFragment: FragmentPropertyDetailsBinding? = null
     private val binding get() = bindingDetailsFragment!!
-    var photoList = mutableListOf<String>()
+    var photoList = mutableListOf<PropertyPhoto>()
+    var descriptionList = mutableListOf<String>()
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<PhotoAdapter.ViewHolder>? = null
 
@@ -115,7 +117,6 @@ class PropertyDetailsFragment() : Fragment() {
             .into(binding.staticMap)
 
         back()
-
         getPropertyPhotos()
     }
 
@@ -127,7 +128,7 @@ class PropertyDetailsFragment() : Fragment() {
                         propertyPhoto -> var propertyIdPhoto = propertyPhoto.property
                     val propertyID = arguments?.get("id")
                     if (propertyIdPhoto == propertyID){
-                        photoList.add(propertyPhoto.name)
+                        photoList.add(propertyPhoto)
                     }
                 }
                 initiateRecyclerView()

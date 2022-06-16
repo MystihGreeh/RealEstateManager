@@ -28,8 +28,6 @@ class MainActivity : AppCompatActivity() {
     val MAP_FRAGMENT_ID = 7
     private var detailsFragment = PropertyDetailsFragment()
 
-
-
     internal lateinit var binding: ActivityMainBinding
 
     private val mainViewModel: MainActivityViewModel by viewModels {

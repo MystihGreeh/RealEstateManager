@@ -144,7 +144,8 @@
     <string name="details_property_back_button">Back</string>
     <string name="details_property_modify_button">Modify</string>
     <string name="delete_property">Delete</string>
-
+    <string name="save">Save</string>
+    <string name="detail_saved">Details saved</string>
 
 
 </resources>

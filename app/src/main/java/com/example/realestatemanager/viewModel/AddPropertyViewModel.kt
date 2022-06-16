@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 class AddPropertyViewModel(private val repository: PropertyRepository, private val photoRepository : PhotoPropertyRepository) : ViewModel() {
 
     val allProperties: LiveData<List<Property>> = repository.allProperties
-
     val allPhotos: LiveData<List<PropertyPhoto>> = photoRepository.allPhotos
+    val propertyPhotos: ArrayList<PropertyPhoto> = ArrayList()
 
     fun deleteProperty(property: Property) = viewModelScope.launch(Dispatchers.IO){
         repository.delete(property)
@@ -36,6 +36,10 @@ class AddPropertyViewModel(private val repository: PropertyRepository, private v
 
     fun addPhoto(photo: PropertyPhoto) = viewModelScope.launch(Dispatchers.IO){
         photoRepository.insert(photo)
+    }
+
+    fun addNewPhoto(propertyPhoto: PropertyPhoto) = viewModelScope.launch(Dispatchers.IO){
+        propertyPhotos.add(propertyPhoto)
     }
 
 

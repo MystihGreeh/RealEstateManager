@@ -21,6 +21,8 @@ class MainActivityViewModel(private val repository : PropertyRepository, private
 
     val allProperties: LiveData<List<Property>> = repository.allProperties
     val allPhoto: LiveData<List<PropertyPhoto>> = photoRepository.allPhotos
+    val allPropertiesFiltered: LiveData<List<Property>> = repository.filteredProperties
+
 
 
     fun deleteProperty(property: Property) = viewModelScope.launch(Dispatchers.IO){
@@ -38,6 +40,11 @@ class MainActivityViewModel(private val repository : PropertyRepository, private
     fun deletePhoto(photo: PropertyPhoto) = viewModelScope.launch(Dispatchers.IO){
         photoRepository.delete(photo)
     }
+
+    /*fun filterProperty(property: Property) = viewModelScope.launch(Dispatchers.IO){
+        repository.select(property)
+    }*/
+
 
 
 }

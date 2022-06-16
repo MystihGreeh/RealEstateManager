@@ -13,10 +13,11 @@ import androidx.room.PrimaryKey
             entity = Property::class,
             parentColumns = ["property_id"],
             childColumns = ["property"],
-            onDelete = CASCADE)])
+            onDelete = CASCADE)
+    ])
 
 data class PropertyPhoto(
-    @ColumnInfo(name = "property") var property: Long,
+    @ColumnInfo(name = "property") var property: Long?,
     @ColumnInfo(name = "photo_name") var name: String,
     @ColumnInfo(name = "photo_description") var description: String,
 ){
