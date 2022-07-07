@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -61,13 +62,17 @@ class ListViewFragment : Fragment(), PropertyClickInterface, PropertyDeleteInter
 
         val bundle = Bundle()
 
+
+
+        bundle.putSerializable("property", property)
+        //bundle.putString("modify", "Edit")
         bundle.putLong("id", property.id!!)
-        bundle.putString("propertyType", property.typeOfGood)
+        bundle.putSerializable("propertyType", property.typeOfGood)
         bundle.putString("propertyPrice", property.priceInDollars)
         bundle.putString("propertySurface", property.surfaceInMeters)
         bundle.putString("propertyRooms", property.numberOfRoom)
         bundle.putString("propertyBedrooms", property.numberOfBedroom)
-        bundle.putBoolean("propertyNearbySchool", property.school)
+        bundle.putSerializable("propertyNearbySchool", property.school)
         bundle.putBoolean("propertyNearbyTransportation", property.transportation)
         bundle.putBoolean("propertyNearbyMarket", property.market)
         bundle.putBoolean("propertyNearbyParks", property.parks)
@@ -90,16 +95,11 @@ class ListViewFragment : Fragment(), PropertyClickInterface, PropertyDeleteInter
         val detailsFragment = PropertyDetailsFragment()
         detailsFragment.arguments = bundle
 
-        /*if (view.findViewById<MainActivity>(R.id.details_main_framelayout)  == View.VISIBLE){
+        if (view?.findViewById<FrameLayout>(R.id.details_main_framelayout)?.visibility  == View.INVISIBLE){
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.details_main_framelayout, detailsFragment)?.commit()
         } else {
-
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.main_activity_layout, detailsFragment)?.commit()
-        }*/
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.activity_main_framelayout, detailsFragment)?.commit()
-
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.activity_main_framelayout, detailsFragment)?.commit()
+        }
 
     }
 

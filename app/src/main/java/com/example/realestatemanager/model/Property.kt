@@ -5,10 +5,10 @@ import android.content.ContentValues
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 
 @Entity(tableName = "properties")
-
 class Property(
     @ColumnInfo(name = "property_id") @PrimaryKey var id: Long?,
     @ColumnInfo(name = "type") var typeOfGood: String,
@@ -36,7 +36,7 @@ class Property(
     @ColumnInfo(name = "longitude") var longitude: Double?,
     @ColumnInfo(name = "latitude") var latitude: Double?,
     @ColumnInfo(name = "propertyStaticMapUrl") var propertyStaticMapUrl: String?
-    ){
+    ) : Serializable {
 
 
     // --- UTILS ---

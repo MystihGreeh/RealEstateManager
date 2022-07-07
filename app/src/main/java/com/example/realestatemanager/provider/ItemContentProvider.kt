@@ -11,11 +11,15 @@ import com.example.realestatemanager.database.RealEstateManagerDatabase
 
 class ItemContentProvider : ContentProvider() {
 
-    val AUTHORITY = "com.example.realestatemanager.provider"
+    companion object{
+        val AUTHORITY = "com.example.realestatemanager.provider"
 
-    val TABLE_NAME = Item::class.java.simpleName
+        val TABLE_NAME = Item::class.java.simpleName
 
-    val URI_PROPERTY= Uri.parse("content://$AUTHORITY/$TABLE_NAME")
+        var URI_PROPERTY= Uri.parse("content://$AUTHORITY/$TABLE_NAME")
+    }
+
+
 
     override fun onCreate(): Boolean {
         return true
@@ -40,26 +44,16 @@ class ItemContentProvider : ContentProvider() {
     }
 
     override fun getType(uri: Uri): String {
-        return "vnd.android.cursor.property/" + AUTHORITY + "." + TABLE_NAME;
+        return "vnd.android.cursor.property/" + AUTHORITY + "." + TABLE_NAME
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        if (getContext() != null && values != null) {
-            /*var id: Long = RealEstateManagerDatabase.getDatabase(context!!).getPropertyDao().insert(Property(n).fromContentValues(values))
 
-            if (!id.equals(0)) {
-
-                getContext()?.getContentResolver()?.notifyChange(uri, null);
-
-                return ContentUris.withAppendedId(uri, id);}*/
             return null
-        }
 
-        throw IllegalArgumentException("Failed to insert row into " + uri);
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-
             return 0
     }
 

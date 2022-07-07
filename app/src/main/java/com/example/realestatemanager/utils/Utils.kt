@@ -2,6 +2,7 @@ package com.example.realestatemanager.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -43,8 +44,18 @@ class Utils {
          * @return
          */
         fun isInternetAvailable(context: Context): Boolean {
-            val wifi = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            val connectivityManager =
+                context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetwork = connectivityManager.activeNetworkInfo
+            return activeNetwork != null && activeNetwork.isConnected
+
+        }
+
+        fun isWifiAvailable(context: Context): Boolean {
+            val wifi =
+                context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
             return wifi.isWifiEnabled
+
         }
 
         fun validateEmail(email: String?): Boolean {
@@ -53,8 +64,8 @@ class Utils {
             return matcher.matches()
         }
 
-
         private val EMAIL_PATTERN by lazy { "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$" }
         private val pattern = Pattern.compile(EMAIL_PATTERN)
+
     }
 }

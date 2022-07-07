@@ -164,14 +164,16 @@
                     app:layout_constraintTop_toBottomOf="@id/parking_check"
                     android:layout_marginHorizontal="16sp"
                     android:text="@string/bus"/>
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/subway_check"
-                    app:layout_constraintTop_toBottomOf="@id/bus_check"
-                    app:layout_constraintStart_toStartOf="@id/bus_check"
-                    android:text="@string/subway"/>
-                <CheckBox
+
+                    <CheckBox
+                        android:id="@+id/subway_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/parks"
+                        app:layout_constraintStart_toStartOf="@id/bus_check"
+                        app:layout_constraintTop_toBottomOf="@id/bus_check" />
+
+                    <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/market_check"

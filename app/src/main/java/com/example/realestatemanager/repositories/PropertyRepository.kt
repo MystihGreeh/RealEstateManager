@@ -7,15 +7,15 @@ import com.example.realestatemanager.model.Property
 class PropertyRepository (private val propertyDao: PropertyDao) {
 
     val allProperties: LiveData<List<Property>> = propertyDao.getAllProperties()
+    //val propertiesFiltered: LiveData<List<Property>> = propertyDao.getPropertiesWithFilters()
 
-    val filteredProperties: LiveData<List<Property>> = propertyDao.getFilteredProperties()
 
     suspend fun insert(property: Property) : Long{
        return propertyDao.insert(property)
 
     }
 
-    suspend fun delete(property: Property){
+    fun delete(property: Property){
         propertyDao.delete(property)
     }
 
@@ -24,7 +24,8 @@ class PropertyRepository (private val propertyDao: PropertyDao) {
     }
 
 
-    /*suspend fun select(property: Property){
-        propertyDao.getPropertiesWithFilters()
-    }*/
+    fun select(priceMini: String, priceMax: String, surfaceMini: String, surfaceMax: String, roomMini: String, roomMax: String, bedroomMini: String, bedroomMax: String): LiveData<List<Property>> {
+         return propertyDao.getPropertiesWithFilters(priceMini, priceMax, surfaceMini, surfaceMax, roomMini, roomMax, bedroomMini, bedroomMax)
+
+    }
 }

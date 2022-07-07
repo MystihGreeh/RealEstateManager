@@ -30,16 +30,16 @@ interface PropertyDao {
 
     // List of properties with pictures with filters
     //@Transaction
-    @Query("SELECT * FROM properties WHERE (type IN (:propertyType)) AND (`is sold` IN (:sold)) AND (price BETWEEN :priceMini AND :priceMax) AND (surface BETWEEN :surfaceMini AND :surfaceMax) AND (`number of room` BETWEEN :roomMini AND :roomMax) AND (`number of berdoom` BETWEEN :bedroomMini AND :bedroomMax) AND (propertyImage IN(:withPhoto)) AND (agent IN (:agent)) AND (soldTimestamp BETWEEN :dateSoldMini AND :dateSoldMax) AND (createdTimestamp BETWEEN :dateEntryMin AND :dateEntryMax)")
-    suspend fun getPropertiesWithFilters(
-        propertyType: String = "house", sold: Boolean = true,
-        priceMini: Double, priceMax: Double,
-        surfaceMini: Int = 0, surfaceMax: Int = 1000000,
-        roomMini: Int = 1, roomMax: Int = 500,
-        bedroomMini: Int = 0, bedroomMax: Int = 500,
-        withPhoto: Boolean = true, agent: String = "Charlotte",
-        dateEntryMin: String = "00/00/1900", dateEntryMax: String = "00/00/2900",
-        dateSoldMini: String = "00/00/1900", dateSoldMax: String = "00/00/2900"
-    ): List<Property>?
+    @Query("SELECT * FROM properties WHERE (price BETWEEN :priceMini AND :priceMax) AND (surface BETWEEN :surfaceMini AND :surfaceMax) AND (`number of room` BETWEEN :roomMini AND :roomMax) AND (`number of berdoom` BETWEEN :bedroomMini AND :bedroomMax)")
+    fun getPropertiesWithFilters(
+        priceMini: String = "0",
+        priceMax: String = "100000000",
+        surfaceMini: String? = "0",
+        surfaceMax: String? = "100000",
+        roomMini: String? = "0",
+        roomMax: String? = "1000",
+        bedroomMini: String? = "0",
+        bedroomMax: String? = "1000"
+    ): LiveData<List<Property>>
 
 }

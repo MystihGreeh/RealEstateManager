@@ -21,7 +21,7 @@ class MainActivityViewModel(private val repository : PropertyRepository, private
 
     val allProperties: LiveData<List<Property>> = repository.allProperties
     val allPhoto: LiveData<List<PropertyPhoto>> = photoRepository.allPhotos
-    val allPropertiesFiltered: LiveData<List<Property>> = repository.filteredProperties
+
 
 
 
@@ -41,10 +41,10 @@ class MainActivityViewModel(private val repository : PropertyRepository, private
         photoRepository.delete(photo)
     }
 
-    /*fun filterProperty(property: Property) = viewModelScope.launch(Dispatchers.IO){
-        repository.select(property)
-    }*/
-
+    fun filterProperty(
+        priceMini: String, priceMax: String, surfaceMini: String, surfaceMax: String, roomMini: String, roomMax: String, bedroomMini: String, bedroomMax: String): LiveData<List<Property>> {
+        return repository.select(priceMini, priceMax, surfaceMini, surfaceMax, roomMini, roomMax, bedroomMini, bedroomMax)
+    }
 
 
 }

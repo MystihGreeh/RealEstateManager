@@ -73,6 +73,7 @@ class AddPropertyActivity(): AppCompatActivity() {
     private var adapter: RecyclerView.Adapter<PhotoAdapter.ViewHolder>? = null
     var canSave: Boolean = false
     var photoDetail: String = ""
+    lateinit var fullAddress: String
     var photoList = ArrayList<PropertyPhoto>()
 
 
@@ -84,6 +85,8 @@ class AddPropertyActivity(): AppCompatActivity() {
             (application as RealEstateManagerApplication).photoRepository
         )
     }
+
+
 
     var propertySchool: Boolean = false
     var propertyParks: Boolean = false
@@ -115,8 +118,16 @@ class AddPropertyActivity(): AppCompatActivity() {
 
         val propertyId = intent.getStringExtra("propertyId")
 
+        /*val propertyModify = intent.getBundleExtra("modify")
+        if(propertyModify!!.equals("Edit")){
+            val propertyPrice = intent.getStringExtra("propertyPrice")
+            binding?.price?.setText(propertyPrice)
+            val propertySurface = intent.getStringExtra("propertySurface")
+            binding?.price?.setText(propertySurface)
+        }*/
         takeCoverPictureListener()
         selectSpinner()
+
 
         binding?.saveButton?.setOnClickListener {
             binding?.saveButton?.setText("Save Property")
@@ -193,6 +204,7 @@ class AddPropertyActivity(): AppCompatActivity() {
 
 
     private fun saveProperty() {
+
         val propertyPrice = binding?.price?.text.toString()
         val propertySurface = binding?.surface?.text.toString()
         val propertyNbrRoom = binding?.autoCompleteRooms?.text.toString()
@@ -203,15 +215,22 @@ class AddPropertyActivity(): AppCompatActivity() {
         val propertyCity = binding?.city?.text.toString()
         val propertyCountry = binding?.contry?.text.toString()
         propertyCreatedDate = Utils.Companion.getTodayDate()!!
-        //Setting the Geocoder and getting the StaticMap URL
-        geocoder = Geocoder(this, Locale.getDefault()) // initializing Geocoder
-        val fullAddress = "$propertyStreet, $propertyPostalCode, $propertyCity, $propertyCountry"
+        //Setting the Geocoder and getting the StaticMap URL if Internet is available
+        if (!Utils.Companion.isInternetAvailable(this) || !Utils.Companion.isWifiAvailable(this)){
+            fullAddressList = emptyList()
+            latitude = 0.0
+            longitude =  0.0
+            propertyStaticMapUrl = ""
+            fullAddress = null.toString()
+        } else{
+            geocoder = Geocoder(this, Locale.getDefault()) // initializing Geocoder
+         fullAddress = "$propertyStreet, $propertyPostalCode, $propertyCity, $propertyCountry"
         fullAddressList = geocoder.getFromLocationName(fullAddress, 1)
         latitude = fullAddressList[0].latitude
         longitude = fullAddressList[0].longitude
 
         propertyStaticMapUrl =
-            "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=15&size=200x200&sensor=false&key=" + GOOGLE_KEY
+            "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=15&size=200x200&sensor=false&key=" + GOOGLE_KEY}
 
 
         //Saving property using ViewModel
@@ -244,7 +263,7 @@ class AddPropertyActivity(): AppCompatActivity() {
                 latitude,
                 propertyStaticMapUrl
             )
-        ).observe(this, androidx.lifecycle.Observer {
+        ).observe(this, {
             CoroutineScope(Main).launch {
                 createAllPhotos(it)
             }
@@ -295,8 +314,7 @@ class AddPropertyActivity(): AppCompatActivity() {
     private fun initiateRecyclerView() {
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding?.addHorizontalRecyclerView?.layoutManager = layoutManager
-        photoList = viewModel.propertyPhotos
-        adapter = PhotoAdapter(photoList)
+        adapter = PhotoAdapter(viewModel.propertyPhotos)
         binding?.addHorizontalRecyclerView?.adapter = adapter
     }
 

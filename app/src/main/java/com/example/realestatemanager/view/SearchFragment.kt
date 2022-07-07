@@ -1,6 +1,5 @@
 package com.example.realestatemanager.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,15 +33,16 @@ class SearchFragment : Fragment() {
     var flatType :Boolean = false
     var charlotte :Boolean = false
     var sold :Boolean = false
-    var withPicture :Boolean = false
+    var withPicture :Boolean = true
     var david :Boolean = false
     var sylvain :Boolean = false
     var christelle :Boolean = false
     var penthouseType :Boolean = false
     var propertyAllType:Boolean = false
+    lateinit var propertyDuplexCheck: String
+    lateinit var propertyHouseCheck: String
+    var typeList =ArrayList<String>()
 
-    lateinit var propertySeller:String
-    lateinit var propertyType:String
 
     val viewModel : MainActivityViewModel by activityViewModels()
 
@@ -60,12 +60,14 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         onCheckboxClicked(view)
         onButtonClicked()
-        searchProperties()
         this.onButtonClicked()
+        typeList.add("Maison")
+        typeList.add("Duplex")
+        typeList.joinToString(prefix = "'", postfix = "'", separator =",")
     }
 
     //--------------------------------------------------------------------------------------------//
-    //---------------------------- SETTING SPINER AND CHECKBOX -----------------------------------//
+    //---------------------------- SETTING SPINNER AND CHECKBOX -----------------------------------//
     //--------------------------------------------------------------------------------------------//
 
     // Setting checkbox
@@ -110,6 +112,7 @@ class SearchFragment : Fragment() {
     }
 
     fun searchProperties(){
+
     val propertyPriceMini = binding.priceMini.text.toString()
     val propertyPriceMax = binding.priceMax.text.toString()
     val propertyRoomMini = binding.roomMini.text.toString()
@@ -119,16 +122,17 @@ class SearchFragment : Fragment() {
     val propertySurfaceMini = binding.surfaceMini.text.toString()
     val propertySurfaceMax = binding.surfaceMax.text.toString()
 
-        //Searching property using ViewModel
+    viewModel.filterProperty(propertyPriceMini, propertyPriceMax, propertySurfaceMini, propertySurfaceMax, propertyRoomMini, propertyRoomMax, propertyBedroomMini, propertyBedroomMax).observe(
+        viewLifecycleOwner, { println(it) }
+    )
 
     }
 
     private fun onButtonClicked(){
         binding.searchProperty.setOnClickListener{
             searchProperties()
-            //viewModel.filterProperty()
-            val intent = Intent(this@SearchFragment.requireContext(), ListViewFragment::class.java)
-            startActivity(intent)
+            //val intent = Intent(this@SearchFragment.requireContext(), ListViewFragment::class.java)
+            //startActivity(intent)
         }
     }
 

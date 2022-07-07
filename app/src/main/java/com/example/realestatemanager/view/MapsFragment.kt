@@ -54,8 +54,6 @@ class MapsFragment : Fragment(R.layout.maps_fragment), OnMapReadyCallback {
         mapBinding?.map?.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         getDeviceLocation()
-
-
     }
 
 
@@ -73,22 +71,24 @@ class MapsFragment : Fragment(R.layout.maps_fragment), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         uiSettings()
-        // Add a marker for each properties
-        viewModel.allProperties.observe(this, {
-            propertyList ->
-            if (propertyList != null){
-                val property1 = LatLng(propertyList[0].latitude!!, propertyList[0].longitude!!)
-                val update = CameraUpdateFactory.newLatLngZoom(property1, 12F)
-                mMap.moveCamera(update)
-
-                propertyList.forEach{
-                    val marker = LatLng(it.latitude!!, it.longitude!!)
-                    mMap.addMarker(MarkerOptions().position(marker).title(it.street + ", " + it.city))
-                    mMap.addMarker(MarkerOptions().position(marker).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)))
-                        ?.tag = it.id
+            viewModel.allProperties.observe(this, { propertyList ->
+                if (propertyList.isNotEmpty()) {
+                    val property1 = LatLng(propertyList[0].latitude!!, propertyList[0].longitude!!)
+                    val update = CameraUpdateFactory.newLatLngZoom(property1, 12F)
+                    mMap.moveCamera(update)
+                    propertyList.forEach {
+                        val marker = LatLng(it.latitude!!, it.longitude!!)
+                        mMap.addMarker(
+                            MarkerOptions().position(marker).title(it.street + ", " + it.city)
+                        )
+                        mMap.addMarker(
+                            MarkerOptions().position(marker)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
+                        )
+                            ?.tag = it.id
+                    }
                 }
-            }
-        })
+            })
 
     }
 

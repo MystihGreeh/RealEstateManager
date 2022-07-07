@@ -111,10 +111,10 @@
     </string-array>
 
     <!-- seller -->
-        <string name="charlotte">Charlotte</string>
-        <string name="david">David</string>
-        <string name="sylvain">Sylvain</string>
-        <string name="christelle">Christelle</string>
+    <string name="charlotte">Charlotte</string>
+    <string name="david">David</string>
+    <string name="sylvain">Sylvain</string>
+    <string name="christelle">Christelle</string>
 
 
     <!-- PROPERTY DETAILS -->
@@ -146,6 +146,7 @@
     <string name="delete_property">Delete</string>
     <string name="save">Save</string>
     <string name="detail_saved">Details saved</string>
+
 
 
 </resources>
