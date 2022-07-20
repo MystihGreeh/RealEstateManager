@@ -1,8 +1,6 @@
 package com.example.realestatemanager
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -19,12 +17,7 @@ class ExampleInstrumentedTest {
     private val ITEMS_COUNT = 12
 
 
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.realestatemanager", appContext.packageName)
-    }
+
 
     /**
      * When we delete a property, the property is no more shown

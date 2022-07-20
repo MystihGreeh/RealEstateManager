@@ -74,6 +74,9 @@ class AddPropertyActivity(): AppCompatActivity() {
     var canSave: Boolean = false
     var photoDetail: String = ""
     lateinit var fullAddress: String
+    var propertyPrice: String = ""
+    lateinit var propertySurface: String
+    lateinit var propertyNbrRoom: String
     var photoList = ArrayList<PropertyPhoto>()
 
 
@@ -98,7 +101,7 @@ class AddPropertyActivity(): AppCompatActivity() {
     var propertyDateOfSale: String = ""
     var propertyBus: Boolean = false
     lateinit var propertySeller: String
-    lateinit var propertyType: String
+    var propertyType: String = ""
     lateinit var geocoder: Geocoder
     var latitude: Double = 0.0
     var longitude: Double = 0.0
@@ -115,19 +118,10 @@ class AddPropertyActivity(): AppCompatActivity() {
         setContentView(R.layout.activity_add_property)
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+        modifyProperty()
 
-        val propertyId = intent.getStringExtra("propertyId")
-
-        /*val propertyModify = intent.getBundleExtra("modify")
-        if(propertyModify!!.equals("Edit")){
-            val propertyPrice = intent.getStringExtra("propertyPrice")
-            binding?.price?.setText(propertyPrice)
-            val propertySurface = intent.getStringExtra("propertySurface")
-            binding?.price?.setText(propertySurface)
-        }*/
         takeCoverPictureListener()
         selectSpinner()
-
 
         binding?.saveButton?.setOnClickListener {
             binding?.saveButton?.setText("Save Property")
@@ -202,12 +196,31 @@ class AddPropertyActivity(): AppCompatActivity() {
         })
     }
 
+    private fun modifyProperty(){
+        var property: Property? = intent.getSerializableExtra("property") as Property?
+
+        if (property?.school != true){
+            binding?.schoolCheck?.isChecked
+        }
+        println(property?.priceInDollars)
+
+            propertyType = property?.typeOfGood.toString()
+        println(property?.priceInDollars.toString())
+            propertyPrice = property?.priceInDollars.toString()
+            propertyNbrRoom = property?.numberOfRoom.toString()
+            propertySurface = property?.surfaceInMeters.toString()
+
+
+    }
+
 
     private fun saveProperty() {
 
-        val propertyPrice = binding?.price?.text.toString()
-        val propertySurface = binding?.surface?.text.toString()
-        val propertyNbrRoom = binding?.autoCompleteRooms?.text.toString()
+
+        var propertyPriceText = binding?.price?.text.toString()
+        propertyPriceText.get(propertyPrice.toInt())
+        propertySurface = binding?.surface?.text.toString ()
+        propertyNbrRoom = binding?.autoCompleteRooms?.text.toString()
         val propertyNbrBedroom = binding?.autoCompleteBedrooms?.text.toString()
         val propertyDescription = binding?.description?.text.toString()
         val propertyStreet = binding?.streetAddress?.text.toString()
@@ -238,10 +251,10 @@ class AddPropertyActivity(): AppCompatActivity() {
             Property(
                 null,
                 propertyType,
-                propertyPrice,
-                propertySurface,
-                propertyNbrRoom,
-                propertyNbrBedroom,
+                propertyPrice.toInt(),
+                propertySurface.toInt(),
+                propertyNbrRoom.toInt(),
+                propertyNbrBedroom.toInt(),
                 propertyDescription,
                 propertyStreet,
                 propertyPostalCode,

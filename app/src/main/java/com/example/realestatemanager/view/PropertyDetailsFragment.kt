@@ -43,7 +43,6 @@ class PropertyDetailsFragment() : Fragment() {
 
     val viewModel : MainActivityViewModel by activityViewModels()
 
-    val propertyId = arguments?.get("id")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,76 +62,49 @@ class PropertyDetailsFragment() : Fragment() {
         //val photoString = arguments?.get("photoString")
 
 
+        val property: Property= arguments?.getSerializable("property") as Property
+        println(property.typeOfGood)
 
-
-        val propertyId = arguments?.get("id")
-        val property = arguments?.getSerializable("property")
-        val propertyModify = arguments?.get("modify")
-        val propertyType = arguments?.get("propertyType")
-        val propertyPrice = arguments?.get("propertyPrice")
-        val propertyDescription = arguments?.get("propertyDescription")
-        val propertyRooms = arguments?.get("propertyRooms")
-        val propertySurface = arguments?.get("propertySurface")
-        val propertyBedrooms = arguments?.get("propertyBedrooms")
-        val propertySeller = arguments?.get("propertySeller")
-        val propertyStreet = arguments?.get("propertyAddress")
-        val propertyCity = arguments?.get("propertyCity")
-        val propertyPostalCode = arguments?.get("propertyPostalCode")
-        val propertyCountry = arguments?.get("propertyCountry")
-        val propertyNearbySchool = arguments?.getBoolean("propertyNearbySchool", false)
-        val propertyNearbyTransportation =
-            arguments?.getBoolean("propertyNearbyTransportation", false)
-        val propertyNearbyParks = arguments?.getBoolean("propertyNearbyParks", false)
-        val propertyNearbyParking = arguments?.getBoolean("propertyNearbyParking", false)
-        val propertyNearbyMarket = arguments?.getBoolean("propertyNearbyMarket", false)
-        val propertyNearbyAll = arguments?.getBoolean("propertyNearbyAll", false)
-        val propertyOnSale = arguments?.getBoolean("propertyOnSale", false)
-        val propertyCreationTimeStamp = arguments?.get("propertyCreatedTimeStamp")
-        val propertySoldTimeStamp = arguments?.get("propertySoldTimeStamp")
-        val propertyLatitude = arguments?.get("propertyLatitude")
-        val propertyLongitude = arguments?.get("propertyLongitude")
-        val propertyAgent = arguments?.get("agent")
-        val propertyImage = arguments?.get("image")
         val propertyStaticMapUrl = arguments?.get("propertyStaticMapUrl")
-        binding.propertyTypeTextview.text = propertyType.toString()
-        binding.propertyPriceTextview.text = propertyPrice.toString()
-        binding.descriptionText.text = propertyDescription.toString()
-        binding.propertyNbrRoomsTextview.text = propertyRooms.toString()
-        binding.propertyNbrBedroomsTextview.text = propertyBedrooms.toString()
-        binding.propertySurfaceTextview.text = propertySurface.toString()
-        binding.seller.text = propertySeller.toString()
-        binding.street.text = propertyStreet.toString()
-        binding.city.text = propertyCity.toString()
-        binding.country.text = propertyCountry.toString()
-        binding.postalCode.text = propertyPostalCode.toString()
-        if (propertyNearbySchool == true) {
+        binding.propertyTypeTextview.text = property.typeOfGood.toString()
+        binding.propertyPriceTextview.text = property.priceInDollars.toString()
+        binding.descriptionText.text = property.description.toString()
+        binding.propertyNbrRoomsTextview.text = property.numberOfRoom.toString()
+        binding.propertyNbrBedroomsTextview.text = property.numberOfBedroom.toString()
+        binding.propertySurfaceTextview.text = property.surfaceInMeters.toString()
+        binding.seller.text = property.agent.toString()
+        binding.street.text = property.street.toString()
+        binding.city.text = property.city.toString()
+        binding.country.text = property.country.toString()
+        binding.postalCode.text = property.postalcode.toString()
+        if (property.school == true) {
             binding.schoolNearbyTextview.setImageResource(R.drawable.ic_baseline_check_24)
         } else binding.schoolNearbyTextview.setImageResource(R.drawable.ic_baseline_close_24)
-        if (propertyNearbyParks == true) {
+        if (property.parks == true) {
             binding.parkNearbyTextview.setImageResource(R.drawable.ic_baseline_check_24)
         } else binding.parkNearbyTextview.setImageResource(R.drawable.ic_baseline_close_24)
-        if (propertyNearbyParking == true) {
+        if (property.parking == true) {
             binding.parkingNearbyTextview.setImageResource(R.drawable.ic_baseline_check_24)
         } else binding.parkingNearbyTextview.setImageResource(R.drawable.ic_baseline_close_24)
-        if (propertyNearbyMarket == true) {
+        if (property.market == true) {
             binding.marketNearbyTextview.setImageResource(R.drawable.ic_baseline_check_24)
         } else binding.marketNearbyTextview.setImageResource(R.drawable.ic_baseline_close_24)
-        if (propertyNearbyTransportation == true) {
+        if (property.transportation == true) {
             binding.transportationNearbyTextview.setImageResource(R.drawable.ic_baseline_check_24)
         } else binding.transportationNearbyTextview.setImageResource(R.drawable.ic_baseline_close_24)
-        if (propertyNearbyAll == true) {
+        if (property.selectAll == true) {
             binding.allNearbyTextview.setImageResource(R.drawable.ic_baseline_check_24)
         } else binding.allNearbyTextview.setImageResource(R.drawable.ic_baseline_close_24)
         binding.creationDate.setText(R.string.creation)
         binding.creationDate.setTextColor(Color.parseColor("#04711C"))
-        binding.creationTimestamp.setText(" $propertyCreationTimeStamp ")
-        if (propertyOnSale == false) {
+        binding.creationTimestamp.setText(" ${property.createdTimestamp} ")
+        if (property.isSold == false) {
             binding.isSold.setText(R.string.on_sale)
             binding.isSold.setTextColor(Color.parseColor("#04711C"))
         } else {
             binding.isSold.setText(R.string.sold_the)
             binding.isSold.setTextColor(Color.parseColor("#C50017"))
-            binding.soldTimestamp.setText("$propertySoldTimeStamp")
+            binding.soldTimestamp.setText("${property.soldTimestamp}")
         }
 
         if (propertyStaticMapUrl == "") {
@@ -144,7 +116,7 @@ class PropertyDetailsFragment() : Fragment() {
             } else {
                 println("internet available")
                 val geocoder = Geocoder(requireContext(), Locale.getDefault()) // initializing Geocoder
-                fullAddress = "$propertyStreet, $propertyPostalCode, $propertyCity, $propertyCountry"
+                fullAddress = "${property.street}, ${property.postalcode}, ${property.city}, ${property.country}"
                 fullAddressList = geocoder.getFromLocationName(fullAddress, 1)
                 latitude = fullAddressList[0].latitude
                 longitude = fullAddressList[0].longitude
@@ -153,12 +125,12 @@ class PropertyDetailsFragment() : Fragment() {
                     .load(propertyStaticMapUrlWithInternet)
                     .into(binding.staticMap)
                 val updateProperty = Property(
-                    propertyId as Long?, propertyType.toString(), propertyPrice.toString(),
-                    propertySurface.toString(), propertyRooms.toString(), propertyBedrooms.toString(),
-                    propertyDescription.toString(), propertyStreet.toString(), propertyPostalCode.toString(),
-                    propertyCity.toString(), propertyCountry.toString(), propertyNearbyTransportation!!, propertyNearbyMarket!!,
-                    propertyNearbyParks!!, propertyNearbyParking!!, propertyNearbySchool!!, propertyNearbyAll!!, propertyOnSale!!, propertyAgent.toString(),
-                    propertyImage.toString(), propertyCreationTimeStamp.toString(), propertySoldTimeStamp.toString(), fullAddress,
+                    property.id, property.typeOfGood, property.priceInDollars.toString().toInt(),
+                    property.surfaceInMeters.toString().toInt(), property.numberOfRoom.toString().toInt(), property.numberOfBedroom.toString().toInt(),
+                    property.description, property.street, property.postalcode,
+                    property.city, property.country, property.transportation, property.market,
+                    property.parks, property.parking, property.school, property.selectAll, property.isSold, property.agent,
+                    property.propertyImage, property.createdTimestamp, property.soldTimestamp, fullAddress,
                     longitude, latitude, propertyStaticMapUrlWithInternet)
                 viewModel.updateProperty(updateProperty)
             }
@@ -173,16 +145,14 @@ class PropertyDetailsFragment() : Fragment() {
 
         binding.modifyButton.setOnClickListener {
             val bundle = Bundle()
-            if (propertyModify != null){
-                //bundle.putSerializable("property")
-                bundle.putSerializable("propertyType", propertyType as String?)
-                bundle.putSerializable("propertyPrice", propertyPrice as String)
-                bundle.putSerializable("propertySurface", propertySurface as String)
-            }
-            bundle.putString("modify", "Edit")
+            //bundle.putString("modify", "Edit")
+            bundle.putSerializable("property", property)
+            val addPropertyActivity = AddPropertyActivity()
 
+            //addPropertyActivity.intent.getSerializableExtra("property")
 
             val intent = Intent(requireContext(), AddPropertyActivity::class.java)
+            intent.putExtra("property", property)
             startActivity(intent)
         }
     }
@@ -219,9 +189,7 @@ class PropertyDetailsFragment() : Fragment() {
         }
     }
 
-    fun modifyProperty(){
 
-    }
 
 
     companion object {

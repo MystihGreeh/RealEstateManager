@@ -24,8 +24,9 @@ class PropertyRepository (private val propertyDao: PropertyDao) {
     }
 
 
-    fun select(priceMini: String, priceMax: String, surfaceMini: String, surfaceMax: String, roomMini: String, roomMax: String, bedroomMini: String, bedroomMax: String): LiveData<List<Property>> {
-         return propertyDao.getPropertiesWithFilters(priceMini, priceMax, surfaceMini, surfaceMax, roomMini, roomMax, bedroomMini, bedroomMax)
+    fun select(priceMini: Int, priceMax: Int, surfaceMini: Int, surfaceMax: Int, roomMini: Int,
+               roomMax: Int): LiveData<List<Property>> {
+         return propertyDao.getPropertiesWithFilters(priceMini, priceMax, surfaceMini, surfaceMax, roomMini, roomMax)
 
     }
 }

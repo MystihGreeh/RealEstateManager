@@ -12,10 +12,10 @@ import java.io.Serializable
 class Property(
     @ColumnInfo(name = "property_id") @PrimaryKey var id: Long?,
     @ColumnInfo(name = "type") var typeOfGood: String,
-    @ColumnInfo(name = "price") var priceInDollars: String,
-    @ColumnInfo(name = "surface") var surfaceInMeters: String,
-    @ColumnInfo(name = "number of room") var numberOfRoom: String,
-    @ColumnInfo(name = "number of berdoom") var numberOfBedroom: String,
+    @ColumnInfo(name = "price") var priceInDollars: Int,
+    @ColumnInfo(name = "surface") var surfaceInMeters: Int,
+    @ColumnInfo(name = "number_of_room") var numberOfRoom: Int,
+    @ColumnInfo(name = "number_of_bedroom") var numberOfBedroom: Int,
     @ColumnInfo(name = "description") var description: String,
     @ColumnInfo(name = "street") var street: String,
     @ColumnInfo(name = "postal code") var postalcode: String,
@@ -44,10 +44,10 @@ class Property(
         val property = Property(id, typeOfGood, priceInDollars, surfaceInMeters, numberOfRoom, numberOfBedroom, description, street, postalcode, city, country, transportation, market, parks, parking, school, selectAll, isSold, agent, propertyImage, createdTimestamp, soldTimestamp, fullAddress, longitude, latitude, propertyStaticMapUrl)
         if (values.containsKey("property_id")) property.id =(values.getAsLong("text"))
         if (values.containsKey("type")) property.typeOfGood =(values.getAsString("category"))
-        if (values.containsKey("price")) property.priceInDollars = (values.getAsString("isSelected"))
-        if (values.containsKey("surface")) property.surfaceInMeters = (values.getAsString("userId"))
-        if (values.containsKey("number of room")) property.numberOfRoom = (values.getAsString("text"))
-        if (values.containsKey("number of berdoom")) property.numberOfBedroom = (values.getAsString("text"))
+        if (values.containsKey("price")) property.priceInDollars = (values.getAsInteger("isSelected"))
+        if (values.containsKey("surface")) property.surfaceInMeters = (values.getAsInteger("userId"))
+        if (values.containsKey("number of room")) property.numberOfRoom = (values.getAsInteger("text"))
+        if (values.containsKey("number of berdoom")) property.numberOfBedroom = (values.getAsInteger("text"))
         if (values.containsKey("description")) property.description = (values.getAsString("text"))
         if (values.containsKey("street")) property.street = (values.getAsString("text"))
         if (values.containsKey("postal code")) property.postalcode = (values.getAsString("text"))

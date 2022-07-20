@@ -30,16 +30,15 @@ interface PropertyDao {
 
     // List of properties with pictures with filters
     //@Transaction
-    @Query("SELECT * FROM properties WHERE (price BETWEEN :priceMini AND :priceMax) AND (surface BETWEEN :surfaceMini AND :surfaceMax) AND (`number of room` BETWEEN :roomMini AND :roomMax) AND (`number of berdoom` BETWEEN :bedroomMini AND :bedroomMax)")
+    @Query("SELECT * FROM properties WHERE (price BETWEEN :priceMini AND :priceMax) AND (surface BETWEEN :surfaceMini AND :surfaceMax) AND (number_of_room BETWEEN :roomMini AND :roomMax)")
     fun getPropertiesWithFilters(
-        priceMini: String = "0",
-        priceMax: String = "100000000",
-        surfaceMini: String? = "0",
-        surfaceMax: String? = "100000",
-        roomMini: String? = "0",
-        roomMax: String? = "1000",
-        bedroomMini: String? = "0",
-        bedroomMax: String? = "1000"
+        priceMini: Int?,
+        priceMax: Int?,
+        surfaceMini: Int?,
+        surfaceMax: Int?,
+        roomMini: Int?,
+        roomMax: Int?,
+
     ): LiveData<List<Property>>
 
 }

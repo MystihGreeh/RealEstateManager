@@ -62,52 +62,59 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/house_check"
+                        android:id="@+id/search_house_check"
                         app:layout_constraintTop_toBottomOf="@id/type"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginHorizontal="16sp"
-                        android:text="@string/house"/>
+                        android:text="@string/house"
+                        tools:ignore="UsingOnClickInXml" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/penthouse_check"
-                        app:layout_constraintTop_toBottomOf="@id/house_check"
+                        android:id="@+id/search_penthouse_check"
+                        android:onClick="onCheckboxClicked"
+                        app:layout_constraintTop_toBottomOf="@id/search_house_check"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginHorizontal="16sp"
-                        android:text="@string/penthouse"/>
+                        android:text="@string/penthouse"
+                        tools:ignore="UsingOnClickInXml" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/townhouse_check"
-                        app:layout_constraintTop_toBottomOf="@id/penthouse_check"
+                        android:id="@+id/search_townhouse_check"
+                        app:layout_constraintTop_toBottomOf="@id/search_penthouse_check"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginHorizontal="16sp"
-                        android:text="@string/townhouse"/>
+                        android:text="@string/townhouse"
+                        tools:ignore="UsingOnClickInXml" />
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/duplex_check"
+                        android:id="@+id/search_duplex_check"
                         app:layout_constraintTop_toBottomOf="@id/type"
-                        app:layout_constraintStart_toStartOf="@id/flat_check"
-                        android:text="@string/duplex"/>
+                        app:layout_constraintStart_toStartOf="@id/search_flat_check"
+                        android:text="@string/duplex"
+                        tools:ignore="UsingOnClickInXml" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/flat_check"
-                        app:layout_constraintTop_toBottomOf="@id/duplex_check"
-                        app:layout_constraintStart_toStartOf="@id/type_all_check"
-                        android:text="@string/flat"/>
+                        android:id="@+id/search_flat_check"
+                        app:layout_constraintTop_toBottomOf="@id/search_duplex_check"
+                        app:layout_constraintStart_toStartOf="@id/search_type_all_check"
+                        android:text="@string/flat"
+                        tools:ignore="UsingOnClickInXml" />
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/type_all_check"
-                        app:layout_constraintTop_toBottomOf="@id/flat_check"
+                        android:id="@+id/search_type_all_check"
+                        app:layout_constraintTop_toBottomOf="@id/search_flat_check"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="16dp"
-                        android:text="@string/select_all"/>
+                        android:text="@string/select_all"
+                        tools:ignore="UsingOnClickInXml" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -144,50 +151,50 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:id="@+id/parking_check"
+                    android:id="@+id/search_parking_check"
                     app:layout_constraintTop_toBottomOf="@id/nearby"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginHorizontal="16sp"
-                    android:text="@string/parking"/>
+                    android:text="@string/parking" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/school_check"
-                    app:layout_constraintTop_toTopOf="@id/parking_check"
-                    app:layout_constraintStart_toStartOf="@id/nearby_all_check"
-                    android:text="@string/school"/>
+                    android:id="@+id/search_school_check"
+                    app:layout_constraintTop_toTopOf="@id/search_parking_check"
+                    app:layout_constraintStart_toStartOf="@id/search_nearby_all_check"
+                    android:text="@string/school" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bus_check"
+                    android:id="@+id/search_bus_check"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/parking_check"
+                    app:layout_constraintTop_toBottomOf="@id/search_parking_check"
                     android:layout_marginHorizontal="16sp"
-                    android:text="@string/bus"/>
+                    android:text="@string/bus" />
 
                     <CheckBox
-                        android:id="@+id/subway_check"
+                        android:id="@+id/search_parks_check"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/parks"
-                        app:layout_constraintStart_toStartOf="@id/bus_check"
-                        app:layout_constraintTop_toBottomOf="@id/bus_check" />
+                        app:layout_constraintStart_toStartOf="@id/search_bus_check"
+                        app:layout_constraintTop_toBottomOf="@id/search_bus_check" />
 
                     <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/market_check"
-                    app:layout_constraintTop_toBottomOf="@id/school_check"
-                    app:layout_constraintStart_toStartOf="@id/nearby_all_check"
+                    app:layout_constraintTop_toBottomOf="@id/search_school_check"
+                    app:layout_constraintStart_toStartOf="@id/search_nearby_all_check"
                     android:text="@string/market"/>
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nearby_all_check"
+                    android:id="@+id/search_nearby_all_check"
                     app:layout_constraintTop_toBottomOf="@id/market_check"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginHorizontal="16dp"
-                    android:text="@string/select_all"/>
+                    android:text="@string/select_all" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -491,7 +498,7 @@
                     app:layout_constraintTop_toBottomOf="@id/managed_by"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginHorizontal="16sp"
-                    android:text="@string/charlotte"/>
+                    android:text="@string/charlotte" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -499,12 +506,12 @@
                     app:layout_constraintTop_toBottomOf="@id/charlotte_check"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginHorizontal="16sp"
-                    android:text="@string/david"/>
+                    android:text="@string/david" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/christelle_check"
+                    android:id="@+id/search_christelle"
                     app:layout_constraintTop_toTopOf="@id/charlotte_check"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/christelle"
@@ -512,9 +519,9 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sylvain_check"
-                    app:layout_constraintTop_toBottomOf="@id/christelle_check"
-                    app:layout_constraintStart_toStartOf="@id/christelle_check"
+                    android:id="@+id/search_sylvain"
+                    app:layout_constraintTop_toBottomOf="@id/search_christelle"
+                    app:layout_constraintStart_toStartOf="@id/search_christelle"
                     android:text="@string/sylvain" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -530,39 +537,43 @@
             android:layout_margin="16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="5dp">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
+                    android:id="@+id/other"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/other"
+                    android:layout_marginVertical="16sp"
                     android:text="@string/Other"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginVertical="16sp"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
+                    android:id="@+id/search_sold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sold"
-                    app:layout_constraintTop_toBottomOf="@id/other"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginHorizontal="16sp"
-                    android:text="@string/sold"/>
+                    android:text="@string/sold"
+                    android:checked="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/other" />
 
                 <CheckBox
+                    android:id="@+id/search_with_picture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/with_picture"
-                    app:layout_constraintTop_toTopOf="@id/sold"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:checked="false"
                     android:text="@string/with_picture"
-                    android:layout_marginHorizontal="16dp"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/search_sold" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

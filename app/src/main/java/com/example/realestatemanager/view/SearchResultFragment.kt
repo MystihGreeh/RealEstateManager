@@ -14,6 +14,7 @@ class SearchResultFragment : Fragment() {
     private var bindingSearchResultFragment: FragmentSearchResultBinding? = null
     private val binding get() = bindingSearchResultFragment!!
 
+
     val viewModel : MainActivityViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,9 @@ class SearchResultFragment : Fragment() {
         // Inflate the layout for this fragment
         bindingSearchResultFragment = FragmentSearchResultBinding.inflate(inflater, container, false)
 
+        viewModel.filteredProperties.observe (this, {
+                list -> binding.propertyListRecyclerView.adapter = SearchAdapter(this, list)
+        })
         return binding.root}
 
 }

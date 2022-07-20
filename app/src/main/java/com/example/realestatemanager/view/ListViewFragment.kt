@@ -62,36 +62,8 @@ class ListViewFragment : Fragment(), PropertyClickInterface, PropertyDeleteInter
 
         val bundle = Bundle()
 
-
-
-        bundle.putSerializable("property", property)
         //bundle.putString("modify", "Edit")
-        bundle.putLong("id", property.id!!)
-        bundle.putSerializable("propertyType", property.typeOfGood)
-        bundle.putString("propertyPrice", property.priceInDollars)
-        bundle.putString("propertySurface", property.surfaceInMeters)
-        bundle.putString("propertyRooms", property.numberOfRoom)
-        bundle.putString("propertyBedrooms", property.numberOfBedroom)
-        bundle.putSerializable("propertyNearbySchool", property.school)
-        bundle.putBoolean("propertyNearbyTransportation", property.transportation)
-        bundle.putBoolean("propertyNearbyMarket", property.market)
-        bundle.putBoolean("propertyNearbyParks", property.parks)
-        bundle.putBoolean("propertyNearbyParking", property.parking)
-        bundle.putBoolean("propertyAll", property.selectAll)
-        bundle.putString("propertyDescription", property.description)
-        bundle.putString("propertyAddress", property.street)
-        bundle.putString("propertyPostalCode", property.postalcode)
-        bundle.putString("propertyCity", property.city)
-        bundle.putString("propertyCountry", property.country)
-        bundle.putString("propertySeller", property.agent)
-        bundle.putBoolean("propertyOnSale", property.isSold)
-        bundle.putString("propertyCreatedTimeStamp", property.createdTimestamp)
-        bundle.putString("propertySoldTimeStamp", property.soldTimestamp)
-        //bundle.putDouble("propertyLatitude", property.latitude)
-        //bundle.putSerializable("propertyLongitude", property.longitude)
-        bundle.putString("propertyStaticMapUrl", property.propertyStaticMapUrl)
-        bundle.putString("propertyImage", property.propertyImage)
-
+        bundle.putSerializable("property", property)
         val detailsFragment = PropertyDetailsFragment()
         detailsFragment.arguments = bundle
 

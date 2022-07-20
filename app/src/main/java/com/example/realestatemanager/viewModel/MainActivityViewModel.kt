@@ -1,6 +1,7 @@
 package com.example.realestatemanager.viewModel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.realestatemanager.model.Property
@@ -20,10 +21,11 @@ class MainActivityViewModel(private val repository : PropertyRepository, private
     private val detailsFragment = PropertyDetailsFragment()
 
     val allProperties: LiveData<List<Property>> = repository.allProperties
+
+
     val allPhoto: LiveData<List<PropertyPhoto>> = photoRepository.allPhotos
 
-
-
+    val filteredProperties = MutableLiveData<List<Property>>()
 
     fun deleteProperty(property: Property) = viewModelScope.launch(Dispatchers.IO){
         repository.delete(property)
@@ -42,8 +44,11 @@ class MainActivityViewModel(private val repository : PropertyRepository, private
     }
 
     fun filterProperty(
-        priceMini: String, priceMax: String, surfaceMini: String, surfaceMax: String, roomMini: String, roomMax: String, bedroomMini: String, bedroomMax: String): LiveData<List<Property>> {
-        return repository.select(priceMini, priceMax, surfaceMini, surfaceMax, roomMini, roomMax, bedroomMini, bedroomMax)
+        priceMini: Int, priceMax: Int, surfaceMini: Int, surfaceMax: Int, roomMini: Int,
+        roomMax: Int)
+    : LiveData<List<Property>> {
+        return repository.select(priceMini, priceMax, surfaceMini, surfaceMax, roomMini, roomMax)
+
     }
 
 

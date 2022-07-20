@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.realestatemanager.R
 import com.example.realestatemanager.model.Property
 
-class PropertyAdapter(val context: ListViewFragment, private val allProperties: List<Property>, val propertyClickInterface: PropertyClickInterface, val propertyDeleteInterface: PropertyDeleteInterface) : RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
+class SearchAdapter(val context: SearchResultFragment, private val filteredProperties: List<Property>) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -36,7 +36,7 @@ class PropertyAdapter(val context: ListViewFragment, private val allProperties: 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val property = allProperties[position]
+        val property = filteredProperties[position]
         holder.propertyTypeOfGood.text = property.typeOfGood
         holder.propertyCity.text = property.city
         holder.propertyPrice.text = property.priceInDollars.toString()
@@ -47,30 +47,18 @@ class PropertyAdapter(val context: ListViewFragment, private val allProperties: 
             holder.propertyOnSale.setText(R.string.sold)
             holder.propertyOnSale.setTextColor(Color.parseColor("#C50017"))
         }
-        holder.itemView.setOnClickListener {
-            propertyClickInterface.onPropertyClick(allProperties[position])
-        }
-        holder.deleteButton.setOnClickListener{
-            propertyDeleteInterface.onDeleteClick(allProperties[position])
-        }
         holder.propertyPicture.setImageURI(property.propertyImage.toUri())
         holder.propertyPicture.cropToPadding
 
     }
-        override fun getItemCount(): Int {
-            return allProperties.size
-        }
+    override fun getItemCount(): Int {
+        return filteredProperties.size
     }
-
-
-
-
-
-interface PropertyClickInterface{
-    fun onPropertyClick(property: Property)
 }
 
-interface PropertyDeleteInterface{
-    fun onDeleteClick(property: Property)
-}
+
+
+
+
+
 
